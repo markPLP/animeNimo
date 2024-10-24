@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .align-element {
+    @apply mx-auto max-w-7xl px-5;
+  }
+
+  .btn {
+    @apply uppercase;
+  }
+}
+
+/* Add this to your global CSS file */
+input[type='search']::-webkit-search-decoration,
+input[type='search']::-webkit-search-results-button,
+input[type='search']::-webkit-search-results-decoration {
+  display: none; /* Hide the search clear button */
+}
+
+/* complex header styling */
+
+@media (min-width: 375px) and (max-width: 1024px) {
+  .complex-grid-header {
+    grid-template-areas:
+      'logo-burger logo-burger  theme'
+      'search-form search-form search-form';
+    grid-template-columns: 1fr 1fr auto;
+  }
+  .header-logo-burger {
+    grid-area: logo-burger;
+  }
+  .header-search-form {
+    grid-area: search-form;
+  }
+  .header-main-nav {
+    grid-area: main-nav;
+  }
+  .header-theme {
+    grid-area: theme;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .complex-grid-header {
+    grid-template-columns: auto auto 1fr auto;
+  }
+}
