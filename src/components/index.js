@@ -7,3 +7,6 @@ export { default as Hero } from './Hero';
 export { default as Loading } from './Loading';
 export { default as ErrorElement } from './ErrorElement';
 export { default as SlickSlider } from './SlickSlider';
+export { default as Socials } from './Socials';
+export { default as PopularAnime } from './PopularAnime';
+export { default as SectionTitle } from './SectionTitle';

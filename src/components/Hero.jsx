@@ -1,28 +1,12 @@
 import { useHeroBannerFetch } from '../utils/reactQueryCustomHooks';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { useEffect, useRef } from 'react';
 
 import Slider from 'react-slick';
+import Loading from './Loading';
 
 const Hero = () => {
-  const { isLoading, filterItems, isError } = useHeroBannerFetch();
-  const sliderRef = useRef(null);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (sliderRef.current) {
-        sliderRef.current.slickSetOption('setPosition', true);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    // Cleanup the event listener on component unmount
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  const { isLoading, data, isError } = useHeroBannerFetch();
 
   const settings = {
     dots: true,
@@ -38,13 +22,13 @@ const Hero = () => {
 
   //NOTE: VERY IMPORT! - data will be undefined if isLoading not set
   // Handle loading and error states
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (isError) return <div>There was an error...</div>;
 
   return (
     <section className="slick-container bg-primary">
-      <Slider {...settings} ref={sliderRef}>
-        {filterItems.map((item) => {
+      <Slider {...settings}>
+        {data.map((item) => {
           const image = item.images?.webp?.large_image_url;
           const { synopsis, title_english } = item;
           return (
@@ -53,14 +37,14 @@ const Hero = () => {
                 <img
                   src={image}
                   alt={title_english}
-                  className="absolute top-0 left-0 mr-auto object-cover w-full h-full"
+                  className="absolute top-0 left-0 mr-auto object-cover object-center w-full h-full"
                 />
               </figure>
               <div className="p-2 h-16 md:h-auto lg:p-5">
-                <h1 className="font-bold text-neutral-content text-1xl lg:text-3xl">
+                <h1 className="font-bold text-primary-content text-1xl lg:text-3xl">
                   {title_english}
                 </h1>
-                <p className="hidden md:block lg:text-xl">
+                <p className="hidden md:block lg:text-xl text-primary-content">
                   {synopsis.substring(0, 200)}...
                 </p>
               </div>

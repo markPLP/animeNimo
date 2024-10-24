@@ -13,11 +13,9 @@ import {
   Register,
   Updated,
 } from './pages';
-
-// import Hero from './components/Hero';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 // LOADERS
-//import { loader as heroLoader } from './components/Hero';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -77,6 +75,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 };

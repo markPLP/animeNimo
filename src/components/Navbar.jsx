@@ -3,22 +3,31 @@ import { FaBarsStaggered } from 'react-icons/fa6';
 import FormInput from './FormInput';
 import { BsSearch } from 'react-icons/bs';
 import ThemeUI from './ThemeUI';
+import Socials from './Socials';
 
 const Navbar = () => {
   return (
-    <nav className="bg-base-200">
-      <div className="navbar complex-grid-header align-element grid items-center gap-2 lg:gap-5">
+    <nav className="bg-base-300">
+      <div className="navbar complex-grid-header align-element grid items-center gap-x-4 gap-y-2 lg:gap-5">
         <div className="header-logo-burger flex items-center">
           {/* DROPDOWN */}
-          <div className="dropdown">
-            <label tabIndex={0} className="btn btn-ghost lg:hidden pl-0">
+          <div className="dropdown mr-5">
+            <label tabIndex={0} className="btn btn-ghost p-4 h-auto">
               <FaBarsStaggered className="h-6 w-6" />
             </label>
             <ul
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-200 rounded-box w-52"
             >
-              {/* DYNAMIC LINKS HERE */}
+              <li>
+                <NavLink to="/">Home</NavLink>
+              </li>
+              <li>
+                <NavLink to="/genre">Genre</NavLink>
+              </li>
+              <li>
+                <NavLink to="/types">Types</NavLink>
+              </li>
             </ul>
           </div>
           <NavLink to="/">AnimeNimo</NavLink>
@@ -39,19 +48,9 @@ const Navbar = () => {
             </button>
           </Form>
         </div>
-        <div className="header-main-nav hidden lg:block">
+        <div className="header-main-nav">
           {/* <ul className='flex justify-self-center gap-x-4'> */}
-          <ul className="menu menu-horizontal flex justify-self-center gap-x-4">
-            <li>
-              <NavLink to="/">Home</NavLink>
-            </li>
-            <li>
-              <NavLink to="/genre">Genre</NavLink>
-            </li>
-            <li>
-              <NavLink to="/types">Types</NavLink>
-            </li>
-          </ul>
+          <Socials />
         </div>
         <ThemeUI className="header-theme" />
       </div>

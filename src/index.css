@@ -24,9 +24,9 @@ input[type='search']::-webkit-search-results-decoration {
 @media (min-width: 375px) and (max-width: 1024px) {
   .complex-grid-header {
     grid-template-areas:
-      'logo-burger logo-burger  theme'
+      'logo-burger main-nav theme'
       'search-form search-form search-form';
-    grid-template-columns: 1fr 1fr auto;
+    grid-template-columns: auto 1fr auto;
   }
   .header-logo-burger {
     grid-area: logo-burger;

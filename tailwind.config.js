@@ -19,7 +19,8 @@ export default {
         mytheme: {
           primary: '#5a2e98', // Custom primary color
           secondary: '#ff7ac6',
-          'text-neutral-content': '#ffffff',
+          'primary-content': '#ffffff',
+          'base-100': '#0e0e0e',
         },
       },
       'mytheme',

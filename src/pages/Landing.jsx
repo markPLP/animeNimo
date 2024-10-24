@@ -1,11 +1,12 @@
-// Landing.js
-// import FirstComponent from './FirstComponent';
-// import SecondComponent from './SecondComponent';
-
-import { Hero } from '../components';
+import { Hero, PopularAnime, SectionTitle } from '../components';
 
 const Landing = () => {
-  return <Hero />;
+  return (
+    <>
+      <Hero />
+      <PopularAnime />
+    </>
+  );
 };
 
 export default Landing;
