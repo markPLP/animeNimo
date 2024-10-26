@@ -28,20 +28,20 @@ const useCustomFetch = (queryKey, endpoint, options = {}) => {
 };
 
 // fetch banner
-export const useHeroBannerFetchQuery = () => {
-  return useCustomFetch('heroBanner', 'top/anime', {
-    filter: true,
-    limit: 10,
-  });
-};
+// export const useHeroBannerFetchQuery = () => {
+//   return useCustomFetch('heroBanner', 'top/anime', {
+//     filter: true,
+//     limit: 10,
+//   });
+// };
 
 // fetch popular anime
-export const usePopularAnimeQuery = () => {
-  return useCustomFetch('popularAnime', '/watch/episodes/popular', {
-    filter: true,
-    limit: 15,
-  });
-};
+// export const usePopularAnimeQuery = () => {
+//   return useCustomFetch('popularAnime', '/watch/episodes/popular', {
+//     filter: true,
+//     limit: 15,
+//   });
+// };
 
 export const useGetFullAnimeQuery = (mal_id) => {
   const { isLoading, data, isError } = useQuery({
