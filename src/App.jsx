@@ -13,6 +13,7 @@ import {
   Register,
   Updated,
   Watch,
+  WatchSingle,
 } from './pages';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
@@ -34,18 +35,6 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Landing />,
-        // children: [
-        //   {
-        //     path: 'hero',
-        //     element: <Hero />,
-        //     loader: heroLoader, // Loader for FirstComponent
-        //   },
-        // {
-        //   path: 'second',
-        //   element: <SecondComponent />,
-        //   loader: loader2, // Loader for SecondComponent
-        // },
-        // ],
       },
       {
         path: '/genre',
@@ -60,9 +49,13 @@ const router = createBrowserRouter([
         element: <Updated />,
       },
       {
-        path: '/watch',
-        element: <Watch />,
+        path: '/watch/:mal_id',
+        element: <WatchSingle />,
       },
+      // {
+      //   path: '/watch/',
+      //   element: <Watch />,
+      // },
     ],
   },
   {

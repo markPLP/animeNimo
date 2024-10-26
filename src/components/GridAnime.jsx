@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import GridAnimeHoverElement from './GridAnimeHoverElement';
-import Loading from './Loading';
-const GridAnime = ({ custom_hook }) => {
-  const { isLoading, data, isError } = custom_hook();
+// import Loading from './Loading';
+const GridAnime = ({ data }) => {
+  // const { isLoading, data, isError } = custom_hook();
   const [hoveredId, setHoveredId] = useState(null); // State to track hovered card
   const [gridIsHovered, setGridIsHovered] = useState(false);
 
@@ -16,8 +16,10 @@ const GridAnime = ({ custom_hook }) => {
     setGridIsHovered(false);
   };
 
-  if (isLoading) return <Loading />;
-  if (isError) return <div>There was an error...</div>;
+  // isloading and isError will be handing on parallel request on landing component
+  // if (isLoading) return <Loading />;
+  // if (isError) return <div>There was an error...</div>;
+
   return (
     <>
       <div className="grid grid-cols-2 gap-[10px]  min-[460px]:grid-cols-3 min-[700px]:grid-cols-4  min-[800px]:grid-cols-5">

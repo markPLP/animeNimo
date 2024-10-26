@@ -9,3 +9,4 @@ export { default as Login } from './Login';
 export { default as Register } from './Register';
 export { default as Updated } from './Updated';
 export { default as Watch } from './Watch';
+export { default as WatchSingle } from './WatchSingle';

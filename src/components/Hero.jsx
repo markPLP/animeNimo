@@ -1,12 +1,10 @@
-import { useHeroBannerFetchQuery } from '../utils/reactQueryCustomHooks';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 import Slider from 'react-slick';
-import Loading from './Loading';
 
-const Hero = () => {
-  const { isLoading, data, isError } = useHeroBannerFetchQuery();
+const Hero = ({ data }) => {
+  // const { isLoading, data, isError } = useHeroBannerFetchQuery();
 
   const settings = {
     dots: true,
@@ -20,10 +18,11 @@ const Hero = () => {
     pauseOnHover: true,
   };
 
-  //NOTE: VERY IMPORT! - data will be undefined if isLoading not set
+  // NOTE: isLoading and isError handle in landing - parallel request
+  // IMPORT! - data will be undefined if isLoading not set
   // Handle loading and error states
-  if (isLoading) return <Loading />;
-  if (isError) return <div>There was an error...</div>;
+  // if (isLoading) return <Loading />;
+  // if (isError) return <div>There was an error...</div>;
 
   return (
     <section className="slick-container bg-primary">

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { customFetch } from '.';
 
+// custom fetch function
 export const useCustomFetch = (queryKey, endpoint, options = {}) => {
   const { filter = true, limit = 10 } = options; // Default to filtering and limiting to 10
 
@@ -39,12 +40,11 @@ export const usePopularAnimeQuery = () => {
   });
 };
 
-export const useGridHoverElementsQuery = (mal_id) => {
+export const useGetFullAnimeQuery = (mal_id) => {
   const { isLoading, data, isError } = useQuery({
     queryKey: ['hoverElement', mal_id],
     queryFn: async () => {
       const response = await customFetch.get(`/anime/${mal_id}/full`);
-
       return response.data.data;
     },
     enabled: !!mal_id, // Only fetch when mal_id is defined

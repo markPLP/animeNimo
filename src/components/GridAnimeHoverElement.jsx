@@ -1,13 +1,11 @@
 import { useEffect, useRef } from 'react';
-import { useGridHoverElementsQuery } from '../utils/reactQueryCustomHooks';
 import { BsFillPlayCircleFill } from 'react-icons/bs';
-
-import Loading from './Loading';
+import { Link } from 'react-router-dom';
+import { useGetFullAnimeQuery } from '../utils/reactQueryCustomHooks';
 
 const GridAnimeHoverElement = ({ mal_id, gridIsHovered }) => {
-  const { isLoading, data, isError } = useGridHoverElementsQuery(mal_id);
+  const { isLoading, data, isError } = useGetFullAnimeQuery(mal_id);
   const hoverRef = useRef(null);
-
   useEffect(() => {
     if (!gridIsHovered) return;
 
@@ -31,13 +29,22 @@ const GridAnimeHoverElement = ({ mal_id, gridIsHovered }) => {
   }, [gridIsHovered]); // Dependency array remains the same
 
   // Handle loading and error states after hooks
-  if (isLoading) return <Loading />;
+  if (isLoading) {
+    return (
+      <div
+        ref={hoverRef}
+        className={`rounded-[11px] px-0 pb-0 z-10 w-[330px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+          bg-gray-800 text-white p-4 rounded shadow-lg transition-opacity duration-200 flex place-items-center`}
+      >
+        <span className="loading loading-dots loading-lg"></span>
+      </div>
+    );
+  }
+
   if (isError) return <div>Error fetching data...</div>;
 
   // Only render if data exists
   if (!data) return null;
-  console.log(data);
-
   const { episodes, synopsis, title_english, type, score, status } = data;
   const { string, to } = data.aired;
   const genres = data.genres;
@@ -82,10 +89,13 @@ const GridAnimeHoverElement = ({ mal_id, gridIsHovered }) => {
           );
         })}
       </p>
-      <button className="rounded-b-[9px] flex items-center gap-2 bg-primary hover hover:bg-secondary w-full justify-center py-3 px-4 uppercase text-[20px] mt-3">
+      <Link
+        to={`/watch/${mal_id}`}
+        className="rounded-b-[9px] flex items-center gap-2 bg-primary hover hover:bg-secondary w-full justify-center py-3 px-4 uppercase text-[20px] mt-3"
+      >
         <BsFillPlayCircleFill />
         watch now!
-      </button>
+      </Link>
     </div>
   );
 };
