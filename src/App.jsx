@@ -18,6 +18,7 @@ import {
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 // LOADERS
+import { loader as landingLoader } from './pages/Landing';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Landing />,
+        loader: landingLoader(queryClient),
       },
       {
         path: '/genre',

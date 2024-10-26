@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { customFetch } from '.';
 
 // custom fetch function
-export const useCustomFetch = (queryKey, endpoint, options = {}) => {
+const useCustomFetch = (queryKey, endpoint, options = {}) => {
   const { filter = true, limit = 10 } = options; // Default to filtering and limiting to 10
 
   const { isLoading, data, isError, error } = useQuery({
@@ -29,7 +29,10 @@ export const useCustomFetch = (queryKey, endpoint, options = {}) => {
 
 // fetch banner
 export const useHeroBannerFetchQuery = () => {
-  return useCustomFetch('heroBanner', 'top/anime', { filter: true, limit: 10 });
+  return useCustomFetch('heroBanner', 'top/anime', {
+    filter: true,
+    limit: 10,
+  });
 };
 
 // fetch popular anime
