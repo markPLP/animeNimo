@@ -12,6 +12,7 @@ import {
   Login,
   Register,
   Updated,
+  Watch,
 } from './pages';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: '/updated',
         element: <Updated />,
+      },
+      {
+        path: '/watch',
+        element: <Watch />,
       },
     ],
   },

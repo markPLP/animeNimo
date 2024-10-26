@@ -18,6 +18,7 @@ export default {
       {
         mytheme: {
           primary: '#5a2e98', // Custom primary color
+          'primary-focus': '#ff7ac6',
           secondary: '#ff7ac6',
           'primary-content': '#ffffff',
           'base-100': '#0e0e0e',

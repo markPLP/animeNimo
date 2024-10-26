@@ -1,10 +1,12 @@
-import { Hero, PopularAnime, SectionTitle } from '../components';
+import { Hero, GridAnime, SectionTitle } from '../components';
+import { usePopularAnimeQuery } from '../utils/reactQueryCustomHooks';
 
 const Landing = () => {
   return (
     <>
       <Hero />
-      <PopularAnime />
+      <SectionTitle title="Popular now" />
+      <GridAnime custom_hook={usePopularAnimeQuery} />
     </>
   );
 };

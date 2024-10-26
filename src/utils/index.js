@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { useEffect, useRef } from 'react';
+
 const apiURL = 'https://api.jikan.moe/v4';
 
 export const customFetch = axios.create({
