@@ -16,10 +16,11 @@ import {
   WatchSingle,
 } from './pages';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import TwoColLayout from './layouts/TwoColLayout';
 
 // LOADERS
 import { loader as landingLoader } from './pages/Landing';
-import TwoColLayout from './layouts/TwoColLayout';
+import { loader as WatchSingleLoader } from './pages/WatchSingle';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -59,6 +60,7 @@ const router = createBrowserRouter([
       {
         path: '/watch/:mal_id',
         element: <WatchSingle />,
+        loader: WatchSingleLoader(queryClient),
       },
     ],
   },

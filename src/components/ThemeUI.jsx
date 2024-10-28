@@ -18,7 +18,11 @@ const ThemeUI = () => {
 
   return (
     <div className="dropdown">
-      <div tabIndex={0} role="button" className="btn m-1 capitalize">
+      <div
+        tabIndex={0}
+        role="button"
+        className="btn m-1 capitalize px-3 sm:px-5"
+      >
         Theme
         <svg
           width="12px"

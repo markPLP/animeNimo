@@ -11,3 +11,4 @@ export { default as Socials } from './Socials';
 export { default as GridAnime } from './GridAnime';
 export { default as SectionTitle } from './SectionTitle';
 export { default as GridAnimeHoverElement } from './GridAnimeHoverElement';
+export { default as TypeHeadSearch } from './TypeHeadSearch';

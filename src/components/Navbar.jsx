@@ -1,14 +1,13 @@
-import { Form, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { FaBarsStaggered } from 'react-icons/fa6';
-import FormInput from './FormInput';
-import { BsSearch } from 'react-icons/bs';
 import ThemeUI from './ThemeUI';
 import Socials from './Socials';
+import TypeHeadSearch from './TypeHeadSearch';
 
 const Navbar = () => {
   return (
     <nav className="bg-base-300">
-      <div className="navbar complex-grid-header align-element grid items-center gap-x-4 gap-y-2 lg:gap-5">
+      <div className="navbar complex-grid-header align-element grid items-center gap-x-3 gap-y-2 lg:gap-5 px-3">
         <div className="header-logo-burger flex items-center">
           {/* DROPDOWN */}
           <div className="dropdown mr-5">
@@ -32,21 +31,8 @@ const Navbar = () => {
           </div>
           <NavLink to="/">AnimeNimo</NavLink>
         </div>
-        <div className="header-search-form">
-          <Form className="relative max-w-full w-full">
-            <FormInput
-              type="text"
-              name="search"
-              placeholder="Enter anime name"
-              extendClass="rounded-full appearance-none pr-14 max-w-full"
-            />
-            <button
-              type="submit"
-              className="absolute top-0 bottom-0 right-0 w-12 flex justify-center items-center"
-            >
-              <BsSearch className="text-xl font-bold" />
-            </button>
-          </Form>
+        <div className="header-search-form block w-full lg:w-[500px]">
+          <TypeHeadSearch />
         </div>
         <div className="header-main-nav">
           {/* <ul className='flex justify-self-center gap-x-4'> */}

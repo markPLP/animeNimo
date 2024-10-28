@@ -6,12 +6,13 @@ const FormInput = ({
   size,
   placeholder,
   extendClass,
+  onChange,
 }) => {
   return (
-    <div className='form-control'>
+    <div className="form-control">
       {label && (
-        <label htmlFor={name} className='label'>
-          <span className='label-text capitalize'>{label}</span>
+        <label htmlFor={name} className="label">
+          <span className="label-text capitalize">{label}</span>
         </label>
       )}
       <input
@@ -20,8 +21,9 @@ const FormInput = ({
         defaultValue={defaultValue}
         placeholder={placeholder}
         className={`input input-bordered ${extendClass} ${size}`}
+        onChange={onChange} // Pass onChange to input
       />
     </div>
-  )
-}
-export default FormInput
+  );
+};
+export default FormInput;

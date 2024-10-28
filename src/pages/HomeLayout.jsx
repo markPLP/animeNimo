@@ -1,9 +1,17 @@
 import { Outlet, useNavigation } from 'react-router-dom';
 import Header from '../components/Header';
 import { Loading, Navbar } from '../components';
-
 const HomeLayout = () => {
   const navigation = useNavigation();
+
+  // const [isInitialLoading, setIsInitialLoading] = useState(true);
+  // useEffect(() => {
+  //   // Simulate initial loading state for a few seconds on page load
+  //   const timer = setTimeout(() => setIsInitialLoading(false), 2000); // 2-second delay
+  //   return () => clearTimeout(timer);
+  // }, []);
+
+  // const isPageLoading = navigation.state === 'loading' || isInitialLoading;
   const isPageLoading = navigation.state === 'loading';
   return (
     <>

@@ -1,5 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
-import { customFetch } from '.';
+import { customFetch } from './index';
+import { useEffect, useState } from 'react';
+
+// Debounce hook
+const useDebounce = (value, delay = 500) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => setDebouncedValue(value), delay);
+    return () => clearTimeout(handler);
+  }, [value, delay]);
+
+  return debouncedValue;
+};
 
 // custom fetch function
 const useCustomFetch = (queryKey, endpoint, options = {}) => {
@@ -53,6 +66,33 @@ export const useGetFullAnimeQuery = (mal_id) => {
     enabled: !!mal_id, // Only fetch when mal_id is defined
   });
   return { isLoading, data, isError };
+};
+
+export const useGetTypeSearchData = (input) => {
+  const query = useDebounce(input, 500); // Debounced query to avoild frequent request, 500ms
+
+  const { isLoading, data, isError } = useQuery({
+    queryKey: ['suggestions', query], // Cache with first 3 letters only
+    queryFn: async () => {
+      try {
+        const response = await customFetch.get(
+          `/anime?q=${query}&limit=5&order_by=popularity`
+        );
+
+        // const suggestions = ;
+        return response?.data?.data || [];
+        // return response.data;
+      } catch (error) {
+        console.error('Error fetching searched anime:', error);
+        throw new Response('Failed to load searched anime', { status: 500 });
+      }
+    },
+    enabled: query.length > 1, // Only fetch if 2+ characters
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+  });
+  console.log(data, 'searchedAnime');
+
+  return { isLoading, suggestions: data || [], isError };
 };
 
 // export const useHeroBannerFetch = () => {

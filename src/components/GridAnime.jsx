@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import GridAnimeHoverElement from './GridAnimeHoverElement';
-import { useLoaderData } from 'react-router-dom';
-// import Loading from './Loading';
+
 const GridAnime = ({ data }) => {
   // const { isLoading, data, isError } = custom_hook();
 
