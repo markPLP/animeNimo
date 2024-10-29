@@ -1,23 +1,9 @@
-import { useLoaderData } from 'react-router-dom';
-import { Hero, GridAnime, SectionTitle, Loading } from '../components';
-import { heroBannerLoader, popularAnimeLoader } from '../loaders/Loaders';
-
-// loader function
-export const loader = (queryClient) => async () => {
-  //   const heroBanner = await heroBannerLoader(queryClient);
-  // const popularAnime = await popularAnimeLoader(queryClient);
-  // Parallel Execution using Promise.all for better perfomance
-
-  const [heroBanner, popularAnime] = await Promise.all([
-    heroBannerLoader(queryClient),
-    popularAnimeLoader(queryClient),
-  ]);
-
-  return { heroBanner, popularAnime };
-};
+import { useOutletContext } from 'react-router-dom';
+import { Hero, GridAnime, SectionTitle } from '../components';
 
 const Landing = () => {
-  const { heroBanner, popularAnime } = useLoaderData();
+  // useOutletContext - props from <Outlet />
+  const { heroBanner, popularAnime } = useOutletContext();
 
   return (
     <>

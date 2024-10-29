@@ -3,36 +3,37 @@ import FormInput from './FormInput';
 import { BsSearch } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { setQuery } from '../features/search/TypeHeadSearchSlice';
+import { setShowDropdown } from '../features/search/TypeHeadSearchSlice';
 import { useGetTypeSearchData } from '../utils/reactQueryCustomHooks';
 import { BsImage } from 'react-icons/bs';
-import { useRef } from 'react';
 
 const fallBackImage = <BsImage />;
 
 const TypeHeadSearch = () => {
   const query = useSelector((state) => state.typeHeadSearch.query);
+  const showDropdown = useSelector(
+    (state) => state.typeHeadSearch.showDropdown
+  );
 
   const { isLoading, suggestions, isError } = useGetTypeSearchData(query);
-  console.log(suggestions, 'suggestions');
 
   const dispatch = useDispatch();
   const handleChange = (e) => {
     const newQuery = e.target.value;
     // console.log('Dispatching:', dispatch); // Log before dispatching
     dispatch(setQuery(newQuery));
-    ref.current.style.display = 'block';
-  };
-
-  const handleMouseLeave = () => {
-    console.log('leaverrrr');
-    ref.current.style.display = 'none';
+    dispatch(setShowDropdown(true));
   };
 
   const handleMouseEnter = () => {
-    ref.current.style.display = 'block';
+    dispatch(setShowDropdown(true));
+    console.log('handlemouseEnter');
+  };
+  const handleMouseLeave = () => {
+    dispatch(setShowDropdown(false));
+    console.log('handleMouseLeave');
   };
 
-  const ref = useRef(null);
   return (
     <div className="relative">
       <Form className="relative max-w-full w-full">
@@ -51,10 +52,12 @@ const TypeHeadSearch = () => {
           <BsSearch className="text-xl font-bold" />
         </button>
       </Form>
-
       <div
-        ref={ref}
-        className="bg-neutral-900 rounded-lg absolute top-[100%] z-10 w-full"
+        className={`bg-neutral-900 rounded-lg absolute top-[100%] z-10 w-full custom-search-dropdown ${
+          showDropdown ? 'custom-search-dropdown-show' : ''
+        }`}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         {isLoading && (
           <div className="flex place-content-center h-36">
@@ -72,13 +75,11 @@ const TypeHeadSearch = () => {
           const { string } = item.aired;
           return (
             <Link
-              to={`${mal_id}`}
+              to={`/watch/${mal_id}`}
               key={mal_id}
               className={`flex gap-3 items-center p-3 ${
                 index % 2 !== 0 ? 'bg-gray-800' : ''
               } hover hover:bg-gray-900`}
-              onMouseLeave={handleMouseLeave}
-              onMouseEnter={handleMouseEnter}
             >
               <figure>
                 <img

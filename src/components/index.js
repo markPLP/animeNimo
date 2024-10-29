@@ -12,3 +12,4 @@ export { default as GridAnime } from './GridAnime';
 export { default as SectionTitle } from './SectionTitle';
 export { default as GridAnimeHoverElement } from './GridAnimeHoverElement';
 export { default as TypeHeadSearch } from './TypeHeadSearch';
+export { default as FormSelect } from './FormSelect';

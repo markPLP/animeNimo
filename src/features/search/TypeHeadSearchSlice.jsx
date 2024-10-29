@@ -8,12 +8,16 @@ const initialState = {
 const typeHeadSearchSlice = createSlice({
   name: 'typeHeadSearch',
   initialState,
+  showDropdown: false,
   reducers: {
     setQuery: (state, action) => {
       state.query = action.payload;
     },
+    setShowDropdown: (state, action) => {
+      state.showDropdown = action.payload;
+    },
   },
 });
 
-export const { setQuery } = typeHeadSearchSlice.actions;
+export const { setQuery, setShowDropdown } = typeHeadSearchSlice.actions;
 export default typeHeadSearchSlice.reducer;

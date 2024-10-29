@@ -19,6 +19,25 @@ input[type='search']::-webkit-search-results-decoration {
   display: none; /* Hide the search clear button */
 }
 
+/* Custom CSS */
+.custom-search-dropdown {
+  transform: rotateX(-90deg) translate(-50%);
+  transform-origin: top;
+  perspective: 1000px;
+  border-radius: var(--borderRadius);
+  visibility: hidden;
+  opacity: 0;
+  transition: transform 0.3s ease-in-out, opacity 0.2s ease-in-out;
+  z-index: 100;
+  left: 50%;
+}
+
+.custom-search-dropdown-show {
+  visibility: visible;
+  opacity: 1;
+  z-index: 100;
+  transform: rotateX(0) translate(-50%);
+}
 /* complex header styling */
 
 @media (min-width: 375px) and (max-width: 1024px) {

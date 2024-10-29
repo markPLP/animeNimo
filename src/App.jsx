@@ -19,7 +19,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import TwoColLayout from './layouts/TwoColLayout';
 
 // LOADERS
-import { loader as landingLoader } from './pages/Landing';
+import { loader as HomeLayoutLoader } from './pages/HomeLayout';
 import { loader as WatchSingleLoader } from './pages/WatchSingle';
 
 const queryClient = new QueryClient({
@@ -29,16 +29,18 @@ const queryClient = new QueryClient({
     },
   },
 });
+
 const router = createBrowserRouter([
   {
     path: '/',
     element: <HomeLayout />,
     errorElement: <Error />,
+    loader: HomeLayoutLoader(queryClient),
     children: [
       {
         index: true,
         element: <Landing />,
-        loader: landingLoader(queryClient),
+        // loader: landingLoader(queryClient),
       },
     ],
   },
