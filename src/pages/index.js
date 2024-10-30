@@ -1,4 +1,4 @@
-export { default as HomeLayout } from './HomeLayout';
+export { default as HomeLayout } from '../layouts/HomeLayout';
 export { default as Landing } from './Landing';
 export { default as GenreSingle } from './GenreSingle';
 export { default as Genre } from './GenreSingle';
@@ -10,3 +10,4 @@ export { default as Register } from './Register';
 export { default as Updated } from './Updated';
 export { default as Watch } from './Watch';
 export { default as WatchSingle } from './WatchSingle';
+export { default as SearchResults } from './SearchResults';

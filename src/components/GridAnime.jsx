@@ -1,25 +1,28 @@
-import { useState } from 'react';
 import GridAnimeHoverElement from './GridAnimeHoverElement';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  setCardHover,
+  setCardHoveredId,
+} from '../features/cardHover/CardHoverSlice';
 
 const GridAnime = ({ data }) => {
-  // const { isLoading, data, isError } = custom_hook();
+  const { hoveredCard, hoveredCardId } = useSelector(
+    (state) => state.cardHoverState
+  );
 
-  const [hoveredId, setHoveredId] = useState(null); // State to track hovered card
-  const [gridIsHovered, setGridIsHovered] = useState(false);
+  console.log(data, 'gridanime data');
 
+  const dispatch = useDispatch();
   const handleMouseEnter = (mal_id) => {
-    setHoveredId(mal_id);
-    setGridIsHovered(true);
+    dispatch(setCardHoveredId(mal_id));
+    dispatch(setCardHover(true));
+    console.log(mal_id, hoveredCardId, 'mal_id, hoveredCardId');
   };
 
   const handleMouseLeave = () => {
-    setHoveredId(null);
-    setGridIsHovered(false);
+    dispatch(setCardHoveredId(null));
+    dispatch(setCardHover(false));
   };
-
-  // isloading and isError will be handing on parallel request on landing component
-  // if (isLoading) return <Loading />;
-  // if (isError) return <div>There was an error...</div>;
 
   return (
     <>
@@ -28,7 +31,6 @@ const GridAnime = ({ data }) => {
           const image = card.entry?.images?.webp?.large_image_url;
           const { title, mal_id } = card.entry;
           const latestEp = card.episodes[0];
-          // console.log('latestEp', latestEp);
 
           return (
             <div
@@ -58,11 +60,10 @@ const GridAnime = ({ data }) => {
               {/* {(hoveredId === mal_id || gridIsHovered) && (
                 <GridAnimeHoverElement mal_id={mal_id} gridIsHovered={true} />
               )} */}
-              {hoveredId === mal_id && (
+              {hoveredCardId === mal_id && (
                 <GridAnimeHoverElement
                   mal_id={mal_id}
-                  gridIsHovered={gridIsHovered}
-                  setGridIsHovered={setGridIsHovered}
+                  hoveredCard={hoveredCard}
                 />
               )}
             </div>

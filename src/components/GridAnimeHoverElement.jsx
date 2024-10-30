@@ -3,11 +3,11 @@ import { BsFillPlayCircleFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { useGetFullAnimeQuery } from '../utils/reactQueryCustomHooks';
 
-const GridAnimeHoverElement = ({ mal_id, gridIsHovered }) => {
+const GridAnimeHoverElement = ({ mal_id, hoveredCard }) => {
   const { isLoading, data, isError } = useGetFullAnimeQuery(mal_id);
   const hoverRef = useRef(null);
   useEffect(() => {
-    if (!gridIsHovered) return;
+    if (!hoveredCard) return;
 
     const adjustPosition = () => {
       if (hoverRef.current) {
@@ -26,7 +26,7 @@ const GridAnimeHoverElement = ({ mal_id, gridIsHovered }) => {
     adjustPosition();
     window.addEventListener('resize', adjustPosition);
     return () => window.removeEventListener('resize', adjustPosition);
-  }, [gridIsHovered]); // Dependency array remains the same
+  }, [hoveredCard]); // Dependency array remains the same
 
   // Handle loading and error states after hooks
   if (isLoading) {
@@ -54,7 +54,7 @@ const GridAnimeHoverElement = ({ mal_id, gridIsHovered }) => {
       ref={hoverRef}
       className={`rounded-[11px] px-0 pb-0 z-10 w-[330px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
           bg-gray-800 text-white p-4 rounded shadow-lg transition-opacity duration-200 
-          ${gridIsHovered ? 'opacity-100' : 'opacity-0'} 
+          ${hoveredCard ? 'opacity-100' : 'opacity-0'} 
           hidden md:block`}
     >
       <h3 className="text-xl font-medium mb-3 px-5 ">{title_english}</h3>

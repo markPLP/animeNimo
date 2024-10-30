@@ -61,10 +61,13 @@ export const useGetFullAnimeQuery = (mal_id) => {
     queryKey: ['hoverElement', mal_id],
     queryFn: async () => {
       const response = await customFetch.get(`/anime/${mal_id}/full`);
+
       return response.data.data;
     },
     enabled: !!mal_id, // Only fetch when mal_id is defined
   });
+  console.log(data, 'mal_uid');
+
   return { isLoading, data, isError };
 };
 
@@ -90,7 +93,7 @@ export const useGetTypeSearchData = (input) => {
     enabled: query.length > 1, // Only fetch if 2+ characters
     staleTime: 5 * 60 * 1000, // Cache for 5 minutes
   });
-  console.log(data, 'searchedAnime');
+  //console.log(data, 'searchedAnime');
 
   return { isLoading, suggestions: data || [], isError };
 };

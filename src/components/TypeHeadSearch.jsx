@@ -1,4 +1,4 @@
-import { Form, Link } from 'react-router-dom';
+import { Form, Link, useNavigation, useNavigate } from 'react-router-dom';
 import FormInput from './FormInput';
 import { BsSearch } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,37 +6,50 @@ import { setQuery } from '../features/search/TypeHeadSearchSlice';
 import { setShowDropdown } from '../features/search/TypeHeadSearchSlice';
 import { useGetTypeSearchData } from '../utils/reactQueryCustomHooks';
 import { BsImage } from 'react-icons/bs';
-
 const fallBackImage = <BsImage />;
 
-const TypeHeadSearch = () => {
-  const query = useSelector((state) => state.typeHeadSearch.query);
-  const showDropdown = useSelector(
-    (state) => state.typeHeadSearch.showDropdown
-  );
+// export const action =
+//   (store) =>
+//   async ({ request }) => {
+//     // const formData = await request.formData();
+//     const query = store.getState().typeHeadSearch.query;
+//     console.log(query, 'query action');
 
+//     //const searchTerm = formData.get('search');
+//     return null;
+//     // return redirect(`/searchResults?query=${searchTerm}`);
+//   };
+
+const TypeHeadSearch = () => {
+  const navigation = useNavigation();
+  const navigate = useNavigate();
+  const isSubmitting = navigation.state === 'submitting';
+
+  const query = useSelector((state) => state.typeHeadSearchState.query);
+  const showDropdown = useSelector(
+    (state) => state.typeHeadSearchState.showDropdown
+  );
   const { isLoading, suggestions, isError } = useGetTypeSearchData(query);
 
   const dispatch = useDispatch();
   const handleChange = (e) => {
     const newQuery = e.target.value;
-    // console.log('Dispatching:', dispatch); // Log before dispatching
     dispatch(setQuery(newQuery));
     dispatch(setShowDropdown(true));
   };
 
-  const handleMouseEnter = () => {
-    dispatch(setShowDropdown(true));
-    console.log('handlemouseEnter');
-  };
+  const handleMouseEnter = () => dispatch(setShowDropdown(true));
   const handleMouseLeave = () => {
     dispatch(setShowDropdown(false));
-    console.log('handleMouseLeave');
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate(`/search-results/?q=${encodeURIComponent(query)}`);
+  };
   return (
     <div className="relative">
-      <Form className="relative max-w-full w-full">
+      <Form className="relative max-w-full w-full" onSubmit={handleSubmit}>
         <FormInput
           type="text"
           name="search"
@@ -48,6 +61,7 @@ const TypeHeadSearch = () => {
         <button
           type="submit"
           className="absolute top-0 bottom-0 right-0 w-12 flex justify-center items-center"
+          disabled={isSubmitting}
         >
           <BsSearch className="text-xl font-bold" />
         </button>

@@ -5,21 +5,20 @@ import {
   HomeLayout,
   Landing,
   Genre,
-  GenreSingle,
   Types,
-  TypeSingle,
   Error,
   Login,
   Register,
   Updated,
-  Watch,
   WatchSingle,
+  SearchResults,
 } from './pages';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import TwoColLayout from './layouts/TwoColLayout';
 
 // LOADERS
-import { loader as HomeLayoutLoader } from './pages/HomeLayout';
+import { loader as HomeLayoutLoader } from './layouts/HomeLayout';
+import { loader as SearchResultsLoader } from './pages/SearchResults';
 import { loader as WatchSingleLoader } from './pages/WatchSingle';
 
 const queryClient = new QueryClient({
@@ -63,6 +62,11 @@ const router = createBrowserRouter([
         path: '/watch/:mal_id',
         element: <WatchSingle />,
         loader: WatchSingleLoader(queryClient),
+      },
+      {
+        path: '/search-results/',
+        element: <SearchResults />,
+        loader: SearchResultsLoader(queryClient),
       },
     ],
   },
