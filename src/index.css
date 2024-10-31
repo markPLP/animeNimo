@@ -38,8 +38,45 @@ input[type='search']::-webkit-search-results-decoration {
   z-index: 100;
   transform: rotateX(0) translate(-50%);
 }
-/* complex header styling */
 
+.clearfix {
+  overflow: auto;
+
+  &::after {
+    content: '';
+    clear: both;
+    display: table;
+  }
+}
+
+.slick-prev,
+.slick-next {
+  width: 43px;
+  height: 43px;
+  z-index: 10;
+  opacity: 0;
+}
+
+.slick-prev {
+  left: 0;
+}
+
+.slick-next {
+  right: 0;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  font-size: 43px;
+}
+
+/* Show arrows on hover */
+.slick-container:hover .slick-prev,
+.slick-container:hover .slick-next {
+  opacity: 1;
+}
+
+/* complex header styling */
 @media (min-width: 375px) and (max-width: 1024px) {
   .complex-grid-header {
     grid-template-areas:

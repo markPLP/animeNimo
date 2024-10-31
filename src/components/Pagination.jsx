@@ -26,7 +26,7 @@ const Pagination = () => {
     <div className="mt-9 flex justify-end">
       <div className="join">
         <button
-          className="btn btn-xs sm:btn-md join-item"
+          className="btn btn-xs sm:btn-md join-item bg-primary border-none"
           onClick={() => {
             let prevPage = current_page - 1;
             if (prevPage < 1) prevPage = last_visible_page; // bring to last array/item
@@ -39,8 +39,8 @@ const Pagination = () => {
           return (
             <button
               key={pageNumber}
-              className={`btn btn-xs sm:btn-md border-none join-item ${
-                current_page === pageNumber && 'bg-base-300 border-base-300'
+              className={`bg-primary btn btn-xs sm:btn-md border-none join-item ${
+                current_page === pageNumber && 'bg-secondary'
               }`}
               onClick={() => handleChange(pageNumber)}
             >
@@ -49,7 +49,7 @@ const Pagination = () => {
           );
         })}
         <button
-          className="btn btn-xs sm:btn-md join-item"
+          className="btn btn-xs sm:btn-md join-item bg-primary border-none"
           onClick={() => {
             let nextPage = current_page + 1;
             if (nextPage > last_visible_page) nextPage = 1; // bring to the 1st item

@@ -25,7 +25,7 @@ const GridAnime = ({ data }) => {
     <>
       <div className="grid grid-cols-2 gap-[15px]  min-[460px]:grid-cols-3 min-[700px]:grid-cols-4  min-[800px]:grid-cols-5">
         {data.map((card) => {
-          const image = card.entry?.images?.webp?.large_image_url;
+          const image = card.entry?.images?.webp?.image_url;
           const title = card.entry.title;
           const mal_id = card.entry.mal_id;
           //const { title, mal_id } = card.entry;
