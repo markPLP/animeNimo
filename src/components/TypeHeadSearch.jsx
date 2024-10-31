@@ -1,12 +1,16 @@
-import { Form, Link, useNavigation, useNavigate } from 'react-router-dom';
+import {
+  Form,
+  Link,
+  useNavigation,
+  useNavigate,
+  redirect,
+} from 'react-router-dom';
 import FormInput from './FormInput';
 import { BsSearch } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { setQuery } from '../features/search/TypeHeadSearchSlice';
 import { setShowDropdown } from '../features/search/TypeHeadSearchSlice';
 import { useGetTypeSearchData } from '../utils/reactQueryCustomHooks';
-import { BsImage } from 'react-icons/bs';
-const fallBackImage = <BsImage />;
 
 // export const action =
 //   (store) =>
@@ -46,6 +50,8 @@ const TypeHeadSearch = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     navigate(`/search-results/?q=${encodeURIComponent(query)}`);
+    // redirect(`/search-results/?q=${encodeURIComponent(query)}`);
+    console.log(query);
   };
   return (
     <div className="relative">
@@ -85,7 +91,7 @@ const TypeHeadSearch = () => {
         )}
         {suggestions.map((item, index) => {
           const { title, mal_id, score, duration } = item;
-          const image = item?.images?.webp?.small_image_url || fallBackImage;
+          const image = item?.images?.webp?.small_image_url;
           const { string } = item.aired;
           return (
             <Link

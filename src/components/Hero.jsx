@@ -31,7 +31,7 @@ const Hero = ({ data }) => {
           const image = item.images?.webp?.large_image_url;
           const { synopsis, title_english } = item;
           return (
-            <a key={item.mal_id} href="#" className="">
+            <a key={item.mal_id} href="#" className="flex">
               <figure className="relative h-auto pt-[80%] overflow-hidden md:pt-[50%] lg:pt-[38%]">
                 <img
                   src={image}

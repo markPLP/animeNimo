@@ -34,7 +34,7 @@ const GridAnimeHoverElement = ({ mal_id, hoveredCard }) => {
       <div
         ref={hoverRef}
         className={`rounded-[11px] px-0 pb-0 z-10 w-[330px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
-          bg-gray-800 text-white p-4 rounded shadow-lg transition-opacity duration-200 flex place-items-center`}
+          bg-gray-800 text-white p-4 rounded shadow-lg transition-opacity duration-200 flex place-items-center place-content-center`}
       >
         <span className="loading loading-dots loading-lg"></span>
       </div>

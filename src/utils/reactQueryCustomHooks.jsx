@@ -66,8 +66,6 @@ export const useGetFullAnimeQuery = (mal_id) => {
     },
     enabled: !!mal_id, // Only fetch when mal_id is defined
   });
-  console.log(data, 'mal_uid');
-
   return { isLoading, data, isError };
 };
 

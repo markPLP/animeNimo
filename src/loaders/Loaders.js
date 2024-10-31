@@ -19,6 +19,7 @@ const getPopularAnimeQuery = createQuery(
 export const heroBannerLoader = async (queryClient) => {
   try {
     const heroResponse = await queryClient.ensureQueryData(getHeroBannerQuery);
+    console.log(heroResponse);
 
     return filterItems(heroResponse.data.data, 10);
   } catch (error) {
@@ -37,5 +38,35 @@ export const popularAnimeLoader = async (queryClient) => {
   } catch (error) {
     console.error('Error fetching popular anime data:', error);
     throw new Response('Failed to load popular anime data', { status: 500 });
+  }
+};
+
+// searchAnimeLoader function
+export const searchAnimeLoader = async (queryClient, { request }) => {
+  // Get search term from URL on load/form submit
+  const url = new URL(request.url);
+  const searchTerm = url.searchParams.get('q') || '';
+  const page = url.searchParams.get('page') || '1';
+
+  const searchTermQuery = {
+    queryKey: ['searchItems', searchTerm, page],
+    queryFn: () =>
+      customFetch.get(`/anime?sfw=true&q=${searchTerm}&page=${page}`),
+  };
+
+  try {
+    const searchAnimeResponse = await queryClient.ensureQueryData(
+      searchTermQuery
+    );
+    const animeListResponse = searchAnimeResponse?.data?.data;
+    const paginationResponse = searchAnimeResponse?.data?.pagination;
+
+    console.log(searchAnimeResponse, 'searchAnimeResponse');
+    console.log(paginationResponse, 'paginationResponse');
+
+    return { animeListResponse, paginationResponse };
+  } catch (error) {
+    console.error('Error fetching searched anime:', error);
+    throw new Response('Failed to load searched anime', { status: 500 });
   }
 };

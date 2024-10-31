@@ -64,9 +64,10 @@ const router = createBrowserRouter([
         loader: WatchSingleLoader(queryClient),
       },
       {
-        path: '/search-results/',
+        path: '/search-results',
         element: <SearchResults />,
         loader: SearchResultsLoader(queryClient),
+        //loader: SearchResultsLoader,
       },
     ],
   },
