@@ -5,20 +5,25 @@ import {
   allGenresLoader,
   heroBannerLoader,
   popularAnimeLoader,
+  searchAnimeLoader,
 } from '../loaders/Loaders';
 
-export const loader = (queryClient) => async () => {
-  //   const heroBanner = await heroBannerLoader(queryClient);
-  // const popularAnime = await popularAnimeLoader(queryClient);
-  // Parallel Execution using Promise.all for better perfomance
-  const [heroBanner, popularAnime, allGenres] = await Promise.all([
-    heroBannerLoader(queryClient),
-    popularAnimeLoader(queryClient),
-    allGenresLoader(queryClient),
-  ]);
+export const loader =
+  (queryClient) =>
+  async ({ request }) => {
+    //   const heroBanner = await heroBannerLoader(queryClient);
+    // const popularAnime = await popularAnimeLoader(queryClient);
+    // Parallel Execution using Promise.all for better perfomance
+    const [heroBanner, popularAnime, allGenres, searchedAnime] =
+      await Promise.all([
+        heroBannerLoader(queryClient),
+        popularAnimeLoader(queryClient),
+        allGenresLoader(queryClient),
+        searchAnimeLoader(queryClient, { request }),
+      ]);
 
-  return { heroBanner, popularAnime, allGenres };
-};
+    return { heroBanner, popularAnime, allGenres, searchedAnime };
+  };
 
 const HomeLayout = () => {
   const navigation = useNavigation();

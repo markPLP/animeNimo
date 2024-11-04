@@ -64,9 +64,7 @@ export const useGetTypeSearchData = (input) => {
           `/anime?q=${query}&limit=5&order_by=popularity`
         );
 
-        // const suggestions = ;
         return response?.data?.data || [];
-        // return response.data;
       } catch (error) {
         console.error('Error fetching searched anime:', error);
         throw new Response('Failed to load searched anime', { status: 500 });

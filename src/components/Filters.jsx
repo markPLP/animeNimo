@@ -1,42 +1,44 @@
-import { Form, useLoaderData, useOutletContext } from 'react-router-dom';
+import { Form, useLoaderData, useNavigate } from 'react-router-dom';
 import FormSelect from './FormSelect';
 import {
   filterAnimeType,
   filterAnimeStatus,
   filterAnimeOrderBy,
-  filterRating,
-  generateAmountOptions,
 } from '../utils';
 
 import 'react-calendar/dist/Calendar.css';
 import YearPicker from './YearPicker';
-import { useState } from 'react';
 import FormCheckbox from './FormCheckbox';
 import FormRange from './FormRange';
 import FormInput from './FormInput';
 import { BsSearch } from 'react-icons/bs';
+import { useState } from 'react';
 
 const Filters = () => {
-  // to filter
-  // type - "tv" "movie" "ova" "special" "ona" "music" "cm" "pv" "tv_special"
-  // status - "airing" "complete" "upcoming"
-  // rating
-  // order_by - "mal_id" "title" "start_date" "end_date" "episodes" "score" "scored_by" "rank" "popularity" "members" "favorites"
-  // start_date
-  // genres
-  // score
-
-  // text input search
-  // button
-
-  // season
-  // producers
   const { allGenres } = useLoaderData();
-  // const [selectedChoices, setSelectedChoices] = useState([]);
+  const [selectedGenres, setSelectedGenres] = useState([]);
+  const navigate = useNavigate();
 
-  // const handleSelectionChange = (selected) => {
-  //   setSelectedChoices(selected);
-  //   console.log('Selected choices:', selected);
+  const handleSelectionChange = (genres) => {
+    setSelectedGenres(genres); // Update selected genres from FormCheckbox
+  };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const queryParams = new URLSearchParams();
+  //   console.log(selectedGenres);
+
+  //   // Add selected genres to URL params
+  //   if (selectedGenres.length > 0) {
+  //     const appendParams = queryParams.append(
+  //       'genres',
+  //       selectedGenres.join(',')
+  //     );
+  //     console.log(appendParams);
+  //   }
+
+  //   // Navigate to the new URL with updated params
+  //   navigate(`?${queryParams.toString()}`);
   // };
 
   return (
@@ -67,7 +69,12 @@ const Filters = () => {
           list={filterRating}
           size="min-h-10 h-10 capitalize"
         /> */}
-        <FormCheckbox options={allGenres} excludeIds={[12, 49, 50]} />
+        <FormCheckbox
+          name="genres"
+          options={allGenres}
+          excludeIds={[12, 49, 50]}
+          onSelectionChange={handleSelectionChange}
+        />
         <YearPicker name="start_date" label="Start date" />
         <YearPicker name="end_date" label="End date" />
         <FormRange

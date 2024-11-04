@@ -22,15 +22,8 @@ export const allGenresLoader = async (queryClient) => {
     const allGenresResponse = await queryClient.ensureQueryData(
       getAllGenresQuery
     );
-    // console.log(allGenresResponse, 'from allGenresResponse');
-    // const mal_id = allGenresResponse.data.data;
-    // const genraName = allGenresResponse.data.data.name;
 
-    // console.log(mal_id);
-
-    // return { mal_id, genraName };
     return allGenresResponse.data.data;
-    // return filterItems(allGenresResponse.data.data, 10);
   } catch (error) {
     console.error('Error fetching genres data:', error);
     throw new Response('Failed to load genres data', { status: 500 });
@@ -40,7 +33,6 @@ export const allGenresLoader = async (queryClient) => {
 export const heroBannerLoader = async (queryClient) => {
   try {
     const heroResponse = await queryClient.ensureQueryData(getHeroBannerQuery);
-    console.log(heroResponse);
 
     return filterItems(heroResponse.data.data, 10);
   } catch (error) {
@@ -63,27 +55,50 @@ export const popularAnimeLoader = async (queryClient) => {
 };
 
 // searchAnimeLoader function
+
 export const searchAnimeLoader = async (queryClient, { request }) => {
   // Get search term from URL on load/form submit
   const url = new URL(request.url);
   const searchTerm = url.searchParams.get('q') || '';
-  const page = url.searchParams.get('page') || '1';
+  // const page = url.searchParams.get('page') || '1';
 
-  const searchTermQuery = {
-    queryKey: ['searchItems', searchTerm, page],
-    queryFn: () =>
-      customFetch.get(`/anime?sfw=true&q=${searchTerm}&page=${page}`),
+  // const searchTermQuery = {
+  //   queryKey: ['searchItems', searchTerm, page],
+  //   queryFn: () =>
+  //     customFetch.get(`/anime?sfw=true&q=${searchTerm}&page=${page}`),
+  // };
+
+  const searchTermQuery = (queryParams) => {
+    const { type, status, order_by, score, search, page } = queryParams;
+    return {
+      queryKey: [
+        'filterAnime',
+        type ?? '',
+        status ?? '',
+        order_by ?? '',
+        score ?? '',
+        search ?? searchTerm,
+        page ?? 1,
+      ],
+      queryFn: () => {
+        return customFetch.get('/anime?sfw=true', { params: queryParams });
+      },
+    };
   };
+
+  const params = Object.fromEntries([
+    ...new URL(request.url).searchParams.entries(),
+  ]);
 
   try {
     const searchAnimeResponse = await queryClient.ensureQueryData(
-      searchTermQuery
+      searchTermQuery(params)
     );
+
     const animeListResponse = searchAnimeResponse?.data?.data;
     const paginationResponse = searchAnimeResponse?.data?.pagination;
-
-    console.log(searchAnimeResponse, 'searchAnimeResponse');
-    console.log(paginationResponse, 'paginationResponse');
+    // console.log(animeListResponse, 'animeListResponse');
+    // console.log(paginationResponse, 'paginationResponse');
 
     return { animeListResponse, paginationResponse };
   } catch (error) {
@@ -91,3 +106,41 @@ export const searchAnimeLoader = async (queryClient, { request }) => {
     throw new Response('Failed to load searched anime', { status: 500 });
   }
 };
+
+// // FILTER LOADER
+
+// const filterAnimeQuery = (queryParams) => {
+//   const { type, status, order_by, score, search } = queryParams;
+
+//   return {
+//     queryKey: [
+//       'filterAnime',
+//       type ?? '',
+//       status ?? '',
+//       order_by ?? '',
+//       score ?? '',
+//       search ?? '',
+//     ],
+//     queryFn: () => {
+//       return customFetch.get('/anime', { params: queryParams });
+//     },
+//   };
+// };
+
+// export const filterAnimeLoader = async (queryClient, { request }) => {
+//   try {
+//     const params = Object.fromEntries([
+//       ...new URL(request.url).searchParams.entries(),
+//     ]);
+
+//     const response = await queryClient.ensureQueryData(
+//       filterAnimeQuery(params)
+//     );
+//     console.log(response, 'from filterAnimeLoader');
+
+//     return null;
+//   } catch (error) {
+//     console.error('Error fetching filterAnimeLoader:', error);
+//     throw new Response('Failed to load filterAnimeLoader', { status: 500 });
+//   }
+// };

@@ -1,15 +1,21 @@
 import { useState } from 'react';
 
-const FormCheckbox = ({ options, excludeIds = [] }) => {
+const FormCheckbox = ({
+  name,
+  options,
+  excludeIds = [],
+  onSelectionChange,
+}) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [showGenres, setShowGenres] = useState(false);
 
-  const handleCheckboxChange = (option) => {
-    const newSelectedOptions = selectedOptions.includes(option)
-      ? selectedOptions.filter((item) => item !== option) // Unselect if already selected
-      : [...selectedOptions, option]; // Add to selection if not selected
+  const handleCheckboxChange = (mal_id) => {
+    const newSelectedOptions = selectedOptions.includes(mal_id)
+      ? selectedOptions.filter((item) => item !== mal_id) // Unselect if already selected
+      : [...selectedOptions, mal_id]; // Add to selection if not selected
 
     setSelectedOptions(newSelectedOptions);
+    onSelectionChange(newSelectedOptions); // Notify parent of selection change
   };
 
   // Filter out options with excluded mal_id values
@@ -48,7 +54,7 @@ const FormCheckbox = ({ options, excludeIds = [] }) => {
                   value={mal_id}
                   checked={selectedOptions.includes(mal_id)}
                   onChange={() => handleCheckboxChange(mal_id)}
-                  name="genres"
+                  name={name}
                 />
                 <span>{name}</span>
               </label>
