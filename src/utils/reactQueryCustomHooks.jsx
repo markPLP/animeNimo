@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { customFetch } from './index';
 import { useEffect, useState } from 'react';
+import { customFetch } from '.';
 
 // Debounce hook
 const useDebounce = (value, delay = 500) => {
@@ -39,22 +39,6 @@ const useCustomFetch = (queryKey, endpoint, options = {}) => {
 
   return { isLoading, data: data || [], isError };
 };
-
-// fetch banner
-// export const useHeroBannerFetchQuery = () => {
-//   return useCustomFetch('heroBanner', 'top/anime', {
-//     filter: true,
-//     limit: 10,
-//   });
-// };
-
-// fetch popular anime
-// export const usePopularAnimeQuery = () => {
-//   return useCustomFetch('popularAnime', '/watch/episodes/popular', {
-//     filter: true,
-//     limit: 15,
-//   });
-// };
 
 export const useGetFullAnimeQuery = (mal_id) => {
   const { isLoading, data, isError } = useQuery({

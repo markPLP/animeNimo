@@ -15,6 +15,27 @@ const getPopularAnimeQuery = createQuery(
   ['popularAnime'],
   '/watch/episodes/popular'
 );
+const getAllGenresQuery = createQuery(['AllGenres'], '/genres/anime');
+
+export const allGenresLoader = async (queryClient) => {
+  try {
+    const allGenresResponse = await queryClient.ensureQueryData(
+      getAllGenresQuery
+    );
+    // console.log(allGenresResponse, 'from allGenresResponse');
+    // const mal_id = allGenresResponse.data.data;
+    // const genraName = allGenresResponse.data.data.name;
+
+    // console.log(mal_id);
+
+    // return { mal_id, genraName };
+    return allGenresResponse.data.data;
+    // return filterItems(allGenresResponse.data.data, 10);
+  } catch (error) {
+    console.error('Error fetching genres data:', error);
+    throw new Response('Failed to load genres data', { status: 500 });
+  }
+};
 
 export const heroBannerLoader = async (queryClient) => {
   try {

@@ -7,9 +7,10 @@ const FormInput = ({
   placeholder,
   extendClass,
   onChange,
+  parentClass,
 }) => {
   return (
-    <div className="form-control">
+    <div className={`form-control ${parentClass}`}>
       {label && (
         <label htmlFor={name} className="label">
           <span className="label-text capitalize">{label}</span>

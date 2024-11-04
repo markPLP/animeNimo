@@ -1,24 +1,28 @@
 import { Outlet, useLoaderData, useNavigation } from 'react-router-dom';
 import Header from '../components/Header';
-import { Loading, Navbar } from '../components';
-import { heroBannerLoader, popularAnimeLoader } from '../loaders/Loaders';
+import { Filters, Loading, Navbar } from '../components';
+import {
+  allGenresLoader,
+  heroBannerLoader,
+  popularAnimeLoader,
+} from '../loaders/Loaders';
 
 export const loader = (queryClient) => async () => {
   //   const heroBanner = await heroBannerLoader(queryClient);
   // const popularAnime = await popularAnimeLoader(queryClient);
   // Parallel Execution using Promise.all for better perfomance
-
-  const [heroBanner, popularAnime] = await Promise.all([
+  const [heroBanner, popularAnime, allGenres] = await Promise.all([
     heroBannerLoader(queryClient),
     popularAnimeLoader(queryClient),
+    allGenresLoader(queryClient),
   ]);
 
-  return { heroBanner, popularAnime };
+  return { heroBanner, popularAnime, allGenres };
 };
 
 const HomeLayout = () => {
   const navigation = useNavigation();
-  // grab useLoaderData and pass as prop
+  // grab loaderData/useLoaderData and pass as prop
   const loaderData = useLoaderData();
 
   // Rest of HomeLayout component...
@@ -44,7 +48,7 @@ const HomeLayout = () => {
               <Outlet context={loaderData} />
             </section>
             <aside className="lg:w-[380px]">
-              sidebarsidebarsidebarsidebarsidebar
+              <Filters />
             </aside>
           </section>
         </main>

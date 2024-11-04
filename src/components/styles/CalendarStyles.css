@@ -1,0 +1,21 @@
+.react-calendar__navigation__arrow {
+  @apply bg-blue-100 text-secondary rounded p-2 hover:bg-blue-600 transition text-[21px];
+}
+
+.react-calendar__tile,
+.react-calendar__navigation__label {
+  @apply bg-white text-gray-700 border border-gray-300 hover:bg-blue-100 rounded-lg p-2 transition;
+}
+
+.react-calendar__tile--active {
+  @apply bg-blue-500 text-white font-semibold;
+}
+
+.react-calendar__tile--now {
+  @apply bg-blue-100 text-blue-800 font-semibold;
+}
+
+.react-calendar__decade-view .react-calendar__tile,
+.react-calendar__year-view .react-calendar__tile {
+  @apply bg-white text-gray-700 hover:bg-blue-100 rounded-lg p-3 transition;
+}

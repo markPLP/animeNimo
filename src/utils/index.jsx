@@ -42,3 +42,37 @@ export const themes = [
   'nord',
   'sunset',
 ];
+
+export const filterAnimeType = [
+  'tv',
+  'movie',
+  'ova',
+  'special',
+  'ona',
+  'music',
+  'cm',
+  'pv',
+  'tv_special',
+];
+
+export const filterAnimeStatus = ['airing', 'complete', 'upcoming'];
+export const filterAnimeOrderBy = [
+  'title',
+  'episodes',
+  'score',
+  'rank',
+  'popularity',
+];
+
+export const filterRating = ['g', 'pg', 'pg13', 'r17', 'r'];
+
+export const generateAmountOptions = (number) => {
+  return Array.from({ length: number }, (_, index) => {
+    const amount = index + 1;
+    return (
+      <option key={amount} value={amount}>
+        {amount}
+      </option>
+    );
+  });
+};

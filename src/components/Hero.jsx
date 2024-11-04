@@ -30,7 +30,6 @@ const Hero = ({ data }) => {
         {data.map((item) => {
           const image = item.images?.webp?.image_url;
           const { synopsis, title_english, title, genres, status, year } = item;
-          console.log(item);
 
           return (
             <div key={item.mal_id}>
