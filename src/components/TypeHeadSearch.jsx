@@ -33,8 +33,6 @@ const TypeHeadSearch = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     navigate(`/search-results/?q=${encodeURIComponent(query)}`);
-    // redirect(`/search-results/?q=${encodeURIComponent(query)}`);
-    console.log(query);
   };
   return (
     <div className="relative">

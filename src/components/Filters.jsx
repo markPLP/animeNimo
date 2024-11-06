@@ -12,91 +12,139 @@ import FormCheckbox from './FormCheckbox';
 import FormRange from './FormRange';
 import FormInput from './FormInput';
 import { BsSearch } from 'react-icons/bs';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  setSearchQuery,
+  setSelectedGenres,
+  setSelectedYearStart,
+  setType,
+  setStatus,
+  setOrderBy,
+  setScore,
+  setFilters,
+} from '../features/Filter/FilterSlice';
 
 const Filters = () => {
   const { allGenres } = useLoaderData();
-  const [selectedGenres, setSelectedGenres] = useState([]);
   const navigate = useNavigate();
+  //const { search } = useLocation();
+  // const searchParams = new URLSearchParams(search);
+
+  const dispatch = useDispatch();
+
+  // const selectedGenres = useSelector(
+  //   (state) => state.filtersState.selectedGenres
+  // );
+  // const selectedYearStart = useSelector(
+  //   (state) => state.filtersState.selectedYearStart
+  // );
+  // const searchQuery = useSelector((state) => state.filtersState.searchQuery);
+  // const type = useSelector((state) => state.filtersState.type);
+  // const status = useSelector((state) => state.filtersState.status);
+  // const orderBy = useSelector((state) => state.filtersState.orderBy);
+  // const score = useSelector((state) => state.filtersState.score);
+
+  const {
+    selectedGenres,
+    selectedYearStart,
+    searchQuery,
+    type,
+    status,
+    orderBy,
+    score,
+  } = useSelector((state) => state.filtersState);
 
   const handleSelectionChange = (genres) => {
-    setSelectedGenres(genres); // Update selected genres from FormCheckbox
+    dispatch(setSelectedGenres(genres));
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const queryParams = new URLSearchParams();
-  //   console.log(selectedGenres);
+  const startYearSelected = (year) => {
+    dispatch(setSelectedYearStart(year));
+  };
 
-  //   // Add selected genres to URL params
-  //   if (selectedGenres.length > 0) {
-  //     const appendParams = queryParams.append(
-  //       'genres',
-  //       selectedGenres.join(',')
-  //     );
-  //     console.log(appendParams);
-  //   }
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-  //   // Navigate to the new URL with updated params
-  //   navigate(`?${queryParams.toString()}`);
-  // };
+    const formData = new FormData(event.target);
+    const queryParams = new URLSearchParams();
+
+    // Populate query parameters from form data
+    formData.forEach((value, key) => {
+      if (value) queryParams.append(key, value);
+    });
+
+    if (selectedGenres.length)
+      queryParams.set('genres', selectedGenres.join(','));
+    if (selectedYearStart) queryParams.set('start_date', selectedYearStart);
+
+    dispatch(setFilters(queryParams.toString()));
+    navigate(`/search-results?sfw=true&${queryParams.toString()}`);
+  };
 
   return (
-    <Form className="relative bg-base-300 rounded-lg">
+    <Form className="relative bg-base-300 rounded-lg" onSubmit={handleSubmit}>
       <h3 className="text-3xl p-4 pb-0">Quick filter</h3>
-      <div className="form-control grid grid-cols-2 gap-2  p-4">
+      <div className="form-control grid grid-cols-2 gap-3 p-4">
+        <FormInput
+          type="search"
+          placeholder="Search Anime..."
+          name="search"
+          size="min-h-10 h-10"
+          parentClass="col-span-2"
+          value={searchQuery}
+          onChange={(e) => dispatch(setSearchQuery(e.target.value))}
+        />
         <FormSelect
           optionLabel="Type"
           name="type"
           list={filterAnimeType}
           size="min-h-10 h-10 capitalize"
+          value={type}
+          onChange={(e) => dispatch(setType(e.target.value))}
         />
         <FormSelect
           optionLabel="Status"
           name="status"
           list={filterAnimeStatus}
           size="min-h-10 h-10 capitalize"
+          value={status}
+          onChange={(e) => dispatch(setStatus(e.target.value))}
         />
         <FormSelect
           optionLabel="Order by"
           name="order_by"
           list={filterAnimeOrderBy}
           size="min-h-10 h-10 capitalize"
+          value={orderBy}
+          onChange={(e) => dispatch(setOrderBy(e.target.value))}
         />
-        {/* <FormSelect
-          optionLabel="Rating"
-          name="rating"
-          list={filterRating}
-          size="min-h-10 h-10 capitalize"
-        /> */}
         <FormCheckbox
           name="genres"
           options={allGenres}
           excludeIds={[12, 49, 50]}
           onSelectionChange={handleSelectionChange}
+          selectedOptions={selectedGenres}
         />
-        <YearPicker name="start_date" label="Start date" />
-        <YearPicker name="end_date" label="End date" />
+        <YearPicker
+          name="start_date"
+          label="Start date"
+          onYearSelected={startYearSelected}
+          value={selectedYearStart}
+        />
         <FormRange
           label="The score must be between 1 and 9.99."
           size="h-5 capitalize"
           name="score"
           parentClass="col-span-2"
-        />
-        <FormInput
-          type="search"
-          placeholder="Search Anime..."
-          // IMPORTANT name should match whats on the backend
-          name="search"
-          size="min-h-10 h-10"
-          parentClass="col-span-2"
+          value={score}
+          onChange={(e) => dispatch(setScore(e.target.value))}
         />
       </div>
       <button
         type="submit"
-        className="btn btn-primary btn-sm col-span-2 w-full min-h-12 rounded-t-none"
+        className="btn btn-primary btn-sm col-span-2 w-full min-h-12 rounded-t-none mt-2"
       >
-        search <BsSearch />
+        Search <BsSearch />
       </button>
     </Form>
   );

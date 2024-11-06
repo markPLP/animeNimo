@@ -1,4 +1,4 @@
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useLocation } from 'react-router-dom';
 import { GridSearchResults, Pagination } from '../components';
 import { searchAnimeLoader } from '../loaders/Loaders';
 export const loader =
@@ -12,23 +12,14 @@ export const loader =
     return { animeList: animeListResponse, pagination: paginationResponse };
   };
 
-// export const loader = async ({ request }) => {
-//   const params = Object.fromEntries([
-//     ...new URL(request.url).searchParams.entries(),
-//   ]);
-//   console.log(url, 'urlparams');
-
-//   const response = await customFetch.get(url, { params });
-
-//   console.log(params, 'params');
-//   console.log(response, 'response');
-
-//   return response;
-// };
-
-const SearchResults = () => {
+const SearchResults = ({ searchParams }) => {
   const { animeList, pagination } = useLoaderData();
 
+  console.log(animeList, 'animeList');
+
+  if (animeList.length === 0) {
+    return <div>No matches found...</div>;
+  }
   return (
     <>
       <GridSearchResults data={animeList} />

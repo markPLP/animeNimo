@@ -60,45 +60,40 @@ export const searchAnimeLoader = async (queryClient, { request }) => {
   // Get search term from URL on load/form submit
   const url = new URL(request.url);
   const searchTerm = url.searchParams.get('q') || '';
-  // const page = url.searchParams.get('page') || '1';
-
-  // const searchTermQuery = {
-  //   queryKey: ['searchItems', searchTerm, page],
-  //   queryFn: () =>
-  //     customFetch.get(`/anime?sfw=true&q=${searchTerm}&page=${page}`),
-  // };
 
   const searchTermQuery = (queryParams) => {
-    const { type, status, order_by, score, search, page } = queryParams;
+    const { type, status, order_by, score, search, page, genres, start_date } =
+      queryParams;
     return {
       queryKey: [
         'filterAnime',
+        search ?? searchTerm,
         type ?? '',
         status ?? '',
         order_by ?? '',
         score ?? '',
-        search ?? searchTerm,
+        genres ?? '',
+        start_date ?? '',
         page ?? 1,
       ],
       queryFn: () => {
         return customFetch.get('/anime?sfw=true', { params: queryParams });
       },
+      enable: Boolean(searchTerm), // Only run query if searchTerm has a value
     };
   };
 
   const params = Object.fromEntries([
     ...new URL(request.url).searchParams.entries(),
   ]);
+  console.log(params, 'params params');
 
   try {
     const searchAnimeResponse = await queryClient.ensureQueryData(
       searchTermQuery(params)
     );
-
     const animeListResponse = searchAnimeResponse?.data?.data;
     const paginationResponse = searchAnimeResponse?.data?.pagination;
-    // console.log(animeListResponse, 'animeListResponse');
-    // console.log(paginationResponse, 'paginationResponse');
 
     return { animeListResponse, paginationResponse };
   } catch (error) {
@@ -106,26 +101,6 @@ export const searchAnimeLoader = async (queryClient, { request }) => {
     throw new Response('Failed to load searched anime', { status: 500 });
   }
 };
-
-// // FILTER LOADER
-
-// const filterAnimeQuery = (queryParams) => {
-//   const { type, status, order_by, score, search } = queryParams;
-
-//   return {
-//     queryKey: [
-//       'filterAnime',
-//       type ?? '',
-//       status ?? '',
-//       order_by ?? '',
-//       score ?? '',
-//       search ?? '',
-//     ],
-//     queryFn: () => {
-//       return customFetch.get('/anime', { params: queryParams });
-//     },
-//   };
-// };
 
 // export const filterAnimeLoader = async (queryClient, { request }) => {
 //   try {
