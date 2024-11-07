@@ -2,12 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   selectedGenres: [],
-  selectedYearStart: '',
-  searchQuery: '',
-  type: '',
-  status: '',
   orderBy: '',
   score: '',
+  searchQuery: '',
+  selectedYearStart: '',
+  status: '',
+  type: '',
 };
 
 const getFilterFromLocalStorage = () => {
@@ -21,18 +21,23 @@ const filtersSlice = createSlice({
     setFilters(state, action) {
       console.log(state, 'setFilter STATE');
       console.log(action, 'setFilter ACTION');
-      const queryString = action.payload;
-      const params = new URLSearchParams(queryString);
-      let paramsObject = Object.fromEntries(params.entries());
-      if (paramsObject.genres) {
-        paramsObject.genres = paramsObject.genres.split(',');
-      }
 
-      localStorage.setItem('filters', JSON.stringify(paramsObject));
+      const { filteredData } = action.payload;
+      console.log(filteredData, 'filteredDatafilteredDatafilteredData');
 
-      console.log(paramsObject, 'queryParams = action.payload');
+      const { genres, order_by, score, search, start_date, status, type } =
+        filteredData;
 
-      return { ...state, ...paramsObject };
+      state.selectedGenres = genres || [];
+      state.orderBy = order_by || '';
+      state.score = score || 9;
+      state.searchQuery = search || '';
+      state.selectedYearStart = start_date || '';
+      state.status = status || '';
+      state.type = type || '';
+
+      localStorage.setItem('filters', JSON.stringify(state));
+      console.log('Updated State:', JSON.parse(JSON.stringify(state)));
     },
     setSearchQuery(state, action) {
       state.searchQuery = action.payload;

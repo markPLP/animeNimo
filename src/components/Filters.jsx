@@ -27,22 +27,7 @@ import {
 const Filters = () => {
   const { allGenres } = useLoaderData();
   const navigate = useNavigate();
-  //const { search } = useLocation();
-  // const searchParams = new URLSearchParams(search);
-
   const dispatch = useDispatch();
-
-  // const selectedGenres = useSelector(
-  //   (state) => state.filtersState.selectedGenres
-  // );
-  // const selectedYearStart = useSelector(
-  //   (state) => state.filtersState.selectedYearStart
-  // );
-  // const searchQuery = useSelector((state) => state.filtersState.searchQuery);
-  // const type = useSelector((state) => state.filtersState.type);
-  // const status = useSelector((state) => state.filtersState.status);
-  // const orderBy = useSelector((state) => state.filtersState.orderBy);
-  // const score = useSelector((state) => state.filtersState.score);
 
   const {
     selectedGenres,
@@ -53,6 +38,7 @@ const Filters = () => {
     orderBy,
     score,
   } = useSelector((state) => state.filtersState);
+  console.log(selectedGenres, 'from state selectedGenres');
 
   const handleSelectionChange = (genres) => {
     dispatch(setSelectedGenres(genres));
@@ -64,20 +50,29 @@ const Filters = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     const formData = new FormData(event.target);
     const queryParams = new URLSearchParams();
-
     // Populate query parameters from form data
     formData.forEach((value, key) => {
       if (value) queryParams.append(key, value);
     });
 
-    if (selectedGenres.length)
+    if (selectedGenres || selectedGenres.length)
       queryParams.set('genres', selectedGenres.join(','));
     if (selectedYearStart) queryParams.set('start_date', selectedYearStart);
 
-    dispatch(setFilters(queryParams.toString()));
+    let queryParamsPayload = Object.fromEntries([
+      ...new URLSearchParams(queryParams.toString()).entries(),
+    ]);
+
+    if (queryParamsPayload.genres) {
+      queryParamsPayload.genres = queryParamsPayload.genres.split(',');
+    }
+
+    console.log(queryParamsPayload, 'should be object queryParamsPayload');
+
+    dispatch(setFilters({ filteredData: queryParamsPayload }));
+
     navigate(`/search-results?sfw=true&${queryParams.toString()}`);
   };
 
@@ -91,7 +86,8 @@ const Filters = () => {
           name="search"
           size="min-h-10 h-10"
           parentClass="col-span-2"
-          value={searchQuery}
+          //  value={searchQuery}
+          defaultValue={searchQuery}
           onChange={(e) => dispatch(setSearchQuery(e.target.value))}
         />
         <FormSelect
@@ -99,7 +95,8 @@ const Filters = () => {
           name="type"
           list={filterAnimeType}
           size="min-h-10 h-10 capitalize"
-          value={type}
+          //value={type}
+          defaultValue={type}
           onChange={(e) => dispatch(setType(e.target.value))}
         />
         <FormSelect
@@ -107,7 +104,8 @@ const Filters = () => {
           name="status"
           list={filterAnimeStatus}
           size="min-h-10 h-10 capitalize"
-          value={status}
+          defaultValue={status}
+          //value={status}
           onChange={(e) => dispatch(setStatus(e.target.value))}
         />
         <FormSelect
@@ -115,7 +113,8 @@ const Filters = () => {
           name="order_by"
           list={filterAnimeOrderBy}
           size="min-h-10 h-10 capitalize"
-          value={orderBy}
+          //value={orderBy}
+          defaultValue={orderBy}
           onChange={(e) => dispatch(setOrderBy(e.target.value))}
         />
         <FormCheckbox
@@ -124,6 +123,7 @@ const Filters = () => {
           excludeIds={[12, 49, 50]}
           onSelectionChange={handleSelectionChange}
           selectedOptions={selectedGenres}
+          // defaultValue={selectedGenres}
         />
         <YearPicker
           name="start_date"
@@ -136,7 +136,7 @@ const Filters = () => {
           size="h-5 capitalize"
           name="score"
           parentClass="col-span-2"
-          value={score}
+          defaultValue={score}
           onChange={(e) => dispatch(setScore(e.target.value))}
         />
       </div>

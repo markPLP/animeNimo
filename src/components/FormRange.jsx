@@ -1,8 +1,8 @@
 import { useState } from 'react';
-const FormRange = ({ label, size, name, parentClass }) => {
+const FormRange = ({ label, size, name, parentClass, defaultValue }) => {
   const step = 0.01;
   const maxNumber = 9.99;
-  const [selectedNumber, setSelectedNumber] = useState(maxNumber);
+  const [selectedNumber, setSelectedNumber] = useState(defaultValue);
 
   return (
     <div className={`form-control ${parentClass}`}>
@@ -16,6 +16,7 @@ const FormRange = ({ label, size, name, parentClass }) => {
         min={0}
         max={maxNumber}
         value={selectedNumber}
+        defaultValue={defaultValue}
         onChange={(e) => setSelectedNumber(e.target.value)}
         className={`range range-primary ${size}`}
         step={step}

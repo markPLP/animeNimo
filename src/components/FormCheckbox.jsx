@@ -1,39 +1,82 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const FormCheckbox = ({
   name,
   options,
   excludeIds = [],
   onSelectionChange,
+  selectedOptions = [], // Expected to come from Redux and update on change
 }) => {
-  const [selectedOptions, setSelectedOptions] = useState([]);
+  console.log(
+    selectedOptions,
+    'Expected to come from Redux and update on change'
+  );
+
   const [showGenres, setShowGenres] = useState(false);
+  const [selectedValues, setSelectedValues] = useState(selectedOptions);
+  // Sync Redux state with UI
+  useEffect(() => {
+    // console.log('Selected Options from Redux:', selectedOptions);
+    // setSelectedValues(selectedOptions);
+  }, [showGenres]);
 
   const handleCheckboxChange = (mal_id) => {
     const newSelectedOptions = selectedOptions.includes(mal_id)
-      ? selectedOptions.filter((item) => item !== mal_id) // Unselect if already selected
-      : [...selectedOptions, mal_id]; // Add to selection if not selected
+      ? selectedOptions.filter((item) => item !== mal_id)
+      : [...selectedOptions, mal_id];
 
-    setSelectedOptions(newSelectedOptions);
-    onSelectionChange(newSelectedOptions); // Notify parent of selection change
+    setSelectedValues(newSelectedOptions);
+    onSelectionChange(newSelectedOptions); // Update Redux state
   };
 
-  // Filter out options with excluded mal_id values
   const filteredOptions = options.filter(
     (option) => !excludeIds.includes(option.mal_id)
   );
+
   return (
     <div>
       <div
         className="select select-bordered min-h-10 h-10 capitalize flex items-center"
-        onClick={() => setShowGenres(!showGenres)} // Toggle dropdown on header click
+        onClick={() => setShowGenres(!showGenres)}
       >
         Genre
       </div>
-      {showGenres && (
+      <div
+        className={`p-4 grid grid-cols-2 gap-2 absolute top-0 left-0 bg-neutral w-full z-10 ${
+          showGenres === false && 'hidden'
+        }`}
+        onMouseLeave={() => setShowGenres(false)}
+      >
+        <button
+          className="absolute right-[10px] top-[10px] lg:hidden"
+          onClick={() => setShowGenres(false)}
+        >
+          x
+        </button>
+        {filteredOptions.map((option) => {
+          const { mal_id, name } = option;
+          return (
+            <label
+              key={mal_id}
+              className="flex items-center space-x-2 text-[15px] break-all"
+            >
+              <input
+                type="checkbox"
+                className="checkbox checkbox-xs"
+                value={mal_id}
+                checked={selectedOptions.includes(mal_id)} // Verify this is correctly set
+                onChange={() => handleCheckboxChange(mal_id)}
+                name={name}
+              />
+              <span>{name}</span>
+            </label>
+          );
+        })}
+      </div>
+      {/* {showGenres && (
         <div
           className="p-4 grid grid-cols-2 gap-2 absolute top-0 left-0 bg-neutral w-full z-10"
-          onMouseLeave={() => setShowGenres(false)} // Close when mouse leaves the whole dropdown
+          onMouseLeave={() => setShowGenres(false)}
         >
           <button
             className="absolute right-[10px] top-[10px] lg:hidden"
@@ -52,7 +95,7 @@ const FormCheckbox = ({
                   type="checkbox"
                   className="checkbox checkbox-xs"
                   value={mal_id}
-                  checked={selectedOptions.includes(mal_id)}
+                  checked={selectedOptions.includes(mal_id)} // Verify this is correctly set
                   onChange={() => handleCheckboxChange(mal_id)}
                   name={name}
                 />
@@ -61,7 +104,7 @@ const FormCheckbox = ({
             );
           })}
         </div>
-      )}
+      )} */}
     </div>
   );
 };
