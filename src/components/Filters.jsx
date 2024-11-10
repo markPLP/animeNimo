@@ -38,14 +38,16 @@ const Filters = () => {
     orderBy,
     score,
   } = useSelector((state) => state.filtersState);
-  console.log(selectedGenres, 'from state selectedGenres');
+
+  console.log(typeof score, 'typeof score');
+  console.log(score, 'from state score');
 
   const handleSelectionChange = (genres) => {
     dispatch(setSelectedGenres(genres));
   };
 
-  const startYearSelected = (year) => {
-    dispatch(setSelectedYearStart(year));
+  const startYearSelected = (date) => {
+    dispatch(setSelectedYearStart(date));
   };
 
   const handleSubmit = (event) => {
@@ -129,14 +131,15 @@ const Filters = () => {
           name="start_date"
           label="Start date"
           onYearSelected={startYearSelected}
-          value={selectedYearStart}
+          selectedYearStart={selectedYearStart}
         />
         <FormRange
           label="The score must be between 1 and 9.99."
-          size="h-5 capitalize"
+          size="h-5"
           name="score"
           parentClass="col-span-2"
-          defaultValue={score}
+          // defaultValue={score}
+          score={score}
           onChange={(e) => dispatch(setScore(e.target.value))}
         />
       </div>

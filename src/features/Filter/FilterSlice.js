@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   selectedGenres: [],
@@ -15,13 +15,10 @@ const getFilterFromLocalStorage = () => {
 };
 
 const filtersSlice = createSlice({
-  name: 'filter',
+  name: 'filters',
   initialState: getFilterFromLocalStorage(),
   reducers: {
     setFilters(state, action) {
-      console.log(state, 'setFilter STATE');
-      console.log(action, 'setFilter ACTION');
-
       const { filteredData } = action.payload;
       console.log(filteredData, 'filteredDatafilteredDatafilteredData');
 
@@ -30,7 +27,7 @@ const filtersSlice = createSlice({
 
       state.selectedGenres = genres || [];
       state.orderBy = order_by || '';
-      state.score = score || 9;
+      state.score = score || '';
       state.searchQuery = search || '';
       state.selectedYearStart = start_date || '';
       state.status = status || '';
@@ -75,3 +72,12 @@ export const {
 } = filtersSlice.actions;
 
 export default filtersSlice.reducer;
+
+// // Selector to check if any state is populated
+// export const isAnyStatePopulated = createSelector(
+//   (state) => state.filtersState || {},
+//   (filtersState) =>
+//     Object.values(filtersState).some(
+//       (value) => (Array.isArray(value) ? value.length > 0 : Boolean(value)) // ensures that non-empty strings, numbers, or truthy values are counted as "populated."
+//     )
+// );

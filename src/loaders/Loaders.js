@@ -71,7 +71,7 @@ export const searchAnimeLoader = async (queryClient, { request }) => {
         type ?? '',
         status ?? '',
         order_by ?? '',
-        score ?? '',
+        score ?? 9.99,
         genres ?? '',
         start_date ?? '',
         page ?? 1,
