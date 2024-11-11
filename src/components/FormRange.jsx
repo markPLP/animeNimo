@@ -2,7 +2,7 @@ import { useState } from 'react';
 const FormRange = ({ label, size, name, parentClass, defaultValue, score }) => {
   const step = 0.01;
   const maxNumber = 9.99;
-  const [selectedNumber, setSelectedNumber] = useState(score || maxNumber);
+  const [selectedNumber, setSelectedNumber] = useState(score || '');
 
   const handleChange = (e) => {
     e.target.value;

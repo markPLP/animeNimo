@@ -53,6 +53,24 @@ export const useGetFullAnimeQuery = (mal_id) => {
   return { isLoading, data, isError };
 };
 
+export const useGetAllAnimeGenres = () => {
+  const { isLoading, data, isError } = useQuery({
+    queryKey: ['getAllGenres'],
+    queryFn: async () => {
+      try {
+        const response = await customFetch.get('/genres/anime');
+
+        return response.data.data;
+      } catch (error) {
+        console.error('Error fetching genres data:', error);
+        throw new Response('Failed to load genres data', { status: 500 });
+      }
+    },
+  });
+
+  return { isLoading, allGenreData: data, isError };
+};
+
 export const useGetTypeSearchData = (input) => {
   const query = useDebounce(input, 500); // Debounced query to avoild frequent request, 500ms
 

@@ -1,4 +1,5 @@
-import { Form, useLoaderData, useNavigate } from 'react-router-dom';
+import { Form, Link, useLoaderData, useNavigate } from 'react-router-dom';
+import { AiOutlineReload } from 'react-icons/ai';
 import FormSelect from './FormSelect';
 import {
   filterAnimeType,
@@ -16,19 +17,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   setSearchQuery,
   setSelectedGenres,
-  setSelectedYearStart,
+  // setSelectedYearStart,
   setType,
   setStatus,
   setOrderBy,
   setScore,
   setFilters,
+  setFilterReset,
 } from '../features/Filter/FilterSlice';
+import { useGlobalContext } from '../context';
 
-const Filters = () => {
-  const { allGenres } = useLoaderData();
+const Filters = ({ resetLink, allGenres }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const { allGenreData } = useGlobalContext();
   const {
     selectedGenres,
     selectedYearStart,
@@ -39,16 +41,17 @@ const Filters = () => {
     score,
   } = useSelector((state) => state.filtersState);
 
-  console.log(typeof score, 'typeof score');
-  console.log(score, 'from state score');
-
   const handleSelectionChange = (genres) => {
     dispatch(setSelectedGenres(genres));
   };
 
-  const startYearSelected = (date) => {
-    dispatch(setSelectedYearStart(date));
+  const handleReset = () => {
+    dispatch(setFilterReset());
   };
+
+  // const startYearSelected = (date) => {
+  //   dispatch(setSelectedYearStart(date));
+  // };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -70,8 +73,6 @@ const Filters = () => {
     if (queryParamsPayload.genres) {
       queryParamsPayload.genres = queryParamsPayload.genres.split(',');
     }
-
-    console.log(queryParamsPayload, 'should be object queryParamsPayload');
 
     dispatch(setFilters({ filteredData: queryParamsPayload }));
 
@@ -121,18 +122,18 @@ const Filters = () => {
         />
         <FormCheckbox
           name="genres"
-          options={allGenres}
+          options={allGenreData}
           excludeIds={[12, 49, 50]}
           onSelectionChange={handleSelectionChange}
           selectedOptions={selectedGenres}
           // defaultValue={selectedGenres}
         />
-        <YearPicker
+        {/* <YearPicker
           name="start_date"
           label="Start date"
           onYearSelected={startYearSelected}
           selectedYearStart={selectedYearStart}
-        />
+        /> */}
         <FormRange
           label="The score must be between 1 and 9.99."
           size="h-5"
@@ -143,12 +144,19 @@ const Filters = () => {
           onChange={(e) => dispatch(setScore(e.target.value))}
         />
       </div>
-      <button
-        type="submit"
-        className="btn btn-primary btn-sm col-span-2 w-full min-h-12 rounded-t-none mt-2"
-      >
-        Search <BsSearch />
-      </button>
+      <div className="form-control grid grid-cols-2 p-4 pt-0 gap-3">
+        <button type="submit" className="btn btn-primary btn-sm min-h-12 mt-2">
+          Search <BsSearch />
+        </button>
+        <Link
+          to={resetLink}
+          onClick={handleReset}
+          className="btn btn-secondary btn-sm min-h-12 mt-2"
+        >
+          Reset
+          <AiOutlineReload />
+        </Link>
+      </div>
     </Form>
   );
 };

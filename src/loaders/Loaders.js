@@ -15,20 +15,20 @@ const getPopularAnimeQuery = createQuery(
   ['popularAnime'],
   '/watch/episodes/popular'
 );
-const getAllGenresQuery = createQuery(['AllGenres'], '/genres/anime');
+// const getAllGenresQuery = createQuery(['AllGenres'], '/genres/anime');
 
-export const allGenresLoader = async (queryClient) => {
-  try {
-    const allGenresResponse = await queryClient.ensureQueryData(
-      getAllGenresQuery
-    );
+// export const allGenresLoader = async (queryClient) => {
+//   try {
+//     const allGenresResponse = await queryClient.ensureQueryData(
+//       getAllGenresQuery
+//     );
 
-    return allGenresResponse.data.data;
-  } catch (error) {
-    console.error('Error fetching genres data:', error);
-    throw new Response('Failed to load genres data', { status: 500 });
-  }
-};
+//     return allGenresResponse.data.data;
+//   } catch (error) {
+//     console.error('Error fetching genres data:', error);
+//     throw new Response('Failed to load genres data', { status: 500 });
+//   }
+// };
 
 export const heroBannerLoader = async (queryClient) => {
   try {

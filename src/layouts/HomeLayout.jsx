@@ -2,30 +2,30 @@ import { Outlet, useLoaderData, useNavigation } from 'react-router-dom';
 import Header from '../components/Header';
 import { Filters, Loading, Navbar } from '../components';
 import {
-  allGenresLoader,
+  //allGenresLoader,
   heroBannerLoader,
   popularAnimeLoader,
-  //  searchAnimeLoader,
 } from '../loaders/Loaders';
+import { useGlobalContext } from '../context';
 
 export const loader = (queryClient) => async () => {
-  //   const heroBanner = await heroBannerLoader(queryClient);
-  // const popularAnime = await popularAnimeLoader(queryClient);
   // Parallel Execution using Promise.all for better perfomance
-  const [heroBanner, popularAnime, allGenres] = await Promise.all([
+  // allGenres
+  const [heroBanner, popularAnime] = await Promise.all([
     heroBannerLoader(queryClient),
     popularAnimeLoader(queryClient),
-    allGenresLoader(queryClient),
-    // searchAnimeLoader(queryClient, { request }),
+    // allGenresLoader(queryClient),
   ]);
 
-  return { heroBanner, popularAnime, allGenres };
+  return { heroBanner, popularAnime }; //allGenres
 };
 
 const HomeLayout = () => {
   const navigation = useNavigation();
   // grab loaderData/useLoaderData and pass as prop
   const loaderData = useLoaderData();
+  const { allGenresData } = useGlobalContext();
+  // const { allGenres } = useLoaderData();
   const isPageLoading = navigation.state === 'loading';
   return (
     <>
@@ -41,7 +41,7 @@ const HomeLayout = () => {
               <Outlet context={loaderData} />
             </section>
             <aside className="lg:w-[380px]">
-              <Filters />
+              <Filters resetLink="/" allGenres={allGenresData} />
             </aside>
           </section>
         </main>

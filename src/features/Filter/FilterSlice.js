@@ -34,7 +34,10 @@ const filtersSlice = createSlice({
       state.type = type || '';
 
       localStorage.setItem('filters', JSON.stringify(state));
-      console.log('Updated State:', JSON.parse(JSON.stringify(state)));
+    },
+    setFilterReset(state) {
+      localStorage.setItem('filters', JSON.stringify(initialState));
+      return initialState;
     },
     setSearchQuery(state, action) {
       state.searchQuery = action.payload;
@@ -62,6 +65,7 @@ const filtersSlice = createSlice({
 
 export const {
   setFilters,
+  setFilterReset,
   setSearchQuery,
   setSelectedGenres,
   setSelectedYearStart,

@@ -1,9 +1,24 @@
-import { Outlet, useNavigation } from 'react-router-dom';
-import { Header, Loading, Navbar } from '../components';
+import { Outlet, useLoaderData, useNavigation } from 'react-router-dom';
+import { Filters, Header, Loading, Navbar } from '../components';
+import { searchAnimeLoader } from '../loaders/Loaders';
+import { useGlobalContext } from '../context';
+
+export const loader =
+  (queryClient) =>
+  async ({ request }) => {
+    //Call searchAnimeLoader with queryClient and request
+    const { animeListResponse, paginationResponse } = await searchAnimeLoader(
+      queryClient,
+      { request }
+    );
+    return { animeList: animeListResponse, pagination: paginationResponse };
+  };
 
 const TwoColLayout = () => {
   const navigation = useNavigation();
   const isPageLoading = navigation.state === 'loading';
+  const { allGenreData } = useGlobalContext();
+  //  const { allGenres } = useLoaderData();
 
   return (
     <>
@@ -14,11 +29,11 @@ const TwoColLayout = () => {
       ) : (
         <main>
           <section className="align-element py-10 lg:flex gap-8">
-            {/* lg:grid grid-cols-[1fr_auto] */}
             <section className="md:w-full lg:w-[69%] flex-grow">
+              <Filters resetLink="/search-results" allGenres={allGenreData} />
               <Outlet />
             </section>
-            <aside className="lg:w-[380px]">2nd level pages</aside>
+            <aside className="lg:w-[380px]"></aside>
           </section>
         </main>
       )}

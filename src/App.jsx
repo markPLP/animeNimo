@@ -18,8 +18,9 @@ import TwoColLayout from './layouts/TwoColLayout';
 
 // LOADERS
 import { loader as HomeLayoutLoader } from './layouts/HomeLayout';
-import { loader as SearchResultsLoader } from './pages/SearchResults';
+import { loader as SearchResultsLoader } from './layouts/TwoColLayout';
 import { loader as WatchSingleLoader } from './pages/WatchSingle';
+import { AppProvider } from './context';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,6 +46,7 @@ const router = createBrowserRouter([
   },
   {
     element: <TwoColLayout />,
+    loader: WatchSingleLoader(queryClient),
     children: [
       {
         path: '/genre',
@@ -61,7 +63,7 @@ const router = createBrowserRouter([
       {
         path: '/watch/:mal_id',
         element: <WatchSingle />,
-        loader: WatchSingleLoader(queryClient),
+        // loader: WatchSingleLoader(queryClient),
       },
       {
         path: '/search-results',
@@ -85,8 +87,10 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <ReactQueryDevtools initialIsOpen={false} />
+      <AppProvider>
+        <RouterProvider router={router} />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </AppProvider>
     </QueryClientProvider>
   );
 };
