@@ -1,5 +1,5 @@
 import { useLoaderData, useLocation } from 'react-router-dom';
-import { GridSearchResults, Pagination } from '../components';
+import { GridSearchResults, Pagination, PaginationLong } from '../components';
 // import { searchAnimeLoader } from '../loaders/Loaders';
 // export const loader =
 //   (queryClient) =>

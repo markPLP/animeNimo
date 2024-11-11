@@ -86,7 +86,6 @@ export const searchAnimeLoader = async (queryClient, { request }) => {
   const params = Object.fromEntries([
     ...new URL(request.url).searchParams.entries(),
   ]);
-  console.log(params, 'params params');
 
   try {
     const searchAnimeResponse = await queryClient.ensureQueryData(
@@ -94,6 +93,9 @@ export const searchAnimeLoader = async (queryClient, { request }) => {
     );
     const animeListResponse = searchAnimeResponse?.data?.data;
     const paginationResponse = searchAnimeResponse?.data?.pagination;
+
+    console.log(animeListResponse, 'animeListResponse');
+    console.log(paginationResponse, 'paginationResponse');
 
     return { animeListResponse, paginationResponse };
   } catch (error) {

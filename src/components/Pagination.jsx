@@ -1,13 +1,17 @@
 import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
+import PaginationLong from './PaginationLong';
 
 const Pagination = () => {
   const { pagination } = useLoaderData();
   const { current_page, last_visible_page } = pagination;
   // const {} =  pagination.items
+  console.log(last_visible_page, 'last_visible_page');
+
+  if (last_visible_page > 10) return <PaginationLong />;
 
   const { search, pathname } = useLocation();
   const navigate = useNavigate();
-  console.log(search, 'uselocation');
+  // console.log(search, 'uselocation');
 
   const handleChange = (pageNumber) => {
     const searchParams = new URLSearchParams(search);

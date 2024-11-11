@@ -15,6 +15,7 @@ export { default as TypeHeadSearch } from './TypeHeadSearch';
 export { default as FormSelect } from './FormSelect';
 export { default as GridSearchResults } from './GridSearchResults';
 export { default as Pagination } from './Pagination';
+export { default as PaginationLong } from './PaginationLong';
 export { default as Filters } from './Filters';
 export { default as YearPicker } from './YearPicker';
 export { default as FormCheckbox } from './FormCheckbox';

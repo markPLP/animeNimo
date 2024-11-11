@@ -46,7 +46,7 @@ const router = createBrowserRouter([
   },
   {
     element: <TwoColLayout />,
-    loader: WatchSingleLoader(queryClient),
+    //loader: WatchSingleLoader(queryClient),
     children: [
       {
         path: '/genre',
