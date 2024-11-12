@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { customFetch } from '.';
 
@@ -49,6 +49,18 @@ export const useGetFullAnimeQuery = (mal_id) => {
       return response.data.data;
     },
     enabled: !!mal_id, // Only fetch when mal_id is defined
+    retry: (failureCount, error) => {
+      // Retry up to 3 times only if the error status is 429
+      if (
+        error.response &&
+        error.response.status === 429 &&
+        failureCount <= 3
+      ) {
+        return true;
+      }
+      return false;
+    },
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), // Exponential backoff
   });
   return { isLoading, data, isError };
 };
@@ -69,6 +81,50 @@ export const useGetAllAnimeGenres = () => {
   });
 
   return { isLoading, allGenreData: data, isError };
+};
+
+// useQuery hook for fetching and caching data with React Query
+export const useGetTopAnimeQuery = (topAnimeFilter) => {
+  const queryClient = useQueryClient();
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['topAnime', topAnimeFilter],
+    queryFn: async () => {
+      try {
+        const topAnimeResponse = await customFetch.get(
+          `/top/anime?filter=${topAnimeFilter}`
+        );
+        return topAnimeResponse.data.data;
+      } catch (error) {
+        console.error('Error fetching top anime filter:', error);
+        throw new Response('Failed to load top anime filter:TopAnime', {
+          status: 500,
+        });
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['topAnime', topAnimeFilter] });
+    },
+    retry: (failureCount, error) => {
+      // Retry up to 3 times only if the error status is 429
+      if (
+        error.response &&
+        error.response.status === 429 &&
+        failureCount <= 3
+      ) {
+        return true;
+      }
+      return false;
+    },
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), // Exponential backoff
+  });
+
+  // Filter out duplicate mal_id
+  const uniqueData = data
+    ? Array.from(new Map(data.map((item) => [item.mal_id, item])).values())
+    : [];
+
+  return { isLoading, data: uniqueData.slice(0, 10), isError };
 };
 
 export const useGetTypeSearchData = (input) => {

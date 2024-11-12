@@ -20,8 +20,6 @@ const filtersSlice = createSlice({
   reducers: {
     setFilters(state, action) {
       const { filteredData } = action.payload;
-      console.log(filteredData, 'filteredDatafilteredDatafilteredData');
-
       const { genres, order_by, score, search, start_date, status, type } =
         filteredData;
 

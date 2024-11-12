@@ -8,7 +8,6 @@ import {
 } from '../utils';
 
 import 'react-calendar/dist/Calendar.css';
-import YearPicker from './YearPicker';
 import FormCheckbox from './FormCheckbox';
 import FormRange from './FormRange';
 import FormInput from './FormInput';
@@ -81,7 +80,7 @@ const Filters = ({ resetLink, allGenres }) => {
 
   return (
     <Form className="relative bg-base-300 rounded-lg" onSubmit={handleSubmit}>
-      <h3 className="text-3xl p-4 pb-0">Quick filter</h3>
+      <h3 className="text-xl p-4 pb-0">Quick filter</h3>
       <div className="form-control grid grid-cols-2 gap-3 p-4">
         <FormInput
           type="search"

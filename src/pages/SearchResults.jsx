@@ -1,18 +1,19 @@
-import { useLoaderData, useLocation } from 'react-router-dom';
-import { GridSearchResults, Pagination, PaginationLong } from '../components';
-// import { searchAnimeLoader } from '../loaders/Loaders';
-// export const loader =
-//   (queryClient) =>
-//   async ({ request }) => {
-//     // Call searchAnimeLoader with queryClient and request
-//     const { animeListResponse, paginationResponse } = await searchAnimeLoader(
-//       queryClient,
-//       { request }
-//     );
-//     return { animeList: animeListResponse, pagination: paginationResponse };
-//   };
+import { useLoaderData } from 'react-router-dom';
+import { GridSearchResults, Pagination } from '../components';
+import { searchAnimeLoader } from '../loaders/Loaders';
 
-const SearchResults = ({ searchParams }) => {
+export const loader =
+  (queryClient) =>
+  async ({ request }) => {
+    //Call searchAnimeLoader with queryClient and request
+    const { animeListResponse, paginationResponse } = await searchAnimeLoader(
+      queryClient,
+      { request }
+    );
+    return { animeList: animeListResponse, pagination: paginationResponse };
+  };
+
+const SearchResults = () => {
   const { animeList, pagination } = useLoaderData();
 
   if (animeList.length === 0) {

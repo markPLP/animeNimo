@@ -1,2 +1,2 @@
-import { default as HomeLayout } from './HomeLayout';
-import { default as TwoColLayout } from './TwoColLayout';
+export { default as BaseLayout } from './BaseLayout';
+export { default as LayoutTwoCols } from './LayoutTwoCols';

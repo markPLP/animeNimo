@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useEffect, useRef } from 'react';
 
 const apiURL = 'https://api.jikan.moe/v4';
 
@@ -56,6 +55,7 @@ export const filterAnimeType = [
 ];
 
 export const filterAnimeStatus = ['airing', 'complete', 'upcoming'];
+export const topAnimeFilter = ['favorite', 'bypopularity', 'airing'];
 export const filterAnimeOrderBy = [
   'title',
   'episodes',

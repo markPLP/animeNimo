@@ -20,3 +20,4 @@ export { default as Filters } from './Filters';
 export { default as YearPicker } from './YearPicker';
 export { default as FormCheckbox } from './FormCheckbox';
 export { default as FormRange } from './FormRange';
+export { default as TopAnime } from './TopAnime';

@@ -94,13 +94,36 @@ export const searchAnimeLoader = async (queryClient, { request }) => {
     const animeListResponse = searchAnimeResponse?.data?.data;
     const paginationResponse = searchAnimeResponse?.data?.pagination;
 
-    console.log(animeListResponse, 'animeListResponse');
-    console.log(paginationResponse, 'paginationResponse');
-
     return { animeListResponse, paginationResponse };
   } catch (error) {
     console.error('Error fetching searched anime:', error);
     throw new Response('Failed to load searched anime', { status: 500 });
+  }
+};
+
+export const topAnimeLoader = async (
+  queryClient,
+  defaultTopAnimeFilter = 'airing'
+) => {
+  const filterParam = {
+    queryKey: ['topAnime', defaultTopAnimeFilter],
+    queryFn: async () => {
+      const response = await customFetch.get(
+        `/top/anime?filter=${defaultTopAnimeFilter}`
+      );
+      return response.data.data.slice(0, 10);
+    },
+  };
+
+  try {
+    // Ensures the data is fetched and cached
+    const topAnimeData = await queryClient.ensureQueryData(filterParam);
+    return topAnimeData; // Sliced data returned directly
+  } catch (error) {
+    console.error('Error fetching top anime filter:', error);
+    throw new Response('Failed to load top anime filter:LOADERS', {
+      status: 500,
+    });
   }
 };
 

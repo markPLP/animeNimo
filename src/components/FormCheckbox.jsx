@@ -19,9 +19,12 @@ const FormCheckbox = ({
     onSelectionChange(newSelectedOptions); // update the parent/pass data
   };
 
-  const filteredOptions = options.filter(
-    (option) => !excludeIds.includes(option.mal_id)
-  );
+  // const filteredOptions = options.filter((option) => {
+  //   return !excludeIds.includes(option.mal_id);
+  // });
+  const filteredOptions = options
+    ? options.filter((option) => !excludeIds.includes(option.mal_id))
+    : [];
 
   return (
     <div>

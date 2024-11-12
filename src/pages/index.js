@@ -1,4 +1,4 @@
-export { default as HomeLayout } from '../layouts/HomeLayout';
+export { default as HomeLayout } from '../layouts/BaseLayout';
 export { default as Landing } from './Landing';
 export { default as GenreSingle } from './GenreSingle';
 export { default as Genre } from './GenreSingle';

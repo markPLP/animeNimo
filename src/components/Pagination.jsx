@@ -5,7 +5,6 @@ const Pagination = () => {
   const { pagination } = useLoaderData();
   const { current_page, last_visible_page } = pagination;
   // const {} =  pagination.items
-  console.log(last_visible_page, 'last_visible_page');
 
   if (last_visible_page > 10) return <PaginationLong />;
 
@@ -15,7 +14,6 @@ const Pagination = () => {
 
   const handleChange = (pageNumber) => {
     const searchParams = new URLSearchParams(search);
-    console.log(searchParams, 'pagination');
     searchParams.set('page', pageNumber);
 
     navigate(`${pathname}?${searchParams.toString()}`);

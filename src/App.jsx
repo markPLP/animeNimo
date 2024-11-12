@@ -2,25 +2,23 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import {
-  HomeLayout,
   Landing,
   Genre,
   Types,
   Error,
   Login,
   Register,
-  Updated,
   WatchSingle,
   SearchResults,
 } from './pages';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import TwoColLayout from './layouts/TwoColLayout';
 
 // LOADERS
-import { loader as HomeLayoutLoader } from './layouts/HomeLayout';
-import { loader as SearchResultsLoader } from './layouts/TwoColLayout';
-import { loader as WatchSingleLoader } from './pages/WatchSingle';
+import BaseLayout, { loader as BaseLayoutLoader } from './layouts/BaseLayout';
+import { loader as SearchResultsLoader } from './pages/SearchResults';
+//import { loader as WatchSingleLoader } from './pages/WatchSingle';
 import { AppProvider } from './context';
+import LayoutTwoCols from './layouts/LayoutTwoCols';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,43 +31,36 @@ const queryClient = new QueryClient({
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <HomeLayout />,
+    element: <BaseLayout />,
     errorElement: <Error />,
-    loader: HomeLayoutLoader(queryClient),
+    loader: BaseLayoutLoader(queryClient),
     children: [
       {
         index: true,
         element: <Landing />,
-        // loader: landingLoader(queryClient),
-      },
-    ],
-  },
-  {
-    element: <TwoColLayout />,
-    //loader: WatchSingleLoader(queryClient),
-    children: [
-      {
-        path: '/genre',
-        element: <Genre />,
       },
       {
-        path: '/types',
-        element: <Types />,
-      },
-      {
-        path: '/updated',
-        element: <Updated />,
-      },
-      {
-        path: '/watch/:mal_id',
-        element: <WatchSingle />,
-        // loader: WatchSingleLoader(queryClient),
-      },
-      {
-        path: '/search-results',
-        element: <SearchResults />,
-        loader: SearchResultsLoader(queryClient),
-        //loader: SearchResultsLoader,
+        element: <LayoutTwoCols />,
+        children: [
+          {
+            path: '/watch/:mal_id',
+            element: <WatchSingle />,
+            // loader: WatchSingleLoader(queryClient),
+          },
+          {
+            path: '/search-results',
+            element: <SearchResults />,
+            loader: SearchResultsLoader(queryClient),
+          },
+          {
+            path: '/genre',
+            element: <Genre />,
+          },
+          {
+            path: '/types',
+            element: <Types />,
+          },
+        ],
       },
     ],
   },

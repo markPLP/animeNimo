@@ -1,16 +1,30 @@
 import { useOutletContext } from 'react-router-dom';
-import { Hero, GridAnime, SectionTitle } from '../components';
+import {
+  Hero,
+  GridAnime,
+  SectionTitle,
+  Filters,
+  TopAnime,
+} from '../components';
+import { useGlobalContext } from '../context';
 
 const Landing = () => {
   // useOutletContext - props from <Outlet />
   const { heroBanner, popularAnime } = useOutletContext();
+  const { allGenreData } = useGlobalContext();
 
   return (
-    <>
-      <Hero data={heroBanner} />
-      <SectionTitle title="Popular now" />
-      <GridAnime data={popularAnime} />
-    </>
+    <section className="align-element py-10 lg:flex gap-8">
+      <section className="md:w-full lg:w-[69%] flex-grow">
+        <Hero data={heroBanner} />
+        <SectionTitle title="Popular now" />
+        <GridAnime data={popularAnime} />
+      </section>
+      <aside className="lg:w-[380px]">
+        <Filters resetLink="/" allGenres={allGenreData} />
+        <TopAnime />
+      </aside>
+    </section>
   );
 };
 
