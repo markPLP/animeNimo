@@ -3,30 +3,46 @@ import { useGetTopAnimeQuery } from '../utils/reactQueryCustomHooks';
 import { topAnimeFilter } from '../utils';
 import { AiOutlineUsergroupAdd } from 'react-icons/ai';
 import Loading from './Loading';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
+// import {
+//   setCardHover,
+//   setCardHoveredId,
+// } from '../features/cardHover/CardHoverSlice';
 import GridAnimeHoverElement from './GridAnimeHoverElement';
-import {
-  setCardHover,
-  setCardHoveredId,
-} from '../features/cardHover/CardHoverSlice';
 
 const TopAnime = () => {
   const [filter, setFilter] = useState('airing');
   const { data, isLoading, isError } = useGetTopAnimeQuery(filter);
-  const { hoveredCard, hoveredCardId } = useSelector(
-    (state) => state.cardHoverState
-  );
 
-  const dispatch = useDispatch();
+  // Local state for hovering effect
+  const [hoveredCardId, setHoveredCardId] = useState(null);
+  const [hoveredCard, setHoveredCard] = useState(false);
+
   const handleMouseEnter = (mal_id) => {
-    dispatch(setCardHoveredId(mal_id));
-    dispatch(setCardHover(true));
+    setHoveredCardId(mal_id);
+    setHoveredCard(true);
   };
 
   const handleMouseLeave = () => {
-    dispatch(setCardHoveredId(null));
-    dispatch(setCardHover(false));
+    setHoveredCardId(null);
+    setHoveredCard(false);
   };
+
+  // const { hoveredCard, hoveredCardId } = useSelector(
+  //   (state) => state.cardHoverState
+  // );
+  // console.log(filter, 'fiter thisd');
+
+  // const dispatch = useDispatch();
+  // const handleMouseEnter = (mal_id) => {
+  //   dispatch(setCardHoveredId(mal_id));
+  //   dispatch(setCardHover(true));
+  // };
+
+  // const handleMouseLeave = () => {
+  //   dispatch(setCardHoveredId(null));
+  //   dispatch(setCardHover(false));
+  // };
 
   return (
     <div className="relative bg-base-300 rounded-lg mt-5">

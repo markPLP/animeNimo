@@ -1,24 +1,19 @@
 import GridAnimeHoverElement from './GridAnimeHoverElement';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  setCardHover,
-  setCardHoveredId,
-} from '../features/cardHover/CardHoverSlice';
+import { useState } from 'react';
 
 const GridSearchResults = ({ data }) => {
-  const { hoveredCard, hoveredCardId } = useSelector(
-    (state) => state.cardHoverState
-  );
+  // Local state for hovering effect
+  const [hoveredCardId, setHoveredCardId] = useState(null);
+  const [hoveredCard, setHoveredCard] = useState(false);
 
-  const dispatch = useDispatch();
   const handleMouseEnter = (mal_id) => {
-    dispatch(setCardHoveredId(mal_id));
-    dispatch(setCardHover(true));
+    setHoveredCardId(mal_id);
+    setHoveredCard(true);
   };
 
   const handleMouseLeave = () => {
-    dispatch(setCardHoveredId(null));
-    dispatch(setCardHover(false));
+    setHoveredCardId(null);
+    setHoveredCard(false);
   };
 
   return (

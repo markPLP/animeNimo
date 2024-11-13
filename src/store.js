@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 import typeHeadSearchReducer from './features/search/TypeHeadSearchSlice';
-import cardHoverReducer from './features/cardHover/CardHoverSlice';
 import filtersReducer from './features/Filter/FilterSlice';
 //import { persistStore, persistReducer } from 'redux-persist';
 //import storage from 'redux-persist/lib/storage'; // default storage is localStorage
@@ -48,7 +47,6 @@ import filtersReducer from './features/Filter/FilterSlice';
 export const store = configureStore({
   reducer: {
     typeHeadSearchState: typeHeadSearchReducer,
-    cardHoverState: cardHoverReducer,
     filtersState: filtersReducer,
   },
 });
