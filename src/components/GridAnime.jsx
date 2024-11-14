@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import GridAnimeHoverElement from './GridAnimeHoverElement';
 
 const GridAnime = ({ data }) => {
@@ -6,15 +6,15 @@ const GridAnime = ({ data }) => {
   const [hoveredCardId, setHoveredCardId] = useState(null);
   const [hoveredCard, setHoveredCard] = useState(false);
 
-  const handleMouseEnter = (mal_id) => {
+  const handleMouseEnter = useCallback((mal_id) => {
     setHoveredCardId(mal_id);
     setHoveredCard(true);
-  };
+  }, []);
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = useCallback(() => {
     setHoveredCardId(null);
     setHoveredCard(false);
-  };
+  }, []);
 
   return (
     <div className="grid grid-cols-2 gap-[15px] min-[460px]:grid-cols-3 min-[700px]:grid-cols-4 min-[800px]:grid-cols-5">

@@ -21,3 +21,4 @@ export { default as YearPicker } from './YearPicker';
 export { default as FormCheckbox } from './FormCheckbox';
 export { default as FormRange } from './FormRange';
 export { default as TopAnime } from './TopAnime';
+export { default as TypeHeadSuggestions } from './TypeHeadSuggestions';

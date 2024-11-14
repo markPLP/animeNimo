@@ -1,13 +1,8 @@
-import { useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { useGetTopAnimeQuery } from '../utils/reactQueryCustomHooks';
-import { topAnimeFilter } from '../utils';
+import { formatNumber, topAnimeFilter } from '../utils';
 import { AiOutlineUsergroupAdd } from 'react-icons/ai';
 import Loading from './Loading';
-// import { useDispatch, useSelector } from 'react-redux';
-// import {
-//   setCardHover,
-//   setCardHoveredId,
-// } from '../features/cardHover/CardHoverSlice';
 import GridAnimeHoverElement from './GridAnimeHoverElement';
 
 const TopAnime = () => {
@@ -18,73 +13,63 @@ const TopAnime = () => {
   const [hoveredCardId, setHoveredCardId] = useState(null);
   const [hoveredCard, setHoveredCard] = useState(false);
 
-  const handleMouseEnter = (mal_id) => {
+  const handleMouseEnter = useCallback((mal_id) => {
     setHoveredCardId(mal_id);
     setHoveredCard(true);
-  };
+  }, []);
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = useCallback(() => {
     setHoveredCardId(null);
     setHoveredCard(false);
-  };
+  }, []);
 
-  // const { hoveredCard, hoveredCardId } = useSelector(
-  //   (state) => state.cardHoverState
-  // );
-  // console.log(filter, 'fiter thisd');
-
-  // const dispatch = useDispatch();
-  // const handleMouseEnter = (mal_id) => {
-  //   dispatch(setCardHoveredId(mal_id));
-  //   dispatch(setCardHover(true));
-  // };
-
-  // const handleMouseLeave = () => {
-  //   dispatch(setCardHoveredId(null));
-  //   dispatch(setCardHover(false));
-  // };
+  const handleFilterClick = useCallback((filterBy) => {
+    setFilter(filterBy);
+  }, []);
 
   return (
     <div className="relative bg-base-300 rounded-lg mt-5">
       <div className="p-4 min-[470px]:flex items-center justify-between lg:flex-col gap-2 lg:items-start">
         <h3 className="text-xl pb-4 min-[470px]:pb-0">Top Anime by</h3>
         <ul className="flex gap-2 min-[470px]:gap-3">
-          {topAnimeFilter.map((filterBy, index) => {
-            return (
-              <button
-                key={index}
-                role="tab"
-                className={`text-[16px] text-neutral-300 hover:text-secondary block row-auto capitalize ${
-                  filter === filterBy ? 'tab-active text-neutral-50' : ''
-                }`}
-                onClick={() => setFilter(filterBy)}
-              >
-                {filterBy === 'bypopularity' ? 'popularity' : filterBy}
-              </button>
-            );
-          })}
+          {topAnimeFilter.map((filterBy, index) => (
+            <button
+              key={index}
+              role="tab"
+              className={`text-[16px] text-neutral-300 hover:text-secondary block row-auto capitalize ${
+                filter === filterBy ? 'tab-active text-neutral-50' : ''
+              }`}
+              onClick={() => handleFilterClick(filterBy)}
+            >
+              {filterBy === 'bypopularity' ? 'popularity' : filterBy}
+            </button>
+          ))}
         </ul>
       </div>
 
       <div className="min-h-[570px]">
         {/* Conditional rendering for loading, error, and data */}
         {isLoading && <Loading />}
-        {isError && <p>Error fetching data: {isError.message}</p>}
+        {isError && (
+          <p>Error fetching data: {isError.message || 'Unknown error'}</p>
+        )}
         <ul className="sm:grid grid-cols-2 lg:grid-cols-1">
           {data && data.length > 0
             ? data.map((animeDeets, index) => {
-                const { mal_id, title, scored_by } = animeDeets;
-                const image = animeDeets?.images?.webp?.image_url;
-                const imageLarge = animeDeets?.images?.webp?.large_image_url;
+                const { mal_id, title, scored_by, images } = animeDeets;
+                const image = images?.webp?.image_url;
+                const imageLarge = images?.webp?.large_image_url;
                 let number = index + 1;
+
+                const listItemClasses = `group hover:cursor-pointer flex p-5 gap-4 relative ${
+                  index === 0
+                    ? 'h-[180px] place-items-end bg-cover col-span-2 lg:col-span-1'
+                    : 'items-center'
+                }`;
 
                 return (
                   <li
-                    className={`group hover:cursor-pointer flex p-5 gap-4 relative ${
-                      index === 0
-                        ? 'h-[180px] place-items-end bg-cover col-span-2 lg:col-span-1'
-                        : 'items-center'
-                    }`}
+                    className={listItemClasses}
                     style={
                       index === 0
                         ? { backgroundImage: `url(${imageLarge})` }
@@ -97,7 +82,7 @@ const TopAnime = () => {
                     {index === 0 && (
                       <span className="absolute top-0 bottom-0 left-0 w-full bg-gradient-to-t from-base-300/100 to-base-100/0 p-5"></span>
                     )}
-                    <div className="">
+                    <div>
                       <span
                         className={`group-hover:text-secondary font-bold leading-[32px] text-[20px] h-[40px] w-[40px] border-2 flex place-content-center rounded-md border-slate-500 text-gray-500 ${
                           index === 0
@@ -126,12 +111,12 @@ const TopAnime = () => {
                           index === 0 ? 'text-white hover:text-secondary' : ''
                         }`}
                       >
-                        <span className={`block leading-4 mb-2 text-[16px]`}>
+                        <span className="block leading-4 mb-2 text-[16px]">
                           {title}
                         </span>
                         <span>
                           <AiOutlineUsergroupAdd className="text-[20px] inline" />
-                          {scored_by}
+                          {formatNumber(scored_by)}
                         </span>
                       </p>
                     </div>
@@ -153,4 +138,4 @@ const TopAnime = () => {
   );
 };
 
-export default TopAnime;
+export default memo(TopAnime);
