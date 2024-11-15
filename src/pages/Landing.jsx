@@ -4,15 +4,16 @@ import {
   GridAnime,
   SectionTitle,
   Filters,
-  TopAnime,
+  SidebarTopAnime,
+  SidebarRecentlyAdded,
 } from '../components';
 import { useGlobalContext } from '../context';
 import { memo } from 'react';
 
 const Landing = () => {
   // useOutletContext - props from <Outlet />
+  const { popularAnime, heroBanner } = useOutletContext();
 
-  const { heroBanner, popularAnime } = useOutletContext();
   const { allGenreData } = useGlobalContext();
 
   return (
@@ -24,7 +25,8 @@ const Landing = () => {
       </section>
       <aside className="lg:w-[380px]">
         <Filters resetLink="/" allGenres={allGenreData} />
-        <TopAnime />
+        <SidebarTopAnime sidebarHeading="Top Anime" />
+        <SidebarRecentlyAdded headingTitle="Recently Added" />
       </aside>
     </section>
   );

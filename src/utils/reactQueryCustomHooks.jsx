@@ -99,29 +99,36 @@ export const useGetTopAnimeQuery = (topAnimeFilter) => {
         });
       }
     },
-    // onSuccess: () => {
-    //   queryClient.invalidateQueries({ queryKey: ['topAnime', topAnimeFilter] });
-    // },
-    // retry: (failureCount, error) => {
-    //   // Retry up to 3 times only if the error status is 429
-    //   if (
-    //     error.response &&
-    //     error.response.status === 429 &&
-    //     failureCount <= 3
-    //   ) {
-    //     return true;
-    //   }
-    //   return false;
-    // },
-    // retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), // Exponential backoff
   });
-
   // Filter out duplicate mal_id
   const uniqueData = data
     ? Array.from(new Map(data.map((item) => [item.mal_id, item])).values())
     : [];
 
   return { isLoading, data: uniqueData.slice(0, 10), isError };
+};
+
+export const useFetchRecentlyAdded = () => {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['recentlyAdded'],
+    queryFn: async () => {
+      try {
+        const recentlyAddedResponse = await customFetch.get('/watch/episodes');
+        return recentlyAddedResponse.data.data;
+      } catch (error) {
+        console.error('Error fetching recently added anime:', error);
+        throw new Response('Failed to load recently added anime', {
+          status: 500,
+        });
+      }
+    },
+  });
+
+  const filterRegionLock = data
+    ? data.filter((item) => item.region_locked !== true)
+    : [];
+
+  return { isLoading, data: filterRegionLock, isError };
 };
 
 export const useGetTypeSearchData = (input) => {

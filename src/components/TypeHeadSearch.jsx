@@ -4,7 +4,7 @@ import { BsSearch } from 'react-icons/bs';
 import { useGetTypeSearchData } from '../utils/reactQueryCustomHooks';
 
 import TypeHeadSuggestions from './TypeHeadSuggestions';
-import { memo, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const TypeHeadSearch = () => {
   const navigation = useNavigation();
@@ -65,4 +65,4 @@ const TypeHeadSearch = () => {
     </div>
   );
 };
-export default memo(TypeHeadSearch);
+export default TypeHeadSearch;

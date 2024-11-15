@@ -11,7 +11,11 @@ const Navbar = () => {
         <div className="header-logo-burger flex items-center">
           {/* DROPDOWN */}
           <div className="dropdown mr-5">
-            <label tabIndex={0} className="btn btn-ghost p-4 h-auto">
+            <label
+              tabIndex={0}
+              className="btn btn-ghost p-4 h-auto"
+              aria-haspopup="true"
+            >
               <FaBarsStaggered className="h-6 w-6" />
             </label>
             <ul
@@ -43,5 +47,4 @@ const Navbar = () => {
     </nav>
   );
 };
-
 export default Navbar;

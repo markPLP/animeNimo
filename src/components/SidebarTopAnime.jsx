@@ -1,11 +1,12 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { useGetTopAnimeQuery } from '../utils/reactQueryCustomHooks';
 import { formatNumber, topAnimeFilter } from '../utils';
 import { AiOutlineUsergroupAdd } from 'react-icons/ai';
 import Loading from './Loading';
 import GridAnimeHoverElement from './GridAnimeHoverElement';
 
-const TopAnime = () => {
+const SidebarTopAnime = () => {
+  //const { topAnime } = useOutletContext();
   const [filter, setFilter] = useState('airing');
   const { data, isLoading, isError } = useGetTopAnimeQuery(filter);
 
@@ -27,12 +28,13 @@ const TopAnime = () => {
     setFilter(filterBy);
   }, []);
 
+  const memoizedFilters = useMemo(() => topAnimeFilter, []);
   return (
     <div className="relative bg-base-300 rounded-lg mt-5">
       <div className="p-4 min-[470px]:flex items-center justify-between lg:flex-col gap-2 lg:items-start">
         <h3 className="text-xl pb-4 min-[470px]:pb-0">Top Anime by</h3>
         <ul className="flex gap-2 min-[470px]:gap-3">
-          {topAnimeFilter.map((filterBy, index) => (
+          {memoizedFilters.map((filterBy, index) => (
             <button
               key={index}
               role="tab"
@@ -47,7 +49,7 @@ const TopAnime = () => {
         </ul>
       </div>
 
-      <div className="min-h-[570px]">
+      <div className="min-h-[270px]">
         {/* Conditional rendering for loading, error, and data */}
         {isLoading && <Loading />}
         {isError && (
@@ -138,4 +140,4 @@ const TopAnime = () => {
   );
 };
 
-export default memo(TopAnime);
+export default memo(SidebarTopAnime);

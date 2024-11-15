@@ -11,3 +11,4 @@ export { default as Updated } from './Updated';
 export { default as Watch } from './Watch';
 export { default as WatchSingle } from './WatchSingle';
 export { default as SearchResults } from './SearchResults';
+export { default as RecentlyAdded } from './RecentlyAdded';

@@ -10,12 +10,14 @@ import {
   Register,
   WatchSingle,
   SearchResults,
+  RecentlyAdded,
 } from './pages';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 // LOADERS
 import BaseLayout, { loader as BaseLayoutLoader } from './layouts/BaseLayout';
 import { loader as SearchResultsLoader } from './pages/SearchResults';
+import { loader as RecentlyAddedLoader } from './pages/RecentlyAdded';
 //import { loader as WatchSingleLoader } from './pages/WatchSingle';
 import { AppProvider } from './context';
 import LayoutTwoCols from './layouts/LayoutTwoCols';
@@ -59,6 +61,11 @@ const router = createBrowserRouter([
           {
             path: '/types',
             element: <Types />,
+          },
+          {
+            path: '/recently-added',
+            element: <RecentlyAdded />,
+            loader: RecentlyAddedLoader,
           },
         ],
       },

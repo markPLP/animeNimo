@@ -1,5 +1,5 @@
 import { Outlet, useNavigation } from 'react-router-dom';
-import { Filters, Loading, TopAnime } from '../components';
+import { Filters, Loading, SidebarTopAnime } from '../components';
 import { useGlobalContext } from '../context';
 
 const LayoutTwoCols = () => {
@@ -21,7 +21,7 @@ const LayoutTwoCols = () => {
             <aside className="lg:w-[380px]">
               2nd level sidebar here 2nd level sidebar here 2nd level sidebar
               here
-              <TopAnime />
+              <SidebarTopAnime />
             </aside>
           </section>
         </main>
