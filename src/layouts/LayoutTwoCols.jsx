@@ -19,8 +19,6 @@ const LayoutTwoCols = () => {
               <Outlet />
             </section>
             <aside className="lg:w-[380px]">
-              2nd level sidebar here 2nd level sidebar here 2nd level sidebar
-              here
               <SidebarTopAnime />
             </aside>
           </section>

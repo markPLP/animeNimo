@@ -1,53 +1,38 @@
 import { useCallback, useState } from 'react';
 import GridAnimeHoverElement from './GridAnimeHoverElement';
+import { AiFillCrown } from 'react-icons/ai';
 
 const SidebarRecentlyAddedItem = ({ dataItem }) => {
   const { entry, episodes } = dataItem;
   const { title, mal_id } = entry;
-  const image = entry?.images?.webp?.small_image_url;
-
-  // Local state for hovering effect
-  const [hoveredCardId, setHoveredCardId] = useState(null);
-  const [hoveredCard, setHoveredCard] = useState(false);
-
-  const handleMouseEnter = useCallback((mal_id) => {
-    setHoveredCardId(mal_id);
-    setHoveredCard(true);
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    setHoveredCardId(null);
-    setHoveredCard(false);
-  }, []);
-
+  const image = entry?.images?.webp?.image_url;
   return (
-    <article
-      className="group hover:cursor-pointer flex p-5 gap-4 relative"
-      onMouseEnter={() => handleMouseEnter(mal_id)}
-      onMouseLeave={handleMouseLeave}
-    >
-      <div className="flex gap-4">
-        <figure className="w-[46px]">
+    <article className="group hover:cursor-pointer gap-4 relative mx-[10px]">
+      <div>
+        <figure className="relative overflow-hidden pt-[150%]">
           <img
             src={image}
             alt={title}
-            className="w-full h-[60px] object-cover"
+            className="absolute top-0 left-0 w-full h-full object-cover"
             loading="lazy"
           />
         </figure>
-        <p className="group-hover:text-secondary flex-1">
-          <span className="block leading-4 mb-2 text-[16px]">{title}</span>
-          <span>
-            {/* {episodes.map((ep) => {
-            return 
-          })} */}
-            Episode {episodes[0].mal_id}
+        <p className="group-hover:text-secondary flex-1 mt-3">
+          <span className="block card-title font-normal text-[18px] justify-center leading-5 mt-1">
+            {title.slice(0, 15)}
           </span>
         </p>
+        <p className="mt-2">
+          {episodes.reverse().map((ep, index) => {
+            const { mal_id } = ep;
+            return (
+              <span className="block leading-4 text-[14px]" key={index}>
+                Episode {mal_id} <AiFillCrown className="inline bg-primary" />
+              </span>
+            );
+          })}
+        </p>
       </div>
-      {hoveredCardId === mal_id && (
-        <GridAnimeHoverElement mal_id={mal_id} hoveredCard={hoveredCard} />
-      )}
     </article>
   );
 };

@@ -40,12 +40,6 @@ const Hero = ({ data }) => {
                     alt={title_english || title}
                     className="w-full h-full object-cover absolute top-0"
                   />
-                  {/* <img
-                    src={image}
-                    alt={title_english || title}
-                    className="w-full h-full object-cover absolute top-0"
-                    loading="lazy"
-                  /> */}
                 </figure>
                 <div>
                   <h1 className="font-bold text-primary-content text-2xl lg:text-3xl mb-2">
@@ -98,5 +92,4 @@ const Hero = ({ data }) => {
   );
 };
 
-// Use React.memo to wrap Hero component for memoization
 export default memo(Hero);

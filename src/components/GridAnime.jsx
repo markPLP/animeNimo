@@ -15,6 +15,7 @@ const GridAnime = ({ data }) => {
     setHoveredCardId(null);
     setHoveredCard(false);
   }, []);
+  console.log(data, 'data from grid Anime recently added');
 
   return (
     <div className="grid grid-cols-2 gap-[15px] min-[460px]:grid-cols-3 min-[700px]:grid-cols-4 min-[800px]:grid-cols-5">

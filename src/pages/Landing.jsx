@@ -10,10 +10,12 @@ import {
 import { useGlobalContext } from '../context';
 import { memo } from 'react';
 
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
 const Landing = () => {
   // useOutletContext - props from <Outlet />
   const { popularAnime, heroBanner } = useOutletContext();
-
   const { allGenreData } = useGlobalContext();
 
   return (
@@ -22,11 +24,11 @@ const Landing = () => {
         <Hero data={heroBanner} />
         <SectionTitle title="Popular now" />
         <GridAnime data={popularAnime} />
+        <SidebarRecentlyAdded headingTitle="Recently Added" />
       </section>
       <aside className="lg:w-[380px]">
         <Filters resetLink="/" allGenres={allGenreData} />
         <SidebarTopAnime sidebarHeading="Top Anime" />
-        <SidebarRecentlyAdded headingTitle="Recently Added" />
       </aside>
     </section>
   );
