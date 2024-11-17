@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
-import { useGetFullAnimeQuery } from '../utils/reactQueryCustomHooks';
 import { Loading } from '../components';
 import { QueryClient } from '@tanstack/react-query';
+import { useFetchFullAnime } from '../hooks/useFetchFullAnime';
 
 export const loader =
   (queryClient) =>
@@ -13,12 +13,7 @@ export const loader =
 
 const WatchSingle = () => {
   const { mal_id } = useParams();
-  const { data } = useGetFullAnimeQuery(mal_id);
-  console.log(data); // Extract mal_id from the route
-  // const { isLoading, data, isError } = useGetFullAnimeQuery(mal_id);
-
-  // if (isLoading) return <Loading />;
-  // if (isError) return <div>Something went wrong...</div>;
+  const { data } = useFetchFullAnime(mal_id);
 
   return <div>WatchSingle: {mal_id}</div>; // Display the mal_id for testing
 };

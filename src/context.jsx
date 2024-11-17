@@ -1,9 +1,9 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import { useGetAllAnimeGenres } from './utils/reactQueryCustomHooks';
+import { createContext, useContext } from 'react';
+import { useFetchAnimeGenres } from './hooks/useFetchAnimeGenres';
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  const { allGenreData } = useGetAllAnimeGenres();
+  const { allGenreData } = useFetchAnimeGenres();
 
   return (
     <AppContext.Provider value={{ allGenreData }}>

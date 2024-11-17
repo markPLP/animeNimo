@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
-import { useFetchRecentlyAdded } from '../utils/reactQueryCustomHooks';
+
 import Loading from './Loading';
 import SidebarRecentlyAddedList from './SidebarRecentlyAddedList';
+import { useFetchRecentlyAdded } from '../hooks/useFetchRecentlyAdded';
 
-const SidebarRecentlyAdded = ({ headingTitle }) => {
-  const { data, isLoading, isError } = useFetchRecentlyAdded();
+const SidebarRecentlyAdded = ({ headingTitle, loaderData }) => {
+  const { data: hookData, isLoading, isError } = useFetchRecentlyAdded();
+  const data = loaderData || hookData;
 
   return (
     <>
@@ -23,7 +25,7 @@ const SidebarRecentlyAdded = ({ headingTitle }) => {
           {data && data.length > 0 ? (
             <SidebarRecentlyAddedList data={data} />
           ) : (
-            !isLoading && <p>No top anime available for the selected filter.</p>
+            !isLoading && <p className="p-5">Loading data...</p>
           )}
         </div>
       </div>

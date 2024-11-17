@@ -1,10 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { BsFillPlayCircleFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
-import { useGetFullAnimeQuery } from '../utils/reactQueryCustomHooks';
+import { useFetchFullAnime } from '../hooks/useFetchFullAnime';
 
+useFetchFullAnime;
 const GridAnimeHoverElement = ({ mal_id, hoveredCard }) => {
-  const { isLoading, data, isError } = useGetFullAnimeQuery(mal_id);
+  const { isLoading, data, isError } = useFetchFullAnime(mal_id);
   const hoverRef = useRef(null);
   useEffect(() => {
     if (!hoveredCard) return;

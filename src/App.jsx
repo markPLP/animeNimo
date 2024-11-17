@@ -45,25 +45,25 @@ const router = createBrowserRouter([
         element: <LayoutTwoCols />,
         children: [
           {
-            path: '/watch/:mal_id',
+            path: 'watch/:mal_id',
             element: <WatchSingle />,
             // loader: WatchSingleLoader(queryClient),
           },
           {
-            path: '/search-results',
+            path: 'search-results',
             element: <SearchResults />,
             loader: SearchResultsLoader(queryClient),
           },
           {
-            path: '/genre',
+            path: 'genre',
             element: <Genre />,
           },
           {
-            path: '/types',
+            path: 'types',
             element: <Types />,
           },
           {
-            path: '/recently-added',
+            path: 'recently-added',
             element: <RecentlyAdded />,
             loader: RecentlyAddedLoader,
           },

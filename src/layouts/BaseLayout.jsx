@@ -1,22 +1,34 @@
 import { Outlet, useLoaderData, useNavigation } from 'react-router-dom';
 import Header from '../components/Header';
 import { Loading, Navbar } from '../components';
-import {
-  heroBannerLoader,
-  popularAnimeLoader,
-  topAnimeLoader,
-} from '../loaders/Loaders';
 import { memo } from 'react';
+import { recentlyAddedQuery } from '../hooks/useFetchRecentlyAdded';
+import { heroQuery } from '../hooks/useFetchHero';
+import { popularAnimeQuery } from '../hooks/useFetchPopular';
+import { topAnimeQuery } from '../hooks/useFetchTopAnime';
 
 export const loader = (queryClient) => async () => {
-  // Parallel Execution using Promise.all for better perfomance
-  const [heroBanner, popularAnime, topAnime] = await Promise.all([
-    heroBannerLoader(queryClient),
-    popularAnimeLoader(queryClient),
-    topAnimeLoader(queryClient),
-  ]);
+  try {
+    const [heroBanner, popularAnime, recentAddedAnime, topAnime] =
+      await Promise.all([
+        queryClient.ensureQueryData(heroQuery),
+        queryClient.ensureQueryData(popularAnimeQuery),
+        queryClient.ensureQueryData(recentlyAddedQuery),
+        queryClient.ensureQueryData(topAnimeQuery('airing')),
+      ]);
 
-  return { heroBanner, popularAnime, topAnime };
+    console.log(topAnime, 'recentAddedAnime from loader');
+
+    return {
+      heroBanner: heroBanner || [],
+      popularAnime: popularAnime || [],
+      recentAddedAnime: recentAddedAnime || [],
+      topAnime: topAnime || [],
+    };
+  } catch (error) {
+    console.error('Error in loader:', error);
+    throw new Response('Failed to fetch data for the page', { status: 500 });
+  }
 };
 
 const BaseLayout = () => {
@@ -24,7 +36,7 @@ const BaseLayout = () => {
   // grab loaderData/useLoaderData and pass as prop
   const loaderData = useLoaderData();
   const isPageLoading = navigation.state === 'loading';
-
+  console.log(loaderData, 'loaderData in BaseLayout');
   return (
     <>
       <Header />

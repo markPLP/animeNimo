@@ -1,10 +1,9 @@
 import { Form, useNavigation, useNavigate } from 'react-router-dom';
 import FormInput from './FormInput';
 import { BsSearch } from 'react-icons/bs';
-import { useGetTypeSearchData } from '../utils/reactQueryCustomHooks';
-
 import TypeHeadSuggestions from './TypeHeadSuggestions';
 import { useCallback, useState } from 'react';
+import { useFetchTypeHeadSearch } from '../hooks/useFetchTypeHeadSearch';
 
 const TypeHeadSearch = () => {
   const navigation = useNavigation();
@@ -13,7 +12,7 @@ const TypeHeadSearch = () => {
   const [query, setQuery] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
 
-  const { isLoading, suggestions, isError } = useGetTypeSearchData(query);
+  const { isLoading, suggestions, isError } = useFetchTypeHeadSearch(query);
 
   const handleChange = useCallback((e) => {
     const newQuery = e.target.value;

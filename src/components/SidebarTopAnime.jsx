@@ -1,20 +1,19 @@
 import { memo, useCallback, useMemo, useState } from 'react';
-import { useGetTopAnimeQuery } from '../utils/reactQueryCustomHooks';
 import { topAnimeFilter } from '../utils';
 import Loading from './Loading';
 import SidebarTopAnimeList from './SidebarTopAnimeList';
-//import SidebarTopAnimeList from './SidebarTopAnimeList';
+import { useFetchTopAnime } from '../hooks/useFetchTopAnime';
 
 const SidebarTopAnime = () => {
-  //const { topAnime } = useOutletContext();
   const [filter, setFilter] = useState('airing');
-  const { data, isLoading, isError } = useGetTopAnimeQuery(filter);
+  const { data, isLoading, isError } = useFetchTopAnime(filter);
 
   const handleFilterClick = useCallback((filterBy) => {
     setFilter(filterBy);
   }, []);
 
   const memoizedFilters = useMemo(() => topAnimeFilter, []);
+
   return (
     <div className="relative bg-base-300 rounded-lg mt-5 lg:mt-0">
       <div className="p-4 min-[470px]:flex items-center justify-between lg:flex-col gap-2 lg:items-start">
