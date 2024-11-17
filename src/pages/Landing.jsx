@@ -3,6 +3,7 @@ import {
   Filters,
   GridAnime,
   Hero,
+  RandomUserWidget,
   SectionTitle,
   SidebarRecentlyAdded,
   SidebarTopAnime,
@@ -10,13 +11,18 @@ import {
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { memo, useContext } from 'react';
+import { memo } from 'react';
 import { useGlobalContext } from '../context';
 
 const Landing = () => {
   const { allGenreData } = useGlobalContext();
-  const { heroBanner, popularAnime, recentAddedAnime, topAnime } =
-    useOutletContext();
+  const {
+    heroBanner,
+    popularAnime,
+    recentAddedAnime,
+    topAnime,
+    userFullDetails,
+  } = useOutletContext();
 
   return (
     <section className="align-element py-10 lg:flex gap-8">
@@ -32,6 +38,7 @@ const Landing = () => {
       <aside className="lg:w-[380px]">
         <Filters resetLink="/" allGenres={allGenreData} />
         <SidebarTopAnime loaderData={topAnime} />
+        <RandomUserWidget loaderData={userFullDetails} />
       </aside>
     </section>
   );

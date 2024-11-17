@@ -1,11 +1,11 @@
 import { useLoaderData } from 'react-router-dom';
 import { GridSearchResults, Pagination } from '../components';
-import { searchAnimeLoader } from '../loaders/Loaders';
+import { useFetchSearchAnime } from '../hooks/useFetchSearchAnime';
 
 export const loader =
   (queryClient) =>
   async ({ request }) => {
-    const { animeListResponse, paginationResponse } = await searchAnimeLoader(
+    const { animeListResponse, paginationResponse } = await useFetchSearchAnime(
       queryClient,
       { request }
     );

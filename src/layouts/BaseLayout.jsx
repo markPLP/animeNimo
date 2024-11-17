@@ -6,24 +6,39 @@ import { recentlyAddedQuery } from '../hooks/useFetchRecentlyAdded';
 import { heroQuery } from '../hooks/useFetchHero';
 import { popularAnimeQuery } from '../hooks/useFetchPopular';
 import { topAnimeQuery } from '../hooks/useFetchTopAnime';
+import {
+  randomUserQuery,
+  userFullDetailsQuery,
+} from '../components/userAnime/useFetchRandomUser';
+import Footer from './Footer';
 
 export const loader = (queryClient) => async () => {
   try {
-    const [heroBanner, popularAnime, recentAddedAnime, topAnime] =
+    const [heroBanner, popularAnime, recentAddedAnime, topAnime, randomUser] =
       await Promise.all([
         queryClient.ensureQueryData(heroQuery),
         queryClient.ensureQueryData(popularAnimeQuery),
         queryClient.ensureQueryData(recentlyAddedQuery),
         queryClient.ensureQueryData(topAnimeQuery('airing')),
+        queryClient.ensureQueryData(randomUserQuery),
       ]);
 
-    console.log(topAnime, 'recentAddedAnime from loader');
+    let userFullDetails = null;
+    if (randomUser) {
+      userFullDetails = await queryClient.ensureQueryData(
+        userFullDetailsQuery(randomUser)
+      );
+    }
+
+    console.log(userFullDetails, 'from userFullDetails loader');
 
     return {
       heroBanner: heroBanner || [],
       popularAnime: popularAnime || [],
       recentAddedAnime: recentAddedAnime || [],
       topAnime: topAnime || [],
+      randomUser,
+      userFullDetails,
     };
   } catch (error) {
     console.error('Error in loader:', error);
@@ -48,6 +63,7 @@ const BaseLayout = () => {
           <Outlet context={loaderData} />
         </main>
       )}
+      <Footer />
     </>
   );
 };

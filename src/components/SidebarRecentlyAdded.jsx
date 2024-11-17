@@ -17,7 +17,7 @@ const SidebarRecentlyAdded = ({ headingTitle, loaderData }) => {
             View All
           </Link>
         </div>
-        <div className="pb-11">
+        <div className="pb-14">
           {isLoading && <Loading />}
           {isError && (
             <p>Error fetching data: {isError.message || 'Unknown error'}</p>
