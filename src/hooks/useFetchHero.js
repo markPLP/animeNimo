@@ -7,6 +7,7 @@ export const heroQuery = {
     try {
       const response = await customFetch.get('top/anime');
       const data = response.data.data;
+
       return data.slice(0, 10);
     } catch (error) {
       console.error('Error fetching hero banner data:', error);

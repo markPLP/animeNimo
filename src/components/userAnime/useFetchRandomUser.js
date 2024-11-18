@@ -51,6 +51,7 @@ export const useFetchRandomUser = () => {
   // Combine loading and error states
   const isLoading = isUserLoading || isDetailsLoading;
   const isError = isUserError || isDetailsError;
+  console.log(fullUserData, 'full data from useFetchRandom');
 
   return { fullUserData, isLoading, isError };
 };

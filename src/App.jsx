@@ -11,11 +11,13 @@ import {
   WatchSingle,
   SearchResults,
   RecentlyAdded,
+  AzList,
 } from './pages';
+import { BaseLayout } from './layouts';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 // LOADERS
-import BaseLayout, { loader as BaseLayoutLoader } from './layouts/BaseLayout';
+import { loader as LandingLoader } from './pages/Landing';
 import { loader as SearchResultsLoader } from './pages/SearchResults';
 import { loader as RecentlyAddedLoader } from './pages/RecentlyAdded';
 //import { loader as WatchSingleLoader } from './pages/WatchSingle';
@@ -35,11 +37,11 @@ const router = createBrowserRouter([
     path: '/',
     element: <BaseLayout />,
     errorElement: <Error />,
-    loader: BaseLayoutLoader(queryClient),
     children: [
       {
         index: true,
         element: <Landing />,
+        loader: LandingLoader(queryClient),
       },
       {
         element: <LayoutTwoCols />,
@@ -66,6 +68,10 @@ const router = createBrowserRouter([
             path: 'recently-added',
             element: <RecentlyAdded />,
             loader: RecentlyAddedLoader,
+          },
+          {
+            path: 'az-list',
+            element: <AzList />,
           },
         ],
       },
