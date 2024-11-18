@@ -1,16 +1,22 @@
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 
 const PaginationLong = () => {
   const { pagination } = useLoaderData(); // Assuming pagination comes from loader
   //const { current_page, last_visible_page } = pagination;
   const { current_page, last_visible_page, has_next_page } = pagination;
 
+  const { search, pathname } = useLocation();
+
   const navigate = useNavigate();
 
   // Function to handle page changes
   const handlePageChange = (pageNumber) => {
-    if (pageNumber < 1 || pageNumber > last_visible_page) return; // Ensure valid page range
-    navigate(`?page=${pageNumber}`);
+    // if (pageNumber < 1 || pageNumber > last_visible_page) return; // Ensure valid page range
+    // navigate(`?page=${pageNumber}`);
+    const searchParams = new URLSearchParams(search);
+    searchParams.set('page', pageNumber);
+
+    navigate(`${pathname}?${searchParams.toString()}`);
   };
 
   const renderPageButtons = () => {

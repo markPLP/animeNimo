@@ -6,8 +6,6 @@ const Pagination = () => {
   const { current_page, last_visible_page } = pagination;
   // const {} =  pagination.items
 
-  if (last_visible_page > 10) return <PaginationLong />;
-
   const { search, pathname } = useLocation();
   const navigate = useNavigate();
   // console.log(search, 'uselocation');
@@ -24,6 +22,7 @@ const Pagination = () => {
     (_, index) => index + 1
   );
 
+  if (last_visible_page > 10) return <PaginationLong />;
   if (pages < 2) return null;
 
   return (

@@ -6,8 +6,6 @@ import { memo, useMemo } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const Hero = ({ data }) => {
-  console.log(data, 'from hero banner data');
-
   const settings = useMemo(
     () => ({
       dots: false,

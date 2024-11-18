@@ -3,7 +3,6 @@ import { animeUserButtonIcons, dateFormat } from '../../utils';
 import { BsFillEmojiSmileFill } from 'react-icons/bs';
 
 const RandomUserWidget = ({ loaderData }) => {
-  console.log(loaderData, 'from randomUserWidget');
   const { last_online, gender, birthday, joined, mal_id, username, images } =
     loaderData;
   const imgUrl = images?.webp?.image_url;

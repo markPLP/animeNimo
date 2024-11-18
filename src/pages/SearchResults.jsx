@@ -21,9 +21,8 @@ const SearchResults = () => {
   }
   return (
     <>
-      {<GridSearchResults data={animeList} />}
-
-      <Pagination pagination={pagination} />
+      <GridSearchResults data={animeList} />
+      <Pagination />
     </>
   );
 };

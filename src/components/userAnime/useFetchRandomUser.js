@@ -7,7 +7,6 @@ export const randomUserQuery = {
     try {
       const response = await customFetch.get('/random/users');
       const username = response?.data?.data?.username;
-      console.log(username, 'from random user');
       return username;
     } catch (error) {
       console.error('Error fetching random user data:', error);
