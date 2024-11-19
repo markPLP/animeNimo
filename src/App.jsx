@@ -21,8 +21,7 @@ import { loader as LandingLoader } from './pages/Landing';
 import { loader as SearchResultsLoader } from './pages/SearchResults';
 import { loader as RecentlyAddedLoader } from './pages/RecentlyAdded';
 import { loader as AzListLoader } from './pages/AzList';
-
-//import { loader as WatchSingleLoader } from './pages/WatchSingle';
+import { loader as WatchSingleLoader } from './pages/WatchSingle';
 import { AppProvider } from './context';
 import LayoutTwoCols from './layouts/LayoutTwoCols';
 
@@ -51,7 +50,7 @@ const router = createBrowserRouter([
           {
             path: 'watch/:mal_id',
             element: <WatchSingle />,
-            // loader: WatchSingleLoader(queryClient),
+            loader: WatchSingleLoader(queryClient),
           },
           {
             path: 'search-results',

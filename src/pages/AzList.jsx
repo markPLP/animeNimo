@@ -7,13 +7,16 @@ const searchByLetterQuery = (queryParams, request) => {
   const searchTerm = url.searchParams.get('letter') || '';
 
   const { letter, page } = queryParams;
+
+  // Default to `letter=` when `searchTerm` is 'all'
+  const queryLetter = searchTerm === 'all' ? '' : letter ?? searchTerm;
+
   return {
-    queryKey: ['searchByLetter', letter ?? searchTerm, page ?? 1],
+    queryKey: ['searchByLetter', queryLetter, page ?? 1],
     queryFn: async () => {
-      const response = await customFetch.get('/anime?sfw=true', {
-        params: queryParams,
+      const response = await customFetch.get('/anime', {
+        params: { letter: queryLetter, page: page ?? 1, sfw: true },
       });
-      // const response = await customFetch.get(`/anime?letter=${queryParams}`);
       return response;
     },
   };
@@ -45,11 +48,7 @@ export const loader =
   };
 
 const AzList = () => {
-  const { data, pagination } = useLoaderData();
-
-  console.log(data, 'from data useloarder');
-  console.log(pagination, 'from pagination useloarder');
-
+  const { data } = useLoaderData();
   return (
     <div>
       <GridSearchResults data={data} />

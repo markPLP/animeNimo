@@ -48,21 +48,26 @@ const RandomUserWidget = ({ loaderData }) => {
               <tr>
                 <th>Last online</th>
                 <td className="text-right capitalize">
-                  {/* {`${dateFormat(last_online)}`} */}
-                  last_online
+                  {`${dateFormat(last_online)}`}
                 </td>
               </tr>
               <tr>
                 <th>Gender</th>
-                <td className="text-right capitalize">{gender}</td>
+                <td className="text-right capitalize">
+                  {gender ? gender : 'n/a'}
+                </td>
               </tr>
               <tr>
                 <th>Birthday</th>
-                <td className="text-right capitalize">{birthday}</td>
+                <td className="text-right capitalize">
+                  {birthday ? birthday : 'n/a'}
+                </td>
               </tr>
               <tr>
                 <th>Joined</th>
-                <td className="text-right capitalize">{joined}</td>
+                <td className="text-right capitalize">
+                  {`${dateFormat(joined)}`}
+                </td>
               </tr>
             </tbody>
           </table>

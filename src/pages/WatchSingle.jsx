@@ -1,21 +1,41 @@
 import { useParams } from 'react-router-dom';
-import { Loading } from '../components';
-import { QueryClient } from '@tanstack/react-query';
-import { useFetchFullAnime } from '../hooks/useFetchFullAnime';
+import { WatchAnime } from '../components';
+import { customFetch } from '../utils';
+
+const singleWatchQuery = (mal_id) => {
+  return {
+    queryKey: ['singleWatchAnime', mal_id],
+    queryFn: () => {
+      return customFetch.get(`/anime/${mal_id}/episodes`);
+    },
+  };
+};
 
 export const loader =
   (queryClient) =>
-  async ({ request }) => {
-    console.log('params url', new URL(request.url).searchParams.entries());
+  async ({ params }) => {
+    const { mal_id } = params;
 
-    return null;
+    const response = await queryClient.ensureQueryData(
+      singleWatchQuery(mal_id)
+    );
+
+    const data = response.data.data;
+    const pagination = response.data.pagination;
+
+    return { data, pagination };
   };
 
 const WatchSingle = () => {
   const { mal_id } = useParams();
-  const { data } = useFetchFullAnime(mal_id);
+  console.log(mal_id, 'from useParams');
 
-  return <div>WatchSingle: {mal_id}</div>; // Display the mal_id for testing
+  return (
+    <>
+      WatchSingle: {mal_id}
+      <WatchAnime />
+    </>
+  ); // Display the mal_id for testing
 };
 
 export default WatchSingle;

@@ -25,3 +25,5 @@ export { default as TypeHeadSuggestions } from './TypeHeadSuggestions';
 export { default as SidebarRecentlyAdded } from './SidebarRecentlyAdded';
 export { default as SidebarRecentlyAddedList } from './SidebarRecentlyAddedList';
 export { default as RandomUserWidget } from '../components/userAnime/RandomUserWidget';
+export { default as WatchAnime } from './WatchAnime';
+export { default as PaginationAnimeEpisodes } from './PaginationAnimeEpisodes';
