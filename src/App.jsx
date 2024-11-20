@@ -48,7 +48,7 @@ const router = createBrowserRouter([
         element: <LayoutTwoCols />,
         children: [
           {
-            path: 'watch/:mal_id',
+            path: 'watch/:mal_id/:title',
             element: <WatchSingle />,
             loader: WatchSingleLoader(queryClient),
           },

@@ -53,6 +53,7 @@ const GridAnime = ({ data }) => {
             {hoveredCardId === mal_id && (
               <GridAnimeHoverElement
                 mal_id={mal_id}
+                title={title}
                 hoveredCard={hoveredCard}
               />
             )}

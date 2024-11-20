@@ -3,9 +3,13 @@ import { AiOutlineUsergroupAdd } from 'react-icons/ai';
 import GridAnimeHoverElement from './GridAnimeHoverElement';
 import { useCallback, useState } from 'react';
 
+// eslint-disable-next-line react/prop-types
 const SidebarTopAnimeItem = ({ dataItem, index }) => {
+  // eslint-disable-next-line react/prop-types
   const { mal_id, title, scored_by, images } = dataItem;
+  // eslint-disable-next-line react/prop-types
   const image = images?.webp?.image_url;
+  // eslint-disable-next-line react/prop-types
   const imageLarge = images?.webp?.large_image_url;
   let number = index + 1;
 

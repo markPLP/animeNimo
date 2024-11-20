@@ -1,12 +1,7 @@
-import WatchPerEpisode from './WatchPerEpisode';
+import PaginationAnimeEpisodes from './PaginationAnimeEpisodes';
 
 const WatchAnime = () => {
-  return (
-    <div>
-      This is the parent component
-      <WatchPerEpisode />
-    </div>
-  );
+  return <div>This is the parent component</div>;
 };
 
 export default WatchAnime;

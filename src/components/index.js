@@ -27,3 +27,6 @@ export { default as SidebarRecentlyAddedList } from './SidebarRecentlyAddedList'
 export { default as RandomUserWidget } from '../components/userAnime/RandomUserWidget';
 export { default as WatchAnime } from './WatchAnime';
 export { default as PaginationAnimeEpisodes } from './PaginationAnimeEpisodes';
+// export { default as WatchAnimeEpisodesList } from './WatchAnimeEpisodesList';
+export { default as WatchAnimeButtonList } from './WatchAnimeButtonList';
+export { default as AnimeDetailed } from './AnimeDetailed';

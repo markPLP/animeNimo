@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useFetchFullAnime } from '../hooks/useFetchFullAnime';
 
 useFetchFullAnime;
-const GridAnimeHoverElement = ({ mal_id, hoveredCard }) => {
+const GridAnimeHoverElement = ({ mal_id, hoveredCard, title }) => {
   const { isLoading, data, isError } = useFetchFullAnime(mal_id);
   const hoverRef = useRef(null);
   useEffect(() => {
@@ -91,7 +91,7 @@ const GridAnimeHoverElement = ({ mal_id, hoveredCard }) => {
         })}
       </p>
       <Link
-        to={`/watch/${mal_id}`}
+        to={`/watch/${mal_id}/${title}`}
         className="rounded-b-[9px] flex items-center gap-2 bg-primary hover hover:bg-secondary w-full justify-center py-3 px-4 uppercase text-[20px] mt-3"
       >
         <BsFillPlayCircleFill />
