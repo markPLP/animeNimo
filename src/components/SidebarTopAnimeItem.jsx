@@ -2,6 +2,7 @@ import { formatNumber } from '../utils';
 import { AiOutlineUsergroupAdd } from 'react-icons/ai';
 import GridAnimeHoverElement from './GridAnimeHoverElement';
 import { useCallback, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 // eslint-disable-next-line react/prop-types
 const SidebarTopAnimeItem = ({ dataItem, index }) => {
@@ -34,7 +35,8 @@ const SidebarTopAnimeItem = ({ dataItem, index }) => {
   }, []);
 
   return (
-    <article
+    <Link
+      to={`/watch/${mal_id}/${title}`}
       className={listItemClasses}
       style={index === 0 ? { backgroundImage: `url(${imageLarge})` } : {}}
       key={`animeDeets-${mal_id}-${index}`}
@@ -77,7 +79,7 @@ const SidebarTopAnimeItem = ({ dataItem, index }) => {
       {hoveredCardId === mal_id && (
         <GridAnimeHoverElement mal_id={mal_id} hoveredCard={hoveredCard} />
       )}
-    </article>
+    </Link>
   );
 };
 

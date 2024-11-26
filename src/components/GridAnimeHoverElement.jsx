@@ -14,6 +14,9 @@ const GridAnimeHoverElement = ({ mal_id, hoveredCard, title }) => {
       if (hoverRef.current) {
         const contentRect = hoverRef.current.getBoundingClientRect();
         const viewportHeight = window.innerHeight;
+        const viewportWidth = window.innerWidth;
+
+        // Vertical adjustment
         if (contentRect.bottom > viewportHeight) {
           hoverRef.current.style.top = 'auto';
           hoverRef.current.style.bottom = '0'; // Align to the bottom if overflow
@@ -21,13 +24,28 @@ const GridAnimeHoverElement = ({ mal_id, hoveredCard, title }) => {
           hoverRef.current.style.top = '50%';
           hoverRef.current.style.bottom = 'auto';
         }
+
+        // Horizontal adjustment
+        if (contentRect.right > viewportWidth) {
+          hoverRef.current.style.left = '0%';
+          hoverRef.current.style.right = '0'; // Align to the right if overflow
+        } else if (contentRect.left < 0) {
+          hoverRef.current.style.left = '100%'; // Align to the left if overflow
+          hoverRef.current.style.right = 'auto';
+        } else {
+          hoverRef.current.style.left = '50%'; // Default alignment
+          hoverRef.current.style.right = 'auto';
+        }
+
+        // Optional: Add transform to center when aligned
+        hoverRef.current.style.transform = 'translate(-50%, -50%)';
       }
     };
 
     adjustPosition();
     window.addEventListener('resize', adjustPosition);
     return () => window.removeEventListener('resize', adjustPosition);
-  }, [hoveredCard]); // Dependency array remains the same
+  }, [hoveredCard]);
 
   // Handle loading and error states after hooks
   if (isLoading) {
@@ -35,7 +53,7 @@ const GridAnimeHoverElement = ({ mal_id, hoveredCard, title }) => {
       <div
         ref={hoverRef}
         className={`rounded-[11px] px-0 pb-0 z-10 w-[330px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
-          bg-gray-800 text-white p-4 rounded shadow-lg transition-opacity duration-200 flex place-items-center place-content-center`}
+          bg-gray-800 text-white p-4 shadow-lg transition-opacity duration-200 flex place-items-center place-content-center`}
       >
         <span className="loading loading-dots loading-lg"></span>
       </div>
@@ -54,7 +72,7 @@ const GridAnimeHoverElement = ({ mal_id, hoveredCard, title }) => {
     <div
       ref={hoverRef}
       className={`rounded-[11px] px-0 pb-0 z-10 w-[330px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
-          bg-gray-800 text-white p-4 rounded shadow-lg transition-opacity duration-200 
+          bg-gray-800 text-white p-4 shadow-lg transition-opacity duration-200 
           ${hoveredCard ? 'opacity-100' : 'opacity-0'} 
           hidden md:block`}
     >

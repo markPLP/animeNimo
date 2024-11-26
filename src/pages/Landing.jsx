@@ -12,10 +12,7 @@ import { recentlyAddedQuery } from '../hooks/useFetchRecentlyAdded';
 import { heroQuery } from '../hooks/useFetchHero';
 import { popularAnimeQuery } from '../hooks/useFetchPopular';
 //import { topAnimeQuery } from '../hooks/useFetchTopAnime';
-import {
-  randomUserQuery,
-  userFullDetailsQuery,
-} from '../components/userAnime/useFetchRandomUser';
+import { randomUserQuery } from '../components/userAnime/useFetchRandomUser';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -34,19 +31,19 @@ export const loader = (queryClient) => async () => {
       ]);
     //topAnime
 
-    let userFullDetails = null;
-    if (randomUser) {
-      userFullDetails = await queryClient.ensureQueryData(
-        userFullDetailsQuery(randomUser)
-      );
-    }
+    // let userFullDetails = null;
+    // if (randomUser) {
+    //   userFullDetails = await queryClient.ensureQueryData(
+    //     userFullDetailsQuery(randomUser)
+    //   );
+    // }
 
     return {
       heroBanner: heroBanner || [],
       popularAnime: popularAnime || [],
       recentAddedAnime: recentAddedAnime || [],
       randomUser,
-      userFullDetails,
+      //userFullDetails,
       // topAnime: topAnime || [],
     };
   } catch (error) {
@@ -57,13 +54,8 @@ export const loader = (queryClient) => async () => {
 
 const Landing = () => {
   const { allGenreData } = useGlobalContext();
-  const {
-    heroBanner,
-    popularAnime,
-    recentAddedAnime,
-    topAnime,
-    userFullDetails,
-  } = useLoaderData();
+  const { heroBanner, popularAnime, recentAddedAnime, topAnime, randomUser } =
+    useLoaderData();
 
   return (
     <section className="align-element py-10 lg:flex gap-8">
@@ -79,7 +71,7 @@ const Landing = () => {
       <aside className="lg:w-[380px]">
         <Filters resetLink="/" allGenres={allGenreData} />
         <SidebarTopAnime loaderData={topAnime} />
-        <RandomUserWidget loaderData={userFullDetails} />
+        <RandomUserWidget loaderData={randomUser} />
       </aside>
     </section>
   );

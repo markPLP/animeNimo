@@ -3,23 +3,19 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { useFetchEpisodes } from '../hooks/useFetchEpisodes';
 import Loading from './Loading';
 import WatchAnimeButtonList from './WatchAnimeButtonList';
+import { useSingleEpisodeContext } from '../pages/WatchSingle';
 
 // eslint-disable-next-line react/display-name
 const PaginationAnimeEpisodes = () => {
   const { mal_id } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
-
+  const { singleEpisode } = useSingleEpisodeContext();
   const { episodes, pagination, isLoading, isError, error } = useFetchEpisodes(
     mal_id,
     currentPage
   );
 
   const { last_visible_page, has_next_page } = pagination;
-
-  // const newdata = {
-  //   lastVisiblePage: pagination.last_visible_page,
-  //   hasNextPage: pagination.has_next_page, // Dynamically use actual next page flag
-  // };
 
   const goToNextPage = useCallback(() => {
     if (currentPage < last_visible_page) {
@@ -33,19 +29,12 @@ const PaginationAnimeEpisodes = () => {
     }
   }, [currentPage]);
 
-  const handleChange = useCallback(
-    (mal_id) => {
-      console.log(mal_id, 'from single button ID');
-    },
-    [mal_id]
-  );
+  // Memoize the pagination controls
+  const paginationControls = useMemo(() => {
+    if (last_visible_page <= 1) return null;
 
-  // if (isLoading) return <Loading />;
-  // if (isError) return <p>{error?.message || 'Failed to fetch data'}</p>;
-
-  return (
-    <div className="flex flex-wrap gap-2 mt-4 flex-col">
-      <div className="pagination mb-4">
+    return (
+      <div className="pagination">
         <button
           className="btn bg-primary"
           onClick={goToPrevPage}
@@ -64,45 +53,36 @@ const PaginationAnimeEpisodes = () => {
           Next
         </button>
       </div>
+    );
+  }, [
+    currentPage,
+    last_visible_page,
+    has_next_page,
+    goToNextPage,
+    goToPrevPage,
+  ]);
+
+  if (isError || error)
+    return <p>{error?.message || 'Failed to fetch data'}</p>;
+
+  return (
+    <div className="flex flex-wrap gap-2 mt-4 flex-col">
+      <div className="flex flex-col gap-4 justify-between mb-5 sm:flex-row sm:items-center">
+        <p className="text-[20px]">
+          You are viewing episodes <span>{singleEpisode}</span>
+        </p>
+        {paginationControls}
+      </div>
+
       {isLoading ? (
         <Loading />
       ) : (
-        <WatchAnimeButtonList
-          episodes={episodes}
-          onChange_setMal_id={handleChange}
-        />
+        <>
+          <WatchAnimeButtonList episodes={episodes} />
+        </>
       )}
     </div>
   );
 };
 
 export default memo(PaginationAnimeEpisodes);
-
-// import React, { useCallback, useMemo, useState } from 'react';
-// import { useFetchSingleEpisodes } from '../hooks/useFetchEpisodes';
-// import Loading from './Loading';
-// import WatchPerEpisode from './WatchPerEpisode';
-
-// const PaginationAnimeEpisodes = ({ EpData, parentEpisodeId }) => {
-//   const [episodeById, setEpisodeById] = useState(1);
-
-//   const { episode, isLoading, isError, error } = useFetchSingleEpisodes(
-//     parentEpisodeId,
-//     episodeById
-//   );
-
-//   const selectedsingleEpisode = useCallback((episodeId) => {
-//     setEpisodeById(episodeId);
-//     console.log(episodeId, 'change from button click episodeId');
-//   }, []);
-
-//   const memoizedEpData = useMemo(() => EpData, [EpData]);
-//   console.log(memoizedEpData, 'from memoizedEpData');
-
-//   if (isLoading) return <Loading />;
-//   if (isError) return <p>{error?.message || 'Failed to fetch data'}</p>;
-
-//   return (
-
-//   );
-// };

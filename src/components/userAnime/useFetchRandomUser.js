@@ -6,51 +6,79 @@ export const randomUserQuery = {
   queryFn: async () => {
     try {
       const response = await customFetch.get('/random/users');
-      const username = response?.data?.data?.username;
-      return username;
+      console.log(response, 'responseresponseresponse');
+      const data = response?.data?.data;
+
+      return data;
     } catch (error) {
+      if (error?.response?.status === 404) {
+        console.warn('404 error: Retrying...');
+        throw new Error('404: Resource not found.');
+      }
       console.error('Error fetching random user data:', error);
       throw new Response('Failed to load random user data', { status: 500 });
     }
   },
-};
-
-export const userFullDetailsQuery = (username) => ({
-  queryKey: ['userFullDetails', username],
-  queryFn: async () => {
-    try {
-      // Make an API call to get the full details of the user
-      const response = await customFetch.get(`/users/${username}/full`);
-
-      // Return the full user data
-      return response?.data?.data;
-    } catch (error) {
-      console.error(`Error fetching full details for ${username}:`, error);
-      throw new Response('Failed to load full user data', { status: 500 });
+  retry: (failureCount, error) => {
+    // Retry up to 3 times only if the error is a 404
+    if (error?.message.includes('404') && failureCount < 3) {
+      return true;
     }
+    return false; // Do not retry for other errors
   },
-});
+};
 
 export const useFetchRandomUser = () => {
   const {
     data: username,
     isLoading: isUserLoading,
     isError: isUserError,
-  } = useQuery(randomUserQuery.queryKey, randomUserQuery.queryFn);
+    refetch: refetchRandomUser, // Refetch function for random user
+  } = useQuery(randomUserQuery.queryKey, randomUserQuery.queryFn, {
+    retry: (failureCount, error) => error.message.includes('404'), // Retry on 404 error
+  });
 
-  // Fetch the full details of the user only after username is available
   const {
     data: fullUserData,
     isLoading: isDetailsLoading,
     isError: isDetailsError,
-  } = useQuery(userFullDetailsQuery(username), {
-    enabled: !!username, // Ensure this query only runs after we have a username
-  });
+    refetch: refetchUserDetails, // Refetch function for user details
+  } = useQuery(
+    userFullDetailsQuery(username).queryKey,
+    userFullDetailsQuery(username).queryFn,
+    {
+      enabled: !!username, // Ensure this query only runs after we have a username
+      retry: (failureCount, error) => error.message.includes('404'), // Retry on 404 error
+    }
+  );
 
-  // Combine loading and error states
   const isLoading = isUserLoading || isDetailsLoading;
   const isError = isUserError || isDetailsError;
+
+  // Trigger refetch manually if needed
+  const refetch = async () => {
+    if (isUserError) await refetchRandomUser();
+    if (isDetailsError) await refetchUserDetails();
+  };
+
   console.log(fullUserData, 'full data from useFetchRandom');
 
-  return { fullUserData, isLoading, isError };
+  return { fullUserData, isLoading, isError, refetch };
 };
+
+// export const userFullDetailsQuery = (username) => ({
+//   queryKey: ['userFullDetails', username],
+//   queryFn: async () => {
+//     try {
+//       const response = await customFetch.get(`/users/${username}/full`);
+//       return response?.data?.data;
+//     } catch (error) {
+//       if (error?.response?.status === 404) {
+//         // Refetch logic for 404
+//         throw new Error('404: User details not found. Retrying...');
+//       }
+//       console.error(`Error fetching full details for ${username}:`, error);
+//       throw new Response('Failed to load full user data', { status: 500 });
+//     }
+//   },
+// });

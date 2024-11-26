@@ -30,3 +30,4 @@ export { default as PaginationAnimeEpisodes } from './PaginationAnimeEpisodes';
 // export { default as WatchAnimeEpisodesList } from './WatchAnimeEpisodesList';
 export { default as WatchAnimeButtonList } from './WatchAnimeButtonList';
 export { default as AnimeDetailed } from './AnimeDetailed';
+export { default as NavLinks } from './NavLinks';

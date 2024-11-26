@@ -1,10 +1,8 @@
 import { useLoaderData, useParams } from 'react-router-dom';
-import {
-  AnimeDetailed,
-  PaginationAnimeEpisodes,
-  WatchAnime,
-} from '../components';
+import { AnimeDetailed, PaginationAnimeEpisodes } from '../components';
 import { customFetch } from '../utils';
+import { Component, createContext, useContext, useState } from 'react';
+import WatchBySingleEpisode from '../components/WatchBySingleEpisode';
 
 const singleAnimeDetailsQuery = (mal_id) => ({
   queryKey: ['animeDetails', mal_id],
@@ -52,18 +50,23 @@ export const loader =
     return { title: animeTitle, mal_id: numericMalId, animeDetails: allData };
   };
 
+export const singleEpisodeContext = createContext();
+
+// custom hook is a function
+export const useSingleEpisodeContext = () => useContext(singleEpisodeContext);
+
 const WatchSingle = () => {
+  const [singleEpisode, setSingleEpisode] = useState(1);
+
   const { mal_id } = useParams();
   const { animeDetails } = useLoaderData();
 
-  console.log(animeDetails, 'from useloaderdata1');
-
   return (
-    <>
-      WatchSingle: {mal_id}
-      <PaginationAnimeEpisodes />
+    <singleEpisodeContext.Provider value={{ singleEpisode, setSingleEpisode }}>
       <AnimeDetailed />
-    </>
+      <PaginationAnimeEpisodes />
+      <WatchBySingleEpisode />
+    </singleEpisodeContext.Provider>
   ); // Display the mal_id for testing
 };
 

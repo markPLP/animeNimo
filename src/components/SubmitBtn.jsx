@@ -1,7 +1,7 @@
-const SubmitBtn = () => {
+const SubmitBtn = ({ text }) => {
   return (
-    <button type="submit" className="btn btn-primary block">
-      SubmitBtn
+    <button type="submit" className="btn btn-primary w-full">
+      {text}
     </button>
   );
 };

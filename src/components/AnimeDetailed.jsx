@@ -35,13 +35,13 @@ const AnimeDetailed = () => {
           })}
         </p>
 
-        <article className="mt-7 sm:grid grid-cols-[225px,1fr] gap-4 lg:grid-cols-6 grid-rows-[auto,1fr]">
-          <figure className="mb-3 flex-grow lg:col-span-2">
+        <article className="flex flex-col gap-4 mt-7 [@media(min-width:518px)]:grid grid-cols-[225px,1fr] gap-4 grid-rows-[auto,auto] md:grid-rows-[auto,1fr]">
+          <figure className="flex-grow md:grid-rows-1 md:col-start-1 md:row-span-2 md:row-start-1">
             <img src={imgURL} alt={title} className="" />
           </figure>
-          <div className="lg:col">
-            <ul className="flex flex-col gap-1 mb-4">
-              <li className="flex flex-col gap-2 u">
+          <div className="">
+            <ul className="flex flex-col gap-1 sm:grid grid-cols-2 md:grid-cols-4 md:gap-[20px]">
+              <li className="flex flex-col gap-2 sm:text-center">
                 <div>
                   <span className="bg-secondary text-white uppercase font-bold text-[10px] inline-block p-0 px-3 text-center">
                     score
@@ -55,33 +55,39 @@ const AnimeDetailed = () => {
                   {formatNumber(favorites)} users
                 </span>
               </li>
-              <li>
+              <li className="sm:text-center">
                 <p className="text-[18px] text-white">
                   Ranked <span className="font-bold">#{rank}</span>
                 </p>
               </li>
-              <li>
+              <li className="sm:text-center">
                 <p className="text-[18px] text-white">
                   Popularity <span className="font-bold">#{popularity}</span>
                 </p>
               </li>
-              <li>
+              <li className="sm:text-center">
                 <p className="text-[18px] text-white">
-                  Members <span className="font-bold">{members}</span>
+                  Members{' '}
+                  <span className="font-bold">{formatNumber(members)}</span>
                 </p>
               </li>
             </ul>
           </div>
-          <div className="sm:col-span-2 lg:col-span-1 col-start-3 col-end-auto">
+          {/*sm:row-start-2 sm:col-span-2  [@media(min-width:518px)]:col-span-2 md:row-start-2 md:col-start-2 md:col-span-1*/}
+          <div className="col-span-2 md:row-start-2 md:col-start-2">
             <h4 className="font-bold border-b pb-2 mb-2">Synopsis</h4>
             <p>
               {!showMore ? `${synopsis.substring(0, 390)}` : synopsis}
-              <button
-                onClick={() => setShowMore(!showMore)}
-                className="text-secondary ml-2"
-              >
-                {showMore ? 'Show less' : 'Read more...'}
-              </button>
+              {synopsis.length > 390 ? (
+                <button
+                  onClick={() => setShowMore(!showMore)}
+                  className="text-secondary ml-2"
+                >
+                  {showMore ? 'Show less' : 'Read more...'}
+                </button>
+              ) : (
+                ''
+              )}
             </p>
           </div>
         </article>

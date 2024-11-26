@@ -12,6 +12,14 @@
   }
 }
 
+.custom-margin-center-100vw {
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  width: 100vw;
+  right: 0;
+  left: 0;
+}
+
 /* Add this to your global CSS file */
 input[type='search']::-webkit-search-decoration,
 input[type='search']::-webkit-search-results-button,

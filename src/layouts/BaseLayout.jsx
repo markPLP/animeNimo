@@ -15,7 +15,7 @@ const BaseLayout = () => {
       <Navbar />
       <Suspense fallback={<Loading />}>
         {isPageLoading ? (
-          <Loading />
+          <Loading extendClass="h-screen" />
         ) : (
           <main>
             <Outlet />

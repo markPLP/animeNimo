@@ -24,7 +24,7 @@ const SidebarTopAnime = () => {
               key={index}
               role="tab"
               className={`text-[16px] text-neutral-300 hover:text-secondary block row-auto capitalize ${
-                filter === filterBy ? 'tab-active text-neutral-50' : ''
+                filter === filterBy ? 'tab-active text-secondary' : ''
               }`}
               onClick={() => handleFilterClick(filterBy)}
             >

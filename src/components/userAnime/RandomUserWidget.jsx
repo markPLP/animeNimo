@@ -2,9 +2,12 @@ import React from 'react';
 import { animeUserButtonIcons, dateFormat } from '../../utils';
 import { BsFillEmojiSmileFill } from 'react-icons/bs';
 
+// eslint-disable-next-line react/prop-types
 const RandomUserWidget = ({ loaderData }) => {
-  const { last_online, gender, birthday, joined, mal_id, username, images } =
+  // eslint-disable-next-line react/prop-types
+  const { last_online, gender, birthday, joined, username, images } =
     loaderData;
+  // eslint-disable-next-line react/prop-types
   const imgUrl = images?.webp?.image_url;
   return (
     <div className="mt-5 bg-base-300 rounded-lg p-4">
@@ -42,7 +45,7 @@ const RandomUserWidget = ({ loaderData }) => {
               <tr>
                 <th>Username</th>
                 <td className="text-right capitalize text-[18px] text-primary font-bold">
-                  {username}
+                  {username || 'n/a'}
                 </td>
               </tr>
               <tr>

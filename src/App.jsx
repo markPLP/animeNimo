@@ -24,6 +24,8 @@ import { loader as AzListLoader } from './pages/AzList';
 import { loader as WatchSingleLoader } from './pages/WatchSingle';
 import { AppProvider } from './context';
 import LayoutTwoCols from './layouts/LayoutTwoCols';
+import About from './pages/About';
+import { Loading } from './components';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -94,7 +96,10 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <AppProvider>
-        <RouterProvider router={router} />
+        <RouterProvider
+          router={router}
+          fallbackElement={<Loading extendClass="h-screen" />}
+        />
         <ReactQueryDevtools initialIsOpen={false} />
       </AppProvider>
     </QueryClientProvider>

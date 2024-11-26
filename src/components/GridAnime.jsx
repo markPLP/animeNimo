@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import GridAnimeHoverElement from './GridAnimeHoverElement';
+import { Link } from 'react-router-dom';
 
 const GridAnime = ({ data }) => {
   // Local state for hovering effect
@@ -23,9 +24,9 @@ const GridAnime = ({ data }) => {
         const title = card.entry.title;
         const mal_id = card.entry.mal_id;
         const latestEp = card.episodes[0];
-
         return (
-          <div
+          <Link
+            to={`/watch/${mal_id}/${title}`}
             key={mal_id}
             className="card bg-base-100 w-full shadow-xl rounded-md relative"
             onMouseEnter={() => handleMouseEnter(mal_id)}
@@ -49,15 +50,17 @@ const GridAnime = ({ data }) => {
               </div>
             </div>
 
-            {/* Render GridAnimeHoverElement only for the hovered card */}
-            {hoveredCardId === mal_id && (
-              <GridAnimeHoverElement
-                mal_id={mal_id}
-                title={title}
-                hoveredCard={hoveredCard}
-              />
-            )}
-          </div>
+            <div className="hidden lg:block">
+              {/* Render GridAnimeHoverElement only for the hovered card */}
+              {hoveredCardId === mal_id && (
+                <GridAnimeHoverElement
+                  mal_id={mal_id}
+                  title={title}
+                  hoveredCard={hoveredCard}
+                />
+              )}
+            </div>
+          </Link>
         );
       })}
     </div>

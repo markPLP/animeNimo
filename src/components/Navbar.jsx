@@ -3,14 +3,22 @@ import { FaBarsStaggered } from 'react-icons/fa6';
 import ThemeUI from './ThemeUI';
 import Socials from './Socials';
 import TypeHeadSearch from './TypeHeadSearch';
+import NavLinks from './NavLinks';
 
 const Navbar = () => {
+  // const sublinksRef = useRef(null);
+  // const sublinksStyle = {
+  //   height: sublinksRef.current
+  //     ? `${sublinksRef.current.getBoundingClientRect().height}px`
+  //     : 'auto', // Fallback value
+  // };
+
   return (
     <nav className="bg-base-300">
       <div className="navbar complex-grid-header align-element grid items-center gap-x-3 gap-y-2 lg:gap-5 px-3">
         <div className="header-logo-burger flex items-center">
           {/* DROPDOWN */}
-          <div className="dropdown mr-5">
+          <div className="dropdown [position:unset]">
             <label
               tabIndex={0}
               className="btn btn-ghost p-4 h-auto"
@@ -18,22 +26,15 @@ const Navbar = () => {
             >
               <FaBarsStaggered className="h-6 w-6" />
             </label>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-200 rounded-box w-52"
-            >
-              <li>
-                <NavLink to="/">Home</NavLink>
-              </li>
-              <li>
-                <NavLink to="/genre">Genre</NavLink>
-              </li>
-              <li>
-                <NavLink to="/types">Types</NavLink>
-              </li>
-            </ul>
+            {/* SUBLINKS */}
+            <NavLinks />
           </div>
-          <NavLink to="/">AnimeNimo</NavLink>
+          <NavLink
+            to="/"
+            className="bg-gradient-to-r from-primary via-blue-500 to-secondary bg-clip-text text-transparent font-bold text-[30px]"
+          >
+            AnimeNimo
+          </NavLink>
         </div>
         <div className="header-search-form block w-full lg:w-[500px]">
           <TypeHeadSearch />

@@ -17,9 +17,19 @@ export const popularAnimeQuery = {
       });
     }
   },
+  retry: (failureCount, error) => {
+    // Retry up to 3 times for 404 or 429 errors
+    if (error?.message.includes('404') || error?.message.includes('429')) {
+      return failureCount < 3;
+    }
+    return false; // Do not retry for other errors
+  },
 };
 
 export const useFetchPopularAnime = () => {
-  const { data, isLoading, isError } = useQuery(popularAnimeQuery);
+  const { data, isLoading, isError } = useQuery({
+    ...popularAnimeQuery,
+    retry: popularAnimeQuery.retry,
+  });
   return { data, isLoading, isError };
 };

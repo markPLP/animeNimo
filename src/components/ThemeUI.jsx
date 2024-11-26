@@ -8,9 +8,14 @@ const initialTHeme = () => {
 const ThemeUI = () => {
   const [theme, setTheme] = useState(initialTHeme());
   const handleThemeChange = (theme) => {
-    setTheme(theme);
+    setTheme(false);
     localStorage.setItem('nimoTheme', JSON.stringify(theme));
   };
+
+  // const handleMouseLeave = () => {
+  //   setShowThemes(!showThemes);
+  //   console.log('out');
+  // };
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -36,7 +41,7 @@ const ThemeUI = () => {
       </div>
       <ul
         tabIndex={0}
-        className="dropdown-content bg-base-300 rounded-box z-[1] w-52 p-2 shadow-2xl right-0"
+        className="dropdown-content bg-base-300 rounded-box w-52 p-2 shadow-2xl right-0 z-20"
       >
         {themes.map((themeOption) => (
           <li key={themeOption}>
@@ -48,7 +53,6 @@ const ThemeUI = () => {
                 checked={theme === themeOption} // mark the selected theme
                 onChange={() => handleThemeChange(themeOption)} // change theme on selection
                 aria-label={themeOption}
-                className="hidden"
               />
               {themeOption}
               {/* {themeOption.charAt(0).toUpperCase() + themeOption.slice(1)}  */}

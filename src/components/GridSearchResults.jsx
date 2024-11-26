@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import GridAnimeHoverElement from './GridAnimeHoverElement';
 import { useState } from 'react';
 
@@ -27,7 +28,8 @@ const GridSearchResults = ({ data }) => {
           const latestEp = card.episodes;
 
           return (
-            <div
+            <Link
+              to={`/watch/${mal_id}/${title}`}
               key={mal_id}
               className="card bg-base-100 w-full shadow-xl rounded-md relative"
               onMouseEnter={() => handleMouseEnter(mal_id)}
@@ -60,7 +62,7 @@ const GridSearchResults = ({ data }) => {
                   hoveredCard={hoveredCard}
                 />
               )}
-            </div>
+            </Link>
           );
         })}
       </div>
