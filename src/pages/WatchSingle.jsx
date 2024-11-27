@@ -55,9 +55,6 @@ export const useSingleEpisodeContext = () => useContext(singleEpisodeContext);
 const WatchSingle = () => {
   const [singleEpisode, setSingleEpisode] = useState(1);
 
-  // const { mal_id } = useParams();
-  // const { animeDetails } = useLoaderData();
-
   return (
     <singleEpisodeContext.Provider value={{ singleEpisode, setSingleEpisode }}>
       <AnimeDetailed />

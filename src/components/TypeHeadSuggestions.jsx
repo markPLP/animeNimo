@@ -33,7 +33,7 @@ const TypeHeadSuggestions = ({
 
         return (
           <Link
-            to={`/watch/${mal_id}`}
+            to={`/watch/${mal_id}/${title}`}
             key={mal_id}
             className={`flex gap-3 items-center p-3 ${
               index % 2 !== 0 ? 'bg-gray-800' : ''
