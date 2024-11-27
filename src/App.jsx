@@ -64,10 +64,6 @@ const router = createBrowserRouter([
             element: <GenreSingle />,
             loader: GenreSingleLoader(queryClient),
           },
-          // {
-          //   path: 'genre',
-          //   element: <Genre />,
-          // },
           {
             path: 'types',
             element: <Types />,

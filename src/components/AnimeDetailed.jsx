@@ -73,7 +73,6 @@ const AnimeDetailed = () => {
               </li>
             </ul>
           </div>
-          {/*sm:row-start-2 sm:col-span-2  [@media(min-width:518px)]:col-span-2 md:row-start-2 md:col-start-2 md:col-span-1*/}
           <div className="col-span-2 md:row-start-2 md:col-start-2">
             <h4 className="font-bold border-b pb-2 mb-2">Synopsis</h4>
             <p>

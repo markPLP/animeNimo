@@ -48,10 +48,6 @@ const Filters = ({ resetLink, allGenres }) => {
     dispatch(setFilterReset());
   };
 
-  // const startYearSelected = (date) => {
-  //   dispatch(setSelectedYearStart(date));
-  // };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -88,7 +84,6 @@ const Filters = ({ resetLink, allGenres }) => {
           name="search"
           size="min-h-10 h-10"
           parentClass="col-span-2"
-          //  value={searchQuery}
           defaultValue={searchQuery}
           onChange={(e) => dispatch(setSearchQuery(e.target.value))}
         />
@@ -97,7 +92,6 @@ const Filters = ({ resetLink, allGenres }) => {
           name="type"
           list={filterAnimeType}
           size="min-h-10 h-10 capitalize"
-          //value={type}
           defaultValue={type}
           onChange={(e) => dispatch(setType(e.target.value))}
         />
@@ -107,7 +101,6 @@ const Filters = ({ resetLink, allGenres }) => {
           list={filterAnimeStatus}
           size="min-h-10 h-10 capitalize"
           defaultValue={status}
-          //value={status}
           onChange={(e) => dispatch(setStatus(e.target.value))}
         />
         <FormSelect
@@ -115,7 +108,6 @@ const Filters = ({ resetLink, allGenres }) => {
           name="order_by"
           list={filterAnimeOrderBy}
           size="min-h-10 h-10 capitalize"
-          //value={orderBy}
           defaultValue={orderBy}
           onChange={(e) => dispatch(setOrderBy(e.target.value))}
         />
@@ -125,7 +117,6 @@ const Filters = ({ resetLink, allGenres }) => {
           excludeIds={[12, 49, 50]}
           onSelectionChange={handleSelectionChange}
           selectedOptions={selectedGenres}
-          // defaultValue={selectedGenres}
         />
         {/* <YearPicker
           name="start_date"
@@ -138,7 +129,6 @@ const Filters = ({ resetLink, allGenres }) => {
           size="h-5"
           name="score"
           parentClass="col-span-2"
-          // defaultValue={score}
           score={score}
           onChange={(e) => dispatch(setScore(e.target.value))}
         />

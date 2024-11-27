@@ -3,10 +3,6 @@ import { NavLink } from 'react-router-dom';
 
 // eslint-disable-next-line react/prop-types
 const NavSubmenu = ({ links }) => {
-  // const currentPage = useMemo(() => {
-  //   return sublinks.find((item) => item.pageId === pageId);
-  // }, [sublinks, pageId]);
-
   const gridCols = 'grid-cols-3';
 
   return (

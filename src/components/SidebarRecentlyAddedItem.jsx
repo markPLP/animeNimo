@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 
 // eslint-disable-next-line react/prop-types
 const SidebarRecentlyAddedItem = ({ dataItem }) => {
-  console.log(dataItem, 'from dataItemdataItem');
-
   // eslint-disable-next-line react/prop-types
   const { entry, episodes } = dataItem;
   const { title, mal_id } = entry;

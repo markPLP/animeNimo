@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const FormCheckbox = ({
   name,
@@ -19,9 +19,6 @@ const FormCheckbox = ({
     onSelectionChange(newSelectedOptions); // update the parent/pass data
   };
 
-  // const filteredOptions = options.filter((option) => {
-  //   return !excludeIds.includes(option.mal_id);
-  // });
   const filteredOptions = options
     ? options.filter((option) => !excludeIds.includes(option.mal_id))
     : [];
@@ -60,7 +57,6 @@ const FormCheckbox = ({
                 type="checkbox"
                 className="checkbox checkbox-xs"
                 value={mal_id}
-                //checked={selectedOptions.includes(mal_id)}
                 checked={isContained}
                 onChange={() => handleCheckboxChange(mal_id)}
                 name={name}

@@ -47,7 +47,6 @@ const GridAnimeHoverElement = ({ mal_id, hoveredCard, title }) => {
     return () => window.removeEventListener('resize', adjustPosition);
   }, [hoveredCard]);
 
-  // Handle loading and error states after hooks
   if (isLoading) {
     return (
       <div
@@ -62,7 +61,6 @@ const GridAnimeHoverElement = ({ mal_id, hoveredCard, title }) => {
 
   if (isError) return <div>Error fetching data...</div>;
 
-  // Only render if data exists
   if (!data) return null;
   const { episodes, synopsis, title_english, type, score, status } = data;
   const { string, to } = data.aired;
@@ -71,7 +69,7 @@ const GridAnimeHoverElement = ({ mal_id, hoveredCard, title }) => {
   return (
     <div
       ref={hoverRef}
-      className={`rounded-[11px] px-0 pb-0 z-10 w-[330px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+      className={`rounded-[11px] px-0 pb-0 z-40 w-[330px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
           bg-gray-800 text-white p-4 shadow-lg transition-opacity duration-200 
           ${hoveredCard ? 'opacity-100' : 'opacity-0'} 
           hidden md:block`}

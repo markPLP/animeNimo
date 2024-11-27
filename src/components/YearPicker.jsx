@@ -20,7 +20,6 @@ const YearPicker = ({ name, label, onYearSelected, selectedYearStart }) => {
 
   return (
     <div className="col-span-2">
-      {/* onMouseLeave={() => setShowCalendar(false)}  */}
       <div
         className="select select-bordered min-h-10 h-10 capitalize flex items-center"
         onClick={() => setShowCalendar(!showCalendar)}

@@ -20,6 +20,9 @@ const fullAnimeQuery = (mal_id) => ({
 });
 
 export const useFetchFullAnime = (mal_id) => {
-  const { isLoading, data, isError } = useQuery(fullAnimeQuery(mal_id));
+  const { isLoading, data, isError } = useQuery({
+    ...fullAnimeQuery(mal_id),
+    retry: fullAnimeQuery(mal_id).retry,
+  });
   return { isLoading, data, isError };
 };

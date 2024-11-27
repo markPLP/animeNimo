@@ -44,7 +44,6 @@ const WatchBySingleEpisode = () => {
             {formatDurationInMinutes(duration)} mins
           </span>
         </p>
-        {/* <p>mal_id: {mal_id}</p> */}
         <p className="font-bold border-b pb-2 mb-2">Synopsis:</p>
         <p>
           {synopsis && !showMore ? `${synopsis.substring(0, 190)}` : synopsis}

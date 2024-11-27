@@ -11,7 +11,6 @@ import {
 import { recentlyAddedQuery } from '../hooks/useFetchRecentlyAdded';
 import { heroQuery } from '../hooks/useFetchHero';
 import { popularAnimeQuery } from '../hooks/useFetchPopular';
-//import { topAnimeQuery } from '../hooks/useFetchTopAnime';
 import { randomUserQuery } from '../components/userAnime/useFetchRandomUser';
 
 import 'slick-carousel/slick/slick.css';
@@ -27,24 +26,13 @@ export const loader = (queryClient) => async () => {
         queryClient.ensureQueryData(popularAnimeQuery),
         queryClient.ensureQueryData(recentlyAddedQuery),
         queryClient.ensureQueryData(randomUserQuery),
-        //queryClient.ensureQueryData(topAnimeQuery('airing')),
       ]);
-    //topAnime
-
-    // let userFullDetails = null;
-    // if (randomUser) {
-    //   userFullDetails = await queryClient.ensureQueryData(
-    //     userFullDetailsQuery(randomUser)
-    //   );
-    // }
 
     return {
       heroBanner: heroBanner || [],
       popularAnime: popularAnime || [],
       recentAddedAnime: recentAddedAnime || [],
       randomUser,
-      //userFullDetails,
-      // topAnime: topAnime || [],
     };
   } catch (error) {
     console.error('Error in loader:', error);

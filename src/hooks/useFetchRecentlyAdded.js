@@ -9,7 +9,6 @@ export const recentlyAddedQuery = {
       const response = await customFetch.get('/watch/episodes');
       const data = response.data.data;
 
-      // console.log(data, 'datadatadata');
       return filterItems(data);
     } catch (error) {
       console.error('Error fetching recently added anime:', error);

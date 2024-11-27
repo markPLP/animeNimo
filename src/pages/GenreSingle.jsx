@@ -1,24 +1,23 @@
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import { GridSearchResults, Pagination } from '../components';
 import { customFetch } from '../utils';
-import { useEffect } from 'react';
 
-const filterGenreQuery = (mal_id) => {
-  return {
-    queryKey: ['singleFilterGenre', mal_id],
-    queryFn: () => {
-      return customFetch.get(`/anime?genres=${mal_id}&sfw=true`);
-    },
-    retry: (failureCount, error) => {
-      // Retry up to 3 times for 404 or 429 errors
-      const status = error?.message?.split(':')[0]; // Extract status from error message
-      if (status === '404' || status === '429') {
-        return failureCount < 3;
-      }
-      return false; // Do not retry for other errors
-    },
-  };
-};
+// const filterGenreQuery = (mal_id) => {
+//   return {
+//     queryKey: ['singleFilterGenre', mal_id],
+//     queryFn: () => {
+//       return customFetch.get(`/anime?genres=${mal_id}&sfw=true`);
+//     },
+//     retry: (failureCount, error) => {
+//       // Retry up to 3 times for 404 or 429 errors
+//       const status = error?.message?.split(':')[0]; // Extract status from error message
+//       if (status === '404' || status === '429') {
+//         return failureCount < 3;
+//       }
+//       return false; // Do not retry for other errors
+//     },
+//   };
+// };
 
 export const loader =
   (queryClient) =>

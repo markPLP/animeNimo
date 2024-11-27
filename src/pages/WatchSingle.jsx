@@ -1,7 +1,7 @@
 import { useLoaderData, useParams } from 'react-router-dom';
 import { AnimeDetailed, PaginationAnimeEpisodes } from '../components';
 import { customFetch } from '../utils';
-import { Component, createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import WatchBySingleEpisode from '../components/WatchBySingleEpisode';
 
 const singleAnimeDetailsQuery = (mal_id) => ({
@@ -44,9 +44,6 @@ export const loader =
     }
 
     const allData = animeDetails.data.data;
-
-    // console.log(allData, 'from allData allData');
-
     return { title: animeTitle, mal_id: numericMalId, animeDetails: allData };
   };
 
@@ -58,8 +55,8 @@ export const useSingleEpisodeContext = () => useContext(singleEpisodeContext);
 const WatchSingle = () => {
   const [singleEpisode, setSingleEpisode] = useState(1);
 
-  const { mal_id } = useParams();
-  const { animeDetails } = useLoaderData();
+  // const { mal_id } = useParams();
+  // const { animeDetails } = useLoaderData();
 
   return (
     <singleEpisodeContext.Provider value={{ singleEpisode, setSingleEpisode }}>

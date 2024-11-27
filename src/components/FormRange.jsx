@@ -4,12 +4,6 @@ const FormRange = ({ label, size, name, parentClass, defaultValue, score }) => {
   const maxNumber = 9.99;
   const [selectedNumber, setSelectedNumber] = useState(score || '');
 
-  const handleChange = (e) => {
-    e.target.value;
-    console.log(e.target.value);
-    console.log(typeof e.target.value);
-  };
-
   return (
     <div className={`form-control ${parentClass}`}>
       <label htmlFor={name} className="label cursor-pointer p-0">

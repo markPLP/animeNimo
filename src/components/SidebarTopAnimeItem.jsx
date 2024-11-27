@@ -36,7 +36,6 @@ const SidebarTopAnimeItem = ({ dataItem, index }) => {
 
   return (
     <div
-      //to={`/watch/${mal_id}/${title}`}
       className={listItemClasses}
       style={index === 0 ? { backgroundImage: `url(${imageLarge})` } : {}}
       key={`animeDeets-${mal_id}-${index}`}

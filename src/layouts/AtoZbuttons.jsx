@@ -8,7 +8,6 @@ const AtoZbuttons = () => {
 
   const handleFilter = useCallback(
     (letter) => {
-      console.log(letter);
       setSelectedLetter(letter);
       navigate(`/az-list?letter=${letter}`);
     },

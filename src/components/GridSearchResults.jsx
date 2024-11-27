@@ -24,17 +24,21 @@ const GridSearchResults = ({ data }) => {
           const image = card.images?.webp?.image_url;
           const title = card.title;
           const mal_id = card.mal_id;
-          //const { title, mal_id } = card.entry;
           const latestEp = card.episodes;
 
           return (
-            <Link
-              to={`/watch/${mal_id}/${title}`}
+            <div
               key={mal_id}
               className="card bg-base-100 w-full shadow-xl rounded-md relative"
               onMouseEnter={() => handleMouseEnter(mal_id)}
               onMouseLeave={handleMouseLeave}
             >
+              <Link
+                className="bg-transparent absolute top-0 left-0 w-full h-full text-[0] z-10"
+                to={`/watch/${mal_id}/${title}`}
+              >
+                to link
+              </Link>
               <figure className="relative overflow-hidden pt-[150%]">
                 <img
                   src={image}
@@ -62,7 +66,7 @@ const GridSearchResults = ({ data }) => {
                   hoveredCard={hoveredCard}
                 />
               )}
-            </Link>
+            </div>
           );
         })}
       </div>

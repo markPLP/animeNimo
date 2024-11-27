@@ -1,16 +1,14 @@
 import { useLoaderData } from 'react-router-dom';
 import { customFetch } from '../utils';
-import { GridAnime, GridSearchResults } from '../components';
+import { GridAnime } from '../components';
 
 const url = '/watch/episodes';
 
 export const loader = async () => {
   try {
     const response = await customFetch.get(url);
-
     const items = response.data.data;
-    // console.log('recently added items', items);
-    console.log('recently added response', response);
+
     return items || [];
   } catch (error) {
     console.error('Error fetching recently added anime:', error);
@@ -26,7 +24,6 @@ const RecentlyAdded = () => {
   return (
     <div className="pt-6">
       <GridAnime data={items} />
-      {/* <GridSearchResults data={items} /> */}
     </div>
   );
 };

@@ -34,9 +34,6 @@ export const loader =
         searchByLetterQuery(queryParams, request) // Pass `request` directly
       );
 
-      console.log(queryParams, 'queryParams queryParams');
-      console.log(response, 'responseresponseresponse searchByLetterQuery');
-
       const data = response.data.data;
       const pagination = response.data.pagination;
 

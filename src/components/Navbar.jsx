@@ -6,13 +6,6 @@ import TypeHeadSearch from './TypeHeadSearch';
 import NavLinks from './NavLinks';
 
 const Navbar = () => {
-  // const sublinksRef = useRef(null);
-  // const sublinksStyle = {
-  //   height: sublinksRef.current
-  //     ? `${sublinksRef.current.getBoundingClientRect().height}px`
-  //     : 'auto', // Fallback value
-  // };
-
   return (
     <nav className="bg-base-300">
       <div className="navbar complex-grid-header align-element grid items-center gap-x-3 gap-y-2 lg:gap-5 px-3">
@@ -40,7 +33,6 @@ const Navbar = () => {
           <TypeHeadSearch />
         </div>
         <div className="header-main-nav">
-          {/* <ul className='flex justify-self-center gap-x-4'> */}
           <Socials />
         </div>
         <ThemeUI className="header-theme" />

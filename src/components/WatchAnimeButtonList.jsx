@@ -14,7 +14,6 @@ const WatchAnimeButtonList = ({ episodes }) => {
 
   return (
     <div className="gap-2 w-full grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-12">
-      {/* <WatchAnimeEpisodesList /> // flex flex-wrap */}
       {episodes.length > 0 ? (
         episodes.map((item) => {
           const { mal_id, title } = item;
