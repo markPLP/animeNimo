@@ -28,6 +28,9 @@ export const recentlyAddedQuery = {
 };
 
 export const useFetchRecentlyAdded = () => {
-  const { data, isLoading, isError } = useQuery(recentlyAddedQuery);
+  const { data, isLoading, isError } = useQuery({
+    ...recentlyAddedQuery,
+    retry: recentlyAddedQuery.retry,
+  });
   return { data, isLoading, isError };
 };

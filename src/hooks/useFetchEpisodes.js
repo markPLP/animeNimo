@@ -16,6 +16,13 @@ export const useFetchEpisodes = (mal_id, currentPage) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['episodes', mal_id, currentPage],
     queryFn: () => fetchEpisodes(mal_id, currentPage), // Use the standalone fetch function
+    retry: (failureCount, error) => {
+      // Retry up to 3 times for 404 or 429 errors
+      if (error?.message.includes('404') || error?.message.includes('429')) {
+        return failureCount < 3;
+      }
+      return false; // Do not retry for other errors
+    },
     keepPreviousData: true, // Retain previous data during fetching
   });
 
@@ -39,6 +46,13 @@ export const useFetchSingleEpisodes = (mal_id, episodeById) => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['episodesbyId', mal_id, episodeById],
     queryFn: () => fetchSingleEpisodes(mal_id, episodeById), // Use the standalone fetch function
+    retry: (failureCount, error) => {
+      // Retry up to 3 times for 404 or 429 errors
+      if (error?.message.includes('404') || error?.message.includes('429')) {
+        return failureCount < 3;
+      }
+      return false; // Do not retry for other errors
+    },
     keepPreviousData: true, // Retain previous data during fetching
   });
 

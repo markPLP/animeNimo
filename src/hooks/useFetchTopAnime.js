@@ -22,10 +22,20 @@ export const topAnimeQuery = (filter) => ({
       });
     }
   },
+  retry: (failureCount, error) => {
+    // Retry up to 3 times for 404 or 429 errors
+    if (error?.message.includes('404') || error?.message.includes('429')) {
+      return failureCount < 3;
+    }
+    return false; // Do not retry for other errors
+  },
 });
 
 export const useFetchTopAnime = (filter) => {
-  const { data, isLoading, isError } = useQuery(topAnimeQuery(filter));
+  const { data, isLoading, isError } = useQuery({
+    ...topAnimeQuery(filter),
+    retry: topAnimeQuery(filter).retry,
+  });
 
   return { data, isLoading, isError };
 };
