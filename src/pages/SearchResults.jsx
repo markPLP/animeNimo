@@ -14,16 +14,16 @@ export const loader =
   };
 
 const SearchResults = () => {
-  const { animeList, pagination } = useLoaderData();
+  const { animeList } = useLoaderData();
 
   if (animeList.length === 0) {
-    return <div>No matches found...</div>;
+    return <div className="mt-6 text-[20px]">No matches found...</div>;
   }
   return (
-    <>
+    <div className="mt-6">
       <GridSearchResults data={animeList} />
       <Pagination />
-    </>
+    </div>
   );
 };
 

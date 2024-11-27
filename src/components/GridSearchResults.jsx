@@ -20,7 +20,7 @@ const GridSearchResults = ({ data }) => {
   return (
     <>
       <div className="grid grid-cols-2 gap-[15px]  min-[460px]:grid-cols-3 min-[700px]:grid-cols-4  min-[800px]:grid-cols-5">
-        {data.map((card) => {
+        {data?.map((card) => {
           const image = card.images?.webp?.image_url;
           const title = card.title;
           const mal_id = card.mal_id;

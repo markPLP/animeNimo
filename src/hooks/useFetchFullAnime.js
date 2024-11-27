@@ -10,13 +10,13 @@ const fullAnimeQuery = (mal_id) => ({
   },
   enabled: !!mal_id, // Only fetch when mal_id is defined
   retry: (failureCount, error) => {
-    // Retry up to 3 times only if the error status is 429
-    if (error.response && error.response.status === 429 && failureCount <= 3) {
-      return true;
+    // Retry up to 3 times for 404 or 429 errors
+    const status = error?.message?.split(':')[0]; // Extract status from error message
+    if (status === '404' || status === '429') {
+      return failureCount < 3;
     }
-    return false;
+    return false; // Do not retry for other errors
   },
-  retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000), // Exponential backoff
 });
 
 export const useFetchFullAnime = (mal_id) => {

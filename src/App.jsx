@@ -3,7 +3,6 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import {
   Landing,
-  Genre,
   Types,
   Error,
   Login,
@@ -12,6 +11,7 @@ import {
   SearchResults,
   RecentlyAdded,
   AzList,
+  GenreSingle,
 } from './pages';
 import { BaseLayout } from './layouts';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -22,9 +22,9 @@ import { loader as SearchResultsLoader } from './pages/SearchResults';
 import { loader as RecentlyAddedLoader } from './pages/RecentlyAdded';
 import { loader as AzListLoader } from './pages/AzList';
 import { loader as WatchSingleLoader } from './pages/WatchSingle';
+import { loader as GenreSingleLoader } from './pages/GenreSingle';
 import { AppProvider } from './context';
 import LayoutTwoCols from './layouts/LayoutTwoCols';
-import About from './pages/About';
 import { Loading } from './components';
 
 const queryClient = new QueryClient({
@@ -60,9 +60,14 @@ const router = createBrowserRouter([
             loader: SearchResultsLoader(queryClient),
           },
           {
-            path: 'genre',
-            element: <Genre />,
+            path: 'genre-single/:mal_id',
+            element: <GenreSingle />,
+            loader: GenreSingleLoader(queryClient),
           },
+          // {
+          //   path: 'genre',
+          //   element: <Genre />,
+          // },
           {
             path: 'types',
             element: <Types />,

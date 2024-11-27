@@ -1,13 +1,22 @@
-import { useCallback, useState } from 'react';
-import GridAnimeHoverElement from './GridAnimeHoverElement';
 import { AiFillCrown } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 
+// eslint-disable-next-line react/prop-types
 const SidebarRecentlyAddedItem = ({ dataItem }) => {
+  console.log(dataItem, 'from dataItemdataItem');
+
+  // eslint-disable-next-line react/prop-types
   const { entry, episodes } = dataItem;
   const { title, mal_id } = entry;
   const image = entry?.images?.webp?.image_url;
   return (
     <article className="group hover:cursor-pointer gap-4 relative mx-[10px]">
+      <Link
+        className="bg-transparent absolute top-0 left-0 w-full h-full text-[0] z-10"
+        to={`/watch/${mal_id}/${title}`}
+      >
+        to link
+      </Link>
       <div>
         <figure className="relative overflow-hidden pt-[150%]">
           <img

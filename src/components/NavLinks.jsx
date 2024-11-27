@@ -12,7 +12,6 @@ const NavLinks = () => {
     // Update isMobile on window resize
 
     const handleResize = () => {
-      console.log(window.innerWidth); // Log window width on resize
       setIsMobile(window.innerWidth <= 768);
     };
 

@@ -9,8 +9,6 @@ const NavSubmenu = ({ links }) => {
 
   const gridCols = 'grid-cols-3';
 
-  console.log(links, 'currentPage from currentPage');
-
   return (
     <ul
       className={`p-2 grid border-0 m-0 rounded-none ${

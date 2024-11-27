@@ -35,14 +35,20 @@ const SidebarTopAnimeItem = ({ dataItem, index }) => {
   }, []);
 
   return (
-    <Link
-      to={`/watch/${mal_id}/${title}`}
+    <div
+      //to={`/watch/${mal_id}/${title}`}
       className={listItemClasses}
       style={index === 0 ? { backgroundImage: `url(${imageLarge})` } : {}}
       key={`animeDeets-${mal_id}-${index}`}
       onMouseEnter={() => handleMouseEnter(mal_id)}
       onMouseLeave={handleMouseLeave}
     >
+      <Link
+        className="bg-transparent absolute top-0 left-0 w-full h-full text-[0] z-10"
+        to={`/watch/${mal_id}/${title}`}
+      >
+        to link
+      </Link>
       {index === 0 && (
         <span className="absolute top-0 bottom-0 left-0 w-full bg-gradient-to-t from-base-300/100 to-base-100/0 p-5"></span>
       )}
@@ -79,7 +85,7 @@ const SidebarTopAnimeItem = ({ dataItem, index }) => {
       {hoveredCardId === mal_id && (
         <GridAnimeHoverElement mal_id={mal_id} hoveredCard={hoveredCard} />
       )}
-    </Link>
+    </div>
   );
 };
 

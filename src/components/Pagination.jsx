@@ -4,14 +4,8 @@ import PaginationLong from './PaginationLong';
 const Pagination = () => {
   const { pagination } = useLoaderData();
   const { current_page, last_visible_page } = pagination;
-  // const {} =  pagination.items
-  console.log(current_page, 'current_pagecurrent_page');
-  console.log(pagination, 'paginationpagination');
-
   const { search, pathname } = useLocation();
   const navigate = useNavigate();
-  // console.log(search, 'uselocation');
-
   const handleChange = (pageNumber) => {
     const searchParams = new URLSearchParams(search);
     searchParams.set('page', pageNumber);

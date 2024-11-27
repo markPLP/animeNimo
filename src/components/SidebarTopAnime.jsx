@@ -15,7 +15,7 @@ const SidebarTopAnime = () => {
   const memoizedFilters = useMemo(() => topAnimeFilter, []);
 
   return (
-    <div className="relative bg-base-300 rounded-lg mt-5 lg:mt-0">
+    <div className="relative bg-base-300 rounded-lg mt-5">
       <div className="p-4 min-[470px]:flex items-center justify-between lg:flex-col gap-2 lg:items-start">
         <h3 className="text-xl pb-4 min-[470px]:pb-0">Top Anime by</h3>
         <ul className="flex gap-2 min-[470px]:gap-3">

@@ -6,7 +6,6 @@ export const randomUserQuery = {
   queryFn: async () => {
     try {
       const response = await customFetch.get('/random/users');
-      console.log(response, 'responseresponseresponse');
       const data = response?.data?.data;
 
       return data;
@@ -44,8 +43,8 @@ export const useFetchRandomUser = () => {
     isError: isDetailsError,
     refetch: refetchUserDetails, // Refetch function for user details
   } = useQuery(
-    userFullDetailsQuery(username).queryKey,
-    userFullDetailsQuery(username).queryFn,
+    // userFullDetailsQuery(username).queryKey,
+    // userFullDetailsQuery(username).queryFn,
     {
       enabled: !!username, // Ensure this query only runs after we have a username
       retry: (failureCount, error) => error.message.includes('404'), // Retry on 404 error
@@ -60,8 +59,6 @@ export const useFetchRandomUser = () => {
     if (isUserError) await refetchRandomUser();
     if (isDetailsError) await refetchUserDetails();
   };
-
-  console.log(fullUserData, 'full data from useFetchRandom');
 
   return { fullUserData, isLoading, isError, refetch };
 };

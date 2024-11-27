@@ -1,24 +1,22 @@
 import { useEffect, useState } from 'react';
 import { themes } from '../utils/index';
 
-const initialTHeme = () => {
+const initialTheme = () => {
   return JSON.parse(localStorage.getItem('nimoTheme')) || themes[2];
 };
 
 const ThemeUI = () => {
-  const [theme, setTheme] = useState(initialTHeme());
-  const handleThemeChange = (theme) => {
-    setTheme(false);
-    localStorage.setItem('nimoTheme', JSON.stringify(theme));
+  const [theme, setTheme] = useState(initialTheme());
+
+  const handleThemeChange = (newTheme) => {
+    setTheme(newTheme); // Directly update the theme
+    localStorage.setItem('nimoTheme', JSON.stringify(newTheme));
   };
 
-  // const handleMouseLeave = () => {
-  //   setShowThemes(!showThemes);
-  //   console.log('out');
-  // };
-
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
+    if (theme) {
+      document.documentElement.setAttribute('data-theme', theme); // Update the theme in the DOM
+    }
   }, [theme]);
 
   return (
@@ -55,7 +53,6 @@ const ThemeUI = () => {
                 aria-label={themeOption}
               />
               {themeOption}
-              {/* {themeOption.charAt(0).toUpperCase() + themeOption.slice(1)}  */}
             </label>
           </li>
         ))}

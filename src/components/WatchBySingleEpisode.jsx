@@ -16,7 +16,6 @@ const WatchBySingleEpisode = () => {
 
   const { title, aired, duration, synopsis } = episode;
   const episode_malId = episode.mal_id;
-  console.log(synopsis);
 
   if (isLoading) return <Loading extendClass="min-h-[250px]" />;
   if (isError || error)

@@ -25,13 +25,18 @@ const GridAnime = ({ data }) => {
         const mal_id = card.entry.mal_id;
         const latestEp = card.episodes[0];
         return (
-          <Link
-            to={`/watch/${mal_id}/${title}`}
+          <div
             key={mal_id}
             className="card bg-base-100 w-full shadow-xl rounded-md relative"
             onMouseEnter={() => handleMouseEnter(mal_id)}
             onMouseLeave={handleMouseLeave}
           >
+            <Link
+              className="bg-transparent absolute top-0 left-0 w-full h-full text-[0] z-10"
+              to={`/watch/${mal_id}/${title}`}
+            >
+              to link
+            </Link>
             <figure className="relative overflow-hidden pt-[150%]">
               <img
                 src={image}
@@ -60,7 +65,7 @@ const GridAnime = ({ data }) => {
                 />
               )}
             </div>
-          </Link>
+          </div>
         );
       })}
     </div>
